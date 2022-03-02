@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "182044788791",
+    "project_id": "neveralone-dbd08",
+    "storage_bucket": "neveralone-dbd08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182044788791:android:ca5a52eb30b325f89117b2",
+        "android_client_info": {
+          "package_name": "ru.itis.neveralone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182044788791-cej2dg3j94tuj332seu497og1s1votbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAxHshZlHruMycKdgzbSkw6vacGXguKqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182044788791-cej2dg3j94tuj332seu497og1s1votbf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

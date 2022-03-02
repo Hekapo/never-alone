@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("io.gitlab.arturbosch.detekt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 kapt {
@@ -65,6 +66,8 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.google.firebase.auth)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
