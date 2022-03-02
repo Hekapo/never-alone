@@ -69,6 +69,9 @@ dependencies {
 
     implementation(libs.google.firebase.auth)
 
+    implementation(libs.dagger.compiler)
+    implementation(libs.dagger.runtime)
+
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.material)
