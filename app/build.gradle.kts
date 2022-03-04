@@ -72,7 +72,8 @@ dependencies {
     api(project(":core:domain"))
     api(project(":core:data"))
     implementation(project(":features:splash"))
-    implementation(project(":features:auth"))
+    implementation(project(":features:signin"))
+    implementation(project(":features:signup"))
 
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.crashlytics)
