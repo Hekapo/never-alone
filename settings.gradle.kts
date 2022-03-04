@@ -11,3 +11,7 @@ enableFeaturePreview("VERSION_CATALOGS")
 rootProject.name = "NeverAlone"
 include(":app")
 
+include(":core")
+include(":core:data")
+include(":core:domain")
+include(":core:ui")
