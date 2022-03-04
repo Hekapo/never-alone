@@ -3,6 +3,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
+
     }
 
     dependencies {
@@ -14,6 +16,12 @@ buildscript {
     }
 }
 
+allprojects {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
 plugins {
     id("io.gitlab.arturbosch.detekt") version("1.19.0") apply(false)
 }
