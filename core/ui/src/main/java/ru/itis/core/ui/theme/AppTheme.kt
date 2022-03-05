@@ -1,8 +1,12 @@
 package ru.itis.core.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Typography
+import androidx.compose.runtime.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
@@ -13,46 +17,43 @@ fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    MaterialTheme {
-//        colors = if (darkTheme) DarkThemeColors else LightThemeColors,
-//        typography = JetnewsTypography,
-//        shapes = JetnewsShapes,
-//        content = content
-//        )
+    val colours = LightThemeColours
+    val colorPalette = remember { colours }
+    colorPalette.update(colours)
+
+    val selectionColours = remember {
+        TextSelectionColors(
+            handleColor = colours.textMediumEmphasis,
+            backgroundColor = colours.textLowEmphasis
+        )
+    }
+
+    val sysUiController = rememberSystemUiController()
+    SideEffect {
+        sysUiController.setSystemBarsColor(
+            color = colours.statusBar,
+        )
+    }
+
+    MaterialTheme(
+        typography = Typography(),
+    ) {
+        CompositionLocalProvider(
+            LocalAppColours provides colorPalette,
+            LocalTextSelectionColors provides selectionColours,
+            content = content,
+        )
     }
 }
 
-//private val LightThemeColors = lightColors(
-//    primary = Red700,
-//    primaryVariant = Red900,
-//    onPrimary = Color.White,
-//    secondary = Red700,
-//    secondaryVariant = Red900,
-//    onSecondary = Color.White,
-//    error = Red800,
-//    onBackground = Color.Black,
-//
-//)
-//
-//private val DarkThemeColors = darkColors(
-//    primary = Red300,
-//    primaryVariant = Red700,
-//    onPrimary = Color.Black,
-//    secondary = Red300,
-//    onSecondary = Color.Black,
-//    error = Red200,
-//    onBackground = Color.White
-//)
-//
-//@Composable
-//fun JetnewsTheme(
-//    darkTheme: Boolean = isSystemInDarkTheme(),
-//    content: @Composable () -> Unit
-//) {
-//    MaterialTheme(
-//        colors = if (darkTheme) DarkThemeColors else LightThemeColors,
-//        typography = JetnewsTypography,
-//        shapes = JetnewsShapes,
-//        content = content
-//    )
-//}
+object AppTheme {
+    val colors: AppColours
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalAppColours.current
+
+}
+
+private val LocalAppColours = staticCompositionLocalOf<AppColours> {
+    error("No LocalAppColors provided")
+}

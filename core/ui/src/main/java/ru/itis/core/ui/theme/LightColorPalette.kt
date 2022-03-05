@@ -1,20 +1,19 @@
 package ru.itis.core.ui.theme
 
-import androidx.compose.ui.graphics.Color
-
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
  */
 
-
 internal val LightThemeColours = AppColours(
-    statusBar = Color.White,
+    statusBar = LightBackground,
     backgroundPrimary = LightBackground,
-    buttonOnPrimary = LightOnBackgroundBTN1,
-    textOnPrimary = LightOnBackgroundTV1,
+    buttonOnPrimary = LightOnBackgroundBTN,
     textHighEmphasis = LightTextHighEmphasis,
-    textMediumEmphasis = LightOnBackgroundTV2,
+    textMediumEmphasis = LightTextMediumEmphasis,
     textLowEmphasis = LightTextLowEmphasis,
     errorOnPrimary = LightError,
     successOnPrimary = LightSuccess,
+    bottomBarOnPrimary = LightOnBackgroundBNV,
+    textFieldOnPrimary = LightOnBackgroundTF,
+    checkBoxOnPrimary = LightOnBackgroundChB
 )

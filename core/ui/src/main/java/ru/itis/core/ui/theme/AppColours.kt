@@ -9,12 +9,10 @@ import androidx.compose.ui.graphics.Color
  * Copyright (c) 05.03.2022 Created by Iskandar
  */
 
-
 class AppColours(
     statusBar: Color,
     backgroundPrimary: Color,
     buttonOnPrimary: Color,
-    textOnPrimary: Color,
     textHighEmphasis: Color,
     textMediumEmphasis: Color,
     textLowEmphasis: Color,
@@ -22,15 +20,15 @@ class AppColours(
     successOnPrimary: Color,
     bottomBarOnPrimary: Color,
     textFieldOnPrimary: Color,
+    checkBoxOnPrimary: Color,
 
     ) {
+
     var statusBar by mutableStateOf(statusBar)
         private set
     var backgroundPrimary by mutableStateOf(backgroundPrimary)
         private set
     var buttonOnPrimary by mutableStateOf(buttonOnPrimary)
-        private set
-    var textOnPrimary by mutableStateOf(textOnPrimary)
         private set
     var textHighEmphasis by mutableStateOf(textHighEmphasis)
         private set
@@ -44,4 +42,23 @@ class AppColours(
         private set
     var bottomBarOnPrimary by mutableStateOf(bottomBarOnPrimary)
         private set
+    var textFieldOnPrimary by mutableStateOf(textFieldOnPrimary)
+        private set
+    var checkBoxOnPrimary by mutableStateOf(checkBoxOnPrimary)
+        private set
+
+    fun update(colours: AppColours) {
+        statusBar = colours.statusBar
+        backgroundPrimary = colours.backgroundPrimary
+        buttonOnPrimary = colours.buttonOnPrimary
+        textHighEmphasis = colours.textHighEmphasis
+        textMediumEmphasis = colours.textMediumEmphasis
+        textLowEmphasis = colours.textLowEmphasis
+        errorOnPrimary = colours.errorOnPrimary
+        successOnPrimary = colours.successOnPrimary
+        bottomBarOnPrimary = colours.bottomBarOnPrimary
+        textFieldOnPrimary = colours.textFieldOnPrimary
+        checkBoxOnPrimary = colours.checkBoxOnPrimary
+
+    }
 }
