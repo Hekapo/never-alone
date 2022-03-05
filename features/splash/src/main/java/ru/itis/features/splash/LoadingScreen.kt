@@ -41,3 +41,10 @@ internal fun Splash() {
         ImageItem(painter = painterResource(id = ru.itis.core.ui.R.drawable.ic_loading))
     }
 }
+
+@Preview
+@Composable
+fun SplashScreenPreview() {
+    Splash()
+
+}
