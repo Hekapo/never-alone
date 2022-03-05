@@ -4,7 +4,7 @@ package ru.itis.core.ui.theme
  * Copyright (c) 05.03.2022 Created by Iskandar
  */
 
-internal val LightThemeColours = AppColours(
+internal val LightColorPalette = AppColours(
     statusBar = LightBackground,
     backgroundPrimary = LightBackground,
     buttonOnPrimary = LightOnBackgroundBTN,
