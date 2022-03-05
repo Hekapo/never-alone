@@ -12,61 +12,36 @@ import androidx.compose.ui.graphics.Color
 
 class AppColours(
     statusBar: Color,
-    contendAccentPrimary: Color,
     backgroundPrimary: Color,
-    backgroundSecondary: Color,
-    contendPrimary: Color,
-    contendSecondary: Color,
-    contendTertiary: Color,
-    textPrimary: Color,
-    textSecondary: Color,
-    textTertiary: Color,
-    indicatorContendError: Color,
-    indicatorContendDone: Color,
-    buttonPrimary: Color,
-    buttonSecondary: Color,
-    iconActive: Color,
-    iconDisabled: Color,
-    textPositive: Color,
-    textNegative: Color,
-    textClickable: Color,
-) {
+    buttonOnPrimary: Color,
+    textOnPrimary: Color,
+    textHighEmphasis: Color,
+    textMediumEmphasis: Color,
+    textLowEmphasis: Color,
+    errorOnPrimary: Color,
+    successOnPrimary: Color,
+    bottomBarOnPrimary: Color,
+    textFieldOnPrimary: Color,
+
+    ) {
     var statusBar by mutableStateOf(statusBar)
-        private set
-    var contendAccentPrimary by mutableStateOf(contendAccentPrimary)
         private set
     var backgroundPrimary by mutableStateOf(backgroundPrimary)
         private set
-    var backgroundSecondary by mutableStateOf(backgroundSecondary)
+    var buttonOnPrimary by mutableStateOf(buttonOnPrimary)
         private set
-    var contendPrimary by mutableStateOf(contendPrimary)
+    var textOnPrimary by mutableStateOf(textOnPrimary)
         private set
-    var contendSecondary by mutableStateOf(contendSecondary)
+    var textHighEmphasis by mutableStateOf(textHighEmphasis)
         private set
-    var contendTertiary by mutableStateOf(contendTertiary)
+    var textMediumEmphasis by mutableStateOf(textMediumEmphasis)
         private set
-    var textPrimary by mutableStateOf(textPrimary)
+    var textLowEmphasis by mutableStateOf(textLowEmphasis)
         private set
-    var textSecondary by mutableStateOf(textSecondary)
+    var errorOnPrimary by mutableStateOf(errorOnPrimary)
         private set
-    var textTertiary by mutableStateOf(textTertiary)
+    var successOnPrimary by mutableStateOf(successOnPrimary)
         private set
-    var indicatorContendError by mutableStateOf(indicatorContendError)
-        private set
-    var indicatorContendDone by mutableStateOf(indicatorContendDone)
-        private set
-    var buttonPrimary by mutableStateOf(buttonPrimary)
-        private set
-    var buttonSecondary by mutableStateOf(buttonSecondary)
-        private set
-    var iconActive by mutableStateOf(iconActive)
-        private set
-    var iconDisabled by mutableStateOf(iconDisabled)
-        private set
-    var textPositive by mutableStateOf(textPositive)
-        private set
-    var textNegative by mutableStateOf(textNegative)
-        private set
-    var textClickable by mutableStateOf(textClickable)
+    var bottomBarOnPrimary by mutableStateOf(bottomBarOnPrimary)
         private set
 }
