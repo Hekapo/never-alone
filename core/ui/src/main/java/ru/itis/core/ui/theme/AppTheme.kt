@@ -1,0 +1,59 @@
+package ru.itis.core.ui.theme
+
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Typography
+import androidx.compose.runtime.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
+/**
+ * Copyright (c) 05.03.2022 Created by Iskandar
+ */
+
+@Composable
+fun AppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colours = LightThemeColours
+    val colorPalette = remember { colours }
+    colorPalette.update(colours)
+
+    val selectionColours = remember {
+        TextSelectionColors(
+            handleColor = colours.textMediumEmphasis,
+            backgroundColor = colours.textLowEmphasis
+        )
+    }
+
+    val sysUiController = rememberSystemUiController()
+    SideEffect {
+        sysUiController.setSystemBarsColor(
+            color = colours.statusBar,
+        )
+    }
+
+    MaterialTheme(
+        typography = Typography(),
+    ) {
+        CompositionLocalProvider(
+            LocalAppColours provides colorPalette,
+            LocalTextSelectionColors provides selectionColours,
+            content = content,
+        )
+    }
+}
+
+object AppTheme {
+    val colors: AppColours
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalAppColours.current
+
+}
+
+private val LocalAppColours = staticCompositionLocalOf<AppColours> {
+    error("No LocalAppColors provided")
+}
