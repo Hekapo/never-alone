@@ -17,7 +17,7 @@ fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colours = LightThemeColours
+    val colours = if (darkTheme) DarkColorPalette else LightColorPalette
     val colorPalette = remember { colours }
     colorPalette.update(colours)
 
@@ -32,6 +32,7 @@ fun AppTheme(
     SideEffect {
         sysUiController.setSystemBarsColor(
             color = colours.statusBar,
+            darkIcons = !darkTheme
         )
     }
 
