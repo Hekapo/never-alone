@@ -1,5 +1,6 @@
 package ru.itis.core.ui.theme
 
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,6 +10,7 @@ import androidx.compose.ui.graphics.Color
  * Copyright (c) 05.03.2022 Created by Iskandar
  */
 
+@Stable
 class AppColours(
     statusBar: Color,
     backgroundPrimary: Color,
