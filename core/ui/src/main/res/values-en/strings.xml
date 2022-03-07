@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Never Alone</string>
+    <string name="create_account">Create account</string>
+    <string name="signin">Sign in</string>
+</resources>
