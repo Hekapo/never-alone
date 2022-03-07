@@ -1,5 +1,6 @@
 package ru.itis.core.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 
 /**
@@ -16,6 +17,7 @@ fun AppTheme(
 
     CompositionLocalProvider(
         LocalAppColors provides rememberedColors,
+        LocalAppDarkColors provides rememberedColors,
         LocalAppTypography provides typography,
     ) {
         content()
@@ -26,7 +28,7 @@ object AppTheme {
     val colors: AppColors
         @Composable
         @ReadOnlyComposable
-        get() = LocalAppColors.current
+        get() = if (isSystemInDarkTheme()) LocalAppDarkColors.current else LocalAppColors.current
 
     val typography: AppTypography
         @Composable
@@ -37,4 +39,7 @@ object AppTheme {
 
 internal val LocalAppColors = staticCompositionLocalOf {
     lightColors()
+}
+internal val LocalAppDarkColors = staticCompositionLocalOf {
+    darkColors()
 }
