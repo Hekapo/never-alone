@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
 import androidx.compose.runtime.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import ru.itis.core.ui.theme.AppTheme.typography
 
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
@@ -41,6 +42,7 @@ fun AppTheme(
     ) {
         CompositionLocalProvider(
             LocalAppColours provides colorPalette,
+            LocalAppTypography provides typography,
             LocalTextSelectionColors provides selectionColours,
             content = content,
         )
@@ -52,6 +54,11 @@ object AppTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalAppColours.current
+
+    val typography: AppTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalAppTypography.current
 
 }
 
