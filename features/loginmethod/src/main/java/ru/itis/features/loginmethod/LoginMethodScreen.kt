@@ -3,8 +3,6 @@ package ru.itis.features.loginmethod
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults.buttonColors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,6 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.itis.core.ui.R
+import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.theme.AppTheme
 
 /**
@@ -23,7 +22,7 @@ import ru.itis.core.ui.theme.AppTheme
 @Composable
 fun LoginMethodRoute(onSignInScreen: () -> Unit, onSignUpScreen: () -> Unit) {
 
-
+LoginMethodScreen()
 }
 
 @Composable
@@ -31,26 +30,35 @@ private fun LoginMethodScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
+            .background(AppTheme.colors.backgroundPrimary)
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
+            modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.app_name),
-            textAlign = TextAlign.Center,
             style = AppTheme.typography.title1,
+            textAlign = TextAlign.Center,
             color = AppTheme.colors.textHighEmphasis
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = { /*TODO*/ },
-            colors = buttonColors(backgroundColor = AppTheme.colors.buttonOnPrimary)
-        ) { 
-            Text(text = "Test", color = AppTheme.colors.textHighEmphasis)
+        Spacer(modifier = Modifier.height(48.dp))
+        AuthButton(
+            text = stringResource(id = R.string.create_account),
+            color = AppTheme.colors.backgroundOnSecondary,
+            style = AppTheme.typography.button
+        ) {
+
         }
-        Button(
-            onClick = { /*TODO*/ }
-        ) { }
+        Spacer(modifier = Modifier.height(16.dp))
+        AuthButton(
+            text = stringResource(id = R.string.signin),
+            color = AppTheme.colors.backgroundOnSecondary,
+            style = AppTheme.typography.button
+        ) {
+
+        }
+
 
     }
 }

@@ -3,6 +3,7 @@ package ru.itis.core.ui.components
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import ru.itis.core.ui.theme.AppTheme
 
 /**
@@ -26,7 +28,7 @@ fun AuthButton(
     onClick: () -> Unit
 ) {
     Button(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().height(46.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = AppTheme.colors.buttonOnPrimary
         ),
