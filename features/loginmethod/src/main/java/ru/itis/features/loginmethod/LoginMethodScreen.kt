@@ -34,5 +34,4 @@ fun LoginMethodScreen(onSignInScreen: () -> Unit, onSignUpScreen: () -> Unit) {
         Button(onClick = { /*TODO*/ }) { }
 
     }
-
 }

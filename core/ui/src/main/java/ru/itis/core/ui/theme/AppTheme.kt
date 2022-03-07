@@ -1,13 +1,6 @@
 package ru.itis.core.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.text.selection.LocalTextSelectionColors
-import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Typography
 import androidx.compose.runtime.*
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import ru.itis.core.ui.theme.AppTheme.typography
 
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
@@ -15,45 +8,25 @@ import ru.itis.core.ui.theme.AppTheme.typography
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    colors: AppColors = AppTheme.colors,
+    typography: AppTypography = AppTheme.typography,
     content: @Composable () -> Unit
 ) {
-    val colours = if (darkTheme) DarkColorPalette else LightColorPalette
-    val colorPalette = remember { colours }
-    colorPalette.update(colours)
+    val rememberedColors = remember { colors.copy() }.apply { updateColorsFrom(colors) }
 
-    val selectionColours = remember {
-        TextSelectionColors(
-            handleColor = colours.textMediumEmphasis,
-            backgroundColor = colours.textLowEmphasis
-        )
-    }
-
-    val sysUiController = rememberSystemUiController()
-    SideEffect {
-        sysUiController.setSystemBarsColor(
-            color = colours.statusBar,
-            darkIcons = !darkTheme
-        )
-    }
-
-    MaterialTheme(
-        typography = Typography(),
+    CompositionLocalProvider(
+        LocalAppColors provides rememberedColors,
+        LocalAppTypography provides typography,
     ) {
-        CompositionLocalProvider(
-            LocalAppColours provides colorPalette,
-            LocalAppTypography provides typography,
-            LocalTextSelectionColors provides selectionColours,
-            content = content,
-        )
+        content()
     }
 }
 
 object AppTheme {
-    val colors: AppColours
+    val colors: AppColors
         @Composable
         @ReadOnlyComposable
-        get() = LocalAppColours.current
+        get() = LocalAppColors.current
 
     val typography: AppTypography
         @Composable
@@ -62,6 +35,6 @@ object AppTheme {
 
 }
 
-private val LocalAppColours = staticCompositionLocalOf<AppColours> {
-    error("No LocalAppColors provided")
+internal val LocalAppColors = staticCompositionLocalOf {
+    lightColors()
 }
