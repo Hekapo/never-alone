@@ -26,17 +26,10 @@ fun LoadingScreen(onNavigate: () -> Unit) {
     }
 
     Splash()
-
 }
 
-@Preview
 @Composable
-fun TestPreview() {
-    Splash()
-
-}
-@Composable
-internal fun Splash() {
+private fun Splash() {
     Box(
         modifier = Modifier
             .background(AppTheme.colors.backgroundPrimary)
@@ -45,4 +38,11 @@ internal fun Splash() {
     ) {
         ImageItem(painter = painterResource(id = ru.itis.core.ui.R.drawable.ic_loading))
     }
+}
+
+@Preview
+@Composable
+fun SplashPreview() {
+    Splash()
+
 }
