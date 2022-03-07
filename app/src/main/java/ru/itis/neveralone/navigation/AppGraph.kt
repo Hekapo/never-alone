@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ru.itis.features.loginmethod.LoginMethod
+import ru.itis.features.loginmethod.LoginMethodScreen
 import ru.itis.features.splash.LoadingScreen
 
 /**
@@ -26,7 +26,7 @@ internal fun AppNavGraph(
 
         }
         composable(route = Destination.ChooseLoginMethod.key) {
-            LoginMethod(
+            LoginMethodScreen(
                 onSignInScreen = { navController.navigate(route = Destination.SignInDestination.key) },
                 onSignUpScreen = { navController.navigate(route = Destination.SignUpDestination.key) }
             )
