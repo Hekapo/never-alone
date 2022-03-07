@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.theme.AppTheme
 
@@ -28,6 +29,12 @@ fun LoadingScreen(onNavigate: () -> Unit) {
 
 }
 
+@Preview
+@Composable
+fun TestPreview() {
+    Splash()
+
+}
 @Composable
 internal fun Splash() {
     Box(
