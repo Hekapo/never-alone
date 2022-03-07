@@ -37,5 +37,5 @@ internal fun Splash() {
         contentAlignment = Alignment.Center,
     ) {
         ImageItem(painter = painterResource(id = ru.itis.core.ui.R.drawable.ic_loading))
-    g}
+    }
 }
