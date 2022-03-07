@@ -22,11 +22,11 @@ import ru.itis.core.ui.theme.AppTheme
 @Composable
 fun LoginMethodRoute(onSignInScreen: () -> Unit, onSignUpScreen: () -> Unit) {
 
-LoginMethodScreen()
+    LoginMethodScreen(onSignInScreen, onSignUpScreen)
 }
 
 @Composable
-private fun LoginMethodScreen() {
+private fun LoginMethodScreen(onSignInScreen: () -> Unit, onSignUpScreen: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,7 +48,7 @@ private fun LoginMethodScreen() {
             color = AppTheme.colors.backgroundOnSecondary,
             style = AppTheme.typography.button
         ) {
-
+            onSignUpScreen()
         }
         Spacer(modifier = Modifier.height(16.dp))
         AuthButton(
@@ -56,10 +56,8 @@ private fun LoginMethodScreen() {
             color = AppTheme.colors.backgroundOnSecondary,
             style = AppTheme.typography.button
         ) {
-
+            onSignInScreen()
         }
-
-
     }
 }
 
@@ -67,6 +65,6 @@ private fun LoginMethodScreen() {
 @Preview(name = "Dark mode", uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun LoginMethodScreenPreview() {
-    LoginMethodScreen()
+    LoginMethodScreen({}, {})
 
 }
