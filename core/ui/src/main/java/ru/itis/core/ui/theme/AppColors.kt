@@ -12,7 +12,8 @@ import androidx.compose.ui.graphics.Color
 class AppColors(
     statusBar: Color,
     backgroundPrimary: Color,
-    buttonOnPrimary: Color,
+    backgroundOnPrimary: Color,
+    backgroundOnSecondary: Color,
     textHighEmphasis: Color,
     textMediumEmphasis: Color,
     textLowEmphasis: Color,
@@ -28,7 +29,9 @@ class AppColors(
         private set
     var backgroundPrimary by mutableStateOf(backgroundPrimary)
         private set
-    var buttonOnPrimary by mutableStateOf(buttonOnPrimary)
+    var backgroundOnSecondary by mutableStateOf(backgroundOnSecondary)
+        private set
+    var buttonOnPrimary by mutableStateOf(backgroundOnPrimary)
         private set
     var textHighEmphasis by mutableStateOf(textHighEmphasis)
         private set
@@ -52,6 +55,7 @@ class AppColors(
     fun copy(
         statusBar: Color = this.statusBar,
         backgroundPrimary: Color = this.backgroundPrimary,
+        backgroundOnSecondary: Color = this.backgroundOnSecondary,
         buttonOnPrimary: Color = this.buttonOnPrimary,
         textHighEmphasis: Color = this.textHighEmphasis,
         textMediumEmphasis: Color = this.textMediumEmphasis,
@@ -66,6 +70,7 @@ class AppColors(
     ): AppColors = AppColors(
         statusBar,
         backgroundPrimary,
+        backgroundOnSecondary,
         buttonOnPrimary,
         textHighEmphasis,
         textMediumEmphasis,
@@ -81,6 +86,7 @@ class AppColors(
     fun updateColorsFrom(colors: AppColors) {
         statusBar = colors.statusBar
         backgroundPrimary = colors.backgroundPrimary
+        backgroundOnSecondary = colors.backgroundOnSecondary
         buttonOnPrimary = colors.buttonOnPrimary
         textHighEmphasis = colors.textHighEmphasis
         textMediumEmphasis = colors.textMediumEmphasis

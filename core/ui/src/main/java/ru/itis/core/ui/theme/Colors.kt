@@ -11,6 +11,7 @@ internal val LightOnBackgroundBTN = Color(color = 0xFF6200EE)
 internal val LightOnBackgroundTF = Color(color = 0xFFE7E0EC)
 internal val LightOnBackgroundChB = Color(color = 0xFF0A7AFF)
 internal val LightOnBackgroundBNV = Color(color = 0xFFF1F5FB)
+internal val LightOnSecondary = Color(color = 0xDEFFFFFF)
 
 internal val LightTextHighEmphasis = Color(color = 0xDE000000)
 internal val LightTextMediumEmphasis = Color(color = 0x99000000)

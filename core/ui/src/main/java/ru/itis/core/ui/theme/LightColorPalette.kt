@@ -21,7 +21,7 @@ fun lightColors(
 ): AppColors = AppColors(
     statusBar = statusBar,
     backgroundPrimary = backgroundPrimary,
-    buttonOnPrimary = buttonOnPrimary,
+    backgroundOnPrimary = buttonOnPrimary,
     textHighEmphasis = textHighEmphasis,
     textMediumEmphasis = textMediumEmphasis,
     textLowEmphasis = textLowEmphasis,
