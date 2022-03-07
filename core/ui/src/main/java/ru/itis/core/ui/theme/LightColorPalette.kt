@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 fun lightColors(
     statusBar: Color = LightBackground,
     backgroundPrimary: Color = LightBackground,
+    backgroundOnSecondary: Color = LightOnSecondary,
     buttonOnPrimary: Color = LightOnBackgroundBTN,
     textHighEmphasis: Color = LightTextHighEmphasis,
     textMediumEmphasis: Color = LightTextMediumEmphasis,
@@ -22,6 +23,7 @@ fun lightColors(
     statusBar = statusBar,
     backgroundPrimary = backgroundPrimary,
     backgroundOnPrimary = buttonOnPrimary,
+    backgroundOnSecondary = backgroundOnSecondary,
     textHighEmphasis = textHighEmphasis,
     textMediumEmphasis = textMediumEmphasis,
     textLowEmphasis = textLowEmphasis,

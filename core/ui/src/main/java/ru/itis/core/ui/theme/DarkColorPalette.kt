@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 fun darkColors(
     statusBar: Color = DarkBackground,
     backgroundPrimary: Color = DarkBackground,
+    backgroundOnSecondary: Color = DarkOnSecondary,
     buttonOnPrimary: Color = DarkOnBackgroundBTN,
     textHighEmphasis: Color = DarkTextHighEmphasis,
     textMediumEmphasis: Color = DarkTextMediumEmphasis,
@@ -21,6 +22,7 @@ fun darkColors(
 ): AppColors = AppColors(
     statusBar = statusBar,
     backgroundPrimary = backgroundPrimary,
+    backgroundOnSecondary = backgroundOnSecondary,
     backgroundOnPrimary = buttonOnPrimary,
     textHighEmphasis = textHighEmphasis,
     textMediumEmphasis = textMediumEmphasis,

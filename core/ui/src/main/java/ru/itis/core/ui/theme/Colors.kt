@@ -23,6 +23,7 @@ internal val DarkOnBackgroundBTN = Color(color = 0xFFBB86FC)
 internal val DarkOnBackgroundTF = Color(color = 0xFF292929)
 internal val DarkOnBackgroundChB = Color(color = 0xFFBB86FC)
 internal val DarkOnBackgroundBNV = Color(color = 0x3D000000)
+internal val DarkOnSecondary = Color(color = 0xDEFFFFFF)
 
 internal val DarkTextHighEmphasis = Color(color = 0xDEFFFFFF)
 internal val DarkTextMediumEmphasis = Color(color = 0x99FFFFFF)
