@@ -9,7 +9,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.theme.AppTheme
 
@@ -38,5 +37,5 @@ internal fun Splash() {
         contentAlignment = Alignment.Center,
     ) {
         ImageItem(painter = painterResource(id = ru.itis.core.ui.R.drawable.ic_loading))
-    }
+    g}
 }
