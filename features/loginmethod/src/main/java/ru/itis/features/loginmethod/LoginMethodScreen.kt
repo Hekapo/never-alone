@@ -7,6 +7,6 @@ import androidx.compose.runtime.Composable
  */
 
 @Composable
-fun LoginMethod() {
-    
+fun LoginMethod(onSignInScreen: () -> Unit, onSignUpScreen: () -> Unit) {
+
 }
