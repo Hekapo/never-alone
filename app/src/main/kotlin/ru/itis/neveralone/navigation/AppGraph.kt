@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ru.itis.features.loginmethod.LoginMethodRoute
+import ru.itis.features.signin.SignInRoute
 import ru.itis.features.splash.LoadingScreen
 
 /**
@@ -30,6 +31,11 @@ internal fun AppNavGraph(
                 onSignInScreen = { navController.navigate(route = Destination.SignInDestination.key) },
                 onSignUpScreen = { navController.navigate(route = Destination.SignUpDestination.key) }
             )
+        }
+        composable(route = Destination.SignInDestination.key) {
+            SignInRoute {
+                navController.navigate(route = Destination.ChooseLoginMethod.key)
+            }
         }
     }
 
