@@ -34,7 +34,7 @@ internal fun AppNavGraph(
         }
         composable(route = Destination.SignInDestination.key) {
             SignInRoute {
-                navController.navigate(route = Destination.ChooseLoginMethod.key)
+                navController.popBackStack()
             }
         }
     }
