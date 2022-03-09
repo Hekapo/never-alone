@@ -1,4 +1,4 @@
-package ru.itis.neveralone.ui.theme
+package ru.itis.neveralone.theme
 
 import androidx.compose.ui.graphics.Color
 
