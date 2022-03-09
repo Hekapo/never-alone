@@ -1,4 +1,4 @@
-package ru.itis.neveralone.ui.theme
+package ru.itis.neveralone.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
