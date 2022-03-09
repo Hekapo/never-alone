@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalComposeUiApi::class)
+
 package ru.itis.features.signin
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -7,9 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.platform.SoftwareKeyboardController
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -83,17 +81,9 @@ private fun SignInScreen(onBackClick: () -> Unit) {
                 color = AppTheme.colors.textHighEmphasis
             )
             Spacer(modifier = Modifier.height(48.dp))
-            TextField(
-                modifier = Modifier,
-                inputValue = "Test",
-                placeholder = "test",
-                onValueChange = {})
+            TextField(modifier = Modifier, inputValue = "Test", placeholder = "test", onValueChange = {})
             Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                modifier = Modifier,
-                inputValue = "Test2",
-                placeholder = "test",
-                onValueChange = {})
+            TextField(modifier = Modifier, inputValue = "Test2", placeholder = "test", onValueChange = {})
             Spacer(modifier = Modifier.height(16.dp))
             AuthButton(
                 text = stringResource(id = R.string.enter),
