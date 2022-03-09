@@ -5,5 +5,5 @@ package ru.itis.core.domain.repository
  */
 
 
-interface AuthRepository {
+interface SignInRepository {
 }
