@@ -14,6 +14,6 @@ class RepositoryModule
 
 internal interface RepositoryModuleBinds {
     @Binds
-    fun singInRepository(repository: SignInRepositoryImpl): SignInRepository
+    fun provideSingInRepository(repository: SignInRepositoryImpl): SignInRepository
 
 }
