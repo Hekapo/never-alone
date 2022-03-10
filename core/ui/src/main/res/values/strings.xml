@@ -3,4 +3,6 @@
     <string name="app_name">Never Alone</string>
     <string name="create_account">Создать аккаунт</string>
     <string name="signin">Войти</string>
+    <string name="back">Назад</string>
+    <string name="enter">Вход</string>
 </resources>
