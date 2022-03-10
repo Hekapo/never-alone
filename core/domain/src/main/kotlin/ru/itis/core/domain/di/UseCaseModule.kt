@@ -15,6 +15,6 @@ class UseCaseModule
 @Module
 internal interface UseCaseModuleBinds {
     @Binds
-    fun provideSignInUseCase(usecase: SignInUseCase): ISignInUseCase
+    fun provideSignInUseCase(useCase: SignInUseCase): ISignInUseCase
 
 }
