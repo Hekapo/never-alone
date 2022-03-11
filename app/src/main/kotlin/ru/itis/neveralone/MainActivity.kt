@@ -20,7 +20,10 @@ class MainActivity : ComponentActivity() {
         AppTheme {
             ProvideWindowInsets(consumeWindowInsets = true) {
                 val navController = rememberNavController()
-                AppNavGraph(navController = navController)
+                AppNavGraph(
+                    navController = navController,
+                    appComponent = (application as App).appComponent
+                )
             }
 
         }
