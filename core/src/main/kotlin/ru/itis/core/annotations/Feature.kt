@@ -1,4 +1,4 @@
-package ru.itis.core
+package ru.itis.core.annotations
 
 import javax.inject.Scope
 

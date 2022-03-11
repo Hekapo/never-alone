@@ -3,7 +3,7 @@ package ru.itis.features.signin
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.ViewModel
 import dagger.Component
-import ru.itis.core.Feature
+import ru.itis.core.annotations.Feature
 import ru.itis.core.domain.usecase.ISignInUseCase
 import kotlin.properties.Delegates.notNull
 
