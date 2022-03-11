@@ -13,8 +13,7 @@ import javax.inject.Singleton
  * Copyright (c) 10.03.2022 Created by Iskandar
  */
 
-@Singleton
-@Component(modules = [RepositoryModule::class, UseCaseModule::class])
+@[Singleton Component(modules = [RepositoryModule::class, UseCaseModule::class])]
 interface AppComponent : SignInDeps {
 
     override val sigInUseCase: ISignInUseCase
