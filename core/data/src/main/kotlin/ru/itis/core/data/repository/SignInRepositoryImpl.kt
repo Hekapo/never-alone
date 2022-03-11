@@ -1,6 +1,6 @@
 package ru.itis.core.data.repository
 
-import ru.itis.core.domain.repository.SignInRepository
+import ru.itis.core.domain.repository.ISignInRepository
 import javax.inject.Inject
 
 /**
@@ -10,6 +10,6 @@ import javax.inject.Inject
 
 internal class SignInRepositoryImpl @Inject constructor(
 
-) : SignInRepository {
+) : ISignInRepository {
 
 }

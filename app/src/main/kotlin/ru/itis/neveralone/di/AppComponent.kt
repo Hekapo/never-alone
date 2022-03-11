@@ -1,8 +1,12 @@
 package ru.itis.neveralone.di
 
+import android.app.Application
+import dagger.BindsInstance
 import dagger.Component
 import ru.itis.core.data.di.RepositoryModule
 import ru.itis.core.domain.di.UseCaseModule
+import ru.itis.core.domain.usecase.ISignInUseCase
+import ru.itis.features.signin.SignInDeps
 import javax.inject.Singleton
 
 /**
@@ -11,5 +15,15 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [RepositoryModule::class, UseCaseModule::class])
-interface AppComponent {
+interface AppComponent : SignInDeps {
+
+    override val sigInUseCase: ISignInUseCase
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): AppComponent
+    }
 }
