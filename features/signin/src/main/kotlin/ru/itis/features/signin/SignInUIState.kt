@@ -7,6 +7,7 @@ package ru.itis.features.signin
 data class SignInUIState(
     val inputEmail: InputEmailField = InputEmailField(),
     val inputPassword: InputPasswordField = InputPasswordField(),
+    val signInProcess: SignInProcess = SignInProcess(),
     val networkError: Boolean = false
 ) {
 
@@ -19,5 +20,11 @@ data class SignInUIState(
         val password: String = "",
         val isFieldEnabled: Boolean = true,
         val isPasswordVisible: Boolean = false
+    )
+
+    data class SignInProcess(
+        val signInSuccess: Boolean = false,
+        val signInLoading: Boolean = false,
+        val signInError: Boolean = false
     )
 }

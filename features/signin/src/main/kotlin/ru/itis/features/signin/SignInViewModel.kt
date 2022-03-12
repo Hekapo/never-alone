@@ -3,12 +3,11 @@ package ru.itis.features.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.ISignInUseCase
+import ru.itis.core.domain.viewstates.SignInState
 import javax.inject.Inject
 
 /**
@@ -21,6 +20,10 @@ internal class SignInViewModel(
 ) : ViewModel() {
     private val _signInUIState = MutableStateFlow(SignInUIState())
     val signInUIState = _signInUIState.asStateFlow()
+
+    init {
+        signInUseCase.signInState.onEach(this::signInState).launchIn(viewModelScope)
+    }
 
     private fun onSignInClick() {
         _signInUIState.update {
@@ -36,6 +39,51 @@ internal class SignInViewModel(
             signInUseCase.trySignIn(email, password)
         }
 
+    }
+
+    private fun signInState(signInState: SignInState) {
+        when (signInState) {
+            is SignInState.SignInStateNone -> {}
+            is SignInState.SignInStateInProcess -> run { signInLoading() }
+            is SignInState.SignInStateSuccess -> run { signInComplete() }
+            is SignInState.SignInStateError -> run { signInError() }
+        }
+    }
+
+    private fun signInComplete() {
+        _signInUIState.update {
+            it.copy(
+                signInProcess = SignInUIState.SignInProcess(
+                    signInSuccess = true,
+                    signInLoading = false,
+                    signInError = false
+                )
+            )
+        }
+    }
+
+    private fun signInLoading() {
+        _signInUIState.update {
+            it.copy(
+                signInProcess = SignInUIState.SignInProcess(
+                    signInSuccess = false,
+                    signInLoading = true,
+                    signInError = false
+                )
+            )
+        }
+    }
+
+    private fun signInError() {
+        _signInUIState.update {
+            it.copy(
+                signInProcess = SignInUIState.SignInProcess(
+                    signInSuccess = false,
+                    signInLoading = false,
+                    signInError = true
+                )
+            )
+        }
     }
 
 
