@@ -24,6 +24,13 @@ internal class SignInRepositoryImpl @Inject constructor(
     override suspend fun trySignInWithEmailAndPassword(email: String, password: String) {
         signInProcessState.value = SignInState.SignInStateInProcess
         firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnFailureListener {
+                signInProcessState.value = SignInState.SignInStateError(it.localizedMessage)
+
+            }
+            .addOnCompleteListener {
+                signInProcessState.value = SignInState.SignInStateSuccess
+            }
 
     }
 
