@@ -17,9 +17,14 @@ internal class SignInRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : ISignInRepository {
 
-    private val signInProcessState = MutableStateFlow(SignInState.SignInStateNone)
+    private val signInProcessState = MutableStateFlow<SignInState>(SignInState.SignInStateNone)
     override val signInProcess: Flow<SignInState>
         get() = signInProcessState.asStateFlow()
 
+    override fun trySignInWithEmailAndPassword(email: String, password: String) {
+        signInProcessState.value = SignInState.SignInStateInProcess
+
+
+    }
 
 }
