@@ -1,11 +1,11 @@
 package ru.itis.features.signin
 
-import androidx.annotation.RestrictTo
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import dagger.Component
 import ru.itis.core.annotations.Feature
+import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.ISignInUseCase
-import kotlin.properties.Delegates.notNull
 
 
 /**
@@ -14,6 +14,8 @@ import kotlin.properties.Delegates.notNull
 
 @[Feature Component(dependencies = [SignInDeps::class])]
 internal interface SignInComponent {
+
+    fun getViewModelFactory(): SignInViewModel.SignInViewModelFactory
 
     @Component.Builder
     interface Builder {
@@ -27,22 +29,19 @@ internal interface SignInComponent {
 interface SignInDeps {
 
     val sigInUseCase: ISignInUseCase
+    val dispatchersProvider: DispatchersProvider
 }
 
-interface SignInDepsProvider {
+internal class SignInComponentViewModel(deps: SignInDeps) : ViewModel() {
 
-    @get:RestrictTo(RestrictTo.Scope.LIBRARY)
-    val deps: SignInDeps
-
-    companion object : SignInDepsProvider by SignInDepsStore
+    val signInComponent = DaggerSignInComponent.builder().deps(deps).build()
 }
 
-object SignInDepsStore : SignInDepsProvider {
-
-    override var deps: SignInDeps by notNull()
-}
-
-internal class SignInComponentViewModel : ViewModel() {
-
-    val signInComponent = DaggerSignInComponent.builder().deps(SignInDepsProvider.deps).build()
+internal class SignInComponentViewModelFactory(
+    private val deps: SignInDeps
+) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return SignInComponentViewModel(deps) as T
+    }
 }

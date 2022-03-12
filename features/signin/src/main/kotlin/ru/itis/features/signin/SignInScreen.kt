@@ -17,12 +17,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
+import dagger.Lazy
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.components.ClickableIcon
 import ru.itis.core.ui.components.TextField
 import ru.itis.core.ui.theme.AppTheme
+import javax.inject.Inject
 
 /**
  * Created by Iskandar on 07.03.2022.
@@ -33,6 +36,14 @@ fun SignInRoute(
     signInDeps: SignInDeps,
     onBackClick: () -> Unit
 ) {
+
+    val signInComponentViewModel = viewModel<SignInComponentViewModel>(
+        factory = SignInComponentViewModelFactory(signInDeps)
+    )
+
+    val signInViewModel = viewModel<SignInViewModel>(
+        factory = signInComponentViewModel.signInComponent.getViewModelFactory()
+    )
 
     SignInScreen {
         onBackClick()
