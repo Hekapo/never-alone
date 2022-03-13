@@ -5,24 +5,33 @@ package ru.itis.features.signin
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
+import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
-import ru.itis.core.ui.components.ClickableIcon
-import ru.itis.core.ui.components.TextField
+import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.theme.AppTheme
 
 /**
@@ -43,14 +52,33 @@ fun SignInRoute(
         factory = signInComponentViewModel.signInComponent.getViewModelFactory()
     )
 
-    SignInScreen {
-        onBackClick()
+    val uiState by signInViewModel.signInUIState.collectAsState()
+
+    LaunchedEffect(uiState.signInProcess.signInSuccess) {
+        if (uiState.signInProcess.signInSuccess) {
+            delay(300)
+            onBackClick()
+        }
     }
+
+    SignInScreen(
+        uiState = uiState,
+        onEmailChanged = signInViewModel::onEmailChanged,
+        onPasswordChanged = signInViewModel::onPasswordChanged,
+        onBackClick = onBackClick
+    )
 
 }
 
 @Composable
-private fun SignInScreen(onBackClick: () -> Unit) {
+private fun SignInScreen(
+    uiState: SignInUIState,
+    onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onBackClick: () -> Unit
+) {
+
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
         modifier = Modifier
@@ -58,20 +86,19 @@ private fun SignInScreen(onBackClick: () -> Unit) {
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary)
     ) {
-        ClickableIcon(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(8.dp),
-            backgroundColor = AppTheme.colors.backgroundPrimary,
-            imageVector = Icons.Default.ArrowBack,
-            contentDescription = stringResource(R.string.back),
-            iconTint = AppTheme.colors.errorOnPrimary,
+        IconButton(
             onClick = {
-//                keyboardController?.hide()
+                keyboardController?.hide()
                 onBackClick()
+            },
+            content = {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = stringResource(id = R.string.back),
+                    tint = AppTheme.colors.textHighEmphasis
+                )
             }
         )
-
 
         Column(
             modifier = Modifier
@@ -88,17 +115,17 @@ private fun SignInScreen(onBackClick: () -> Unit) {
                 color = AppTheme.colors.textHighEmphasis
             )
             Spacer(modifier = Modifier.height(48.dp))
-            TextField(
-                modifier = Modifier,
-                inputValue = "Test",
-                placeholder = "test",
-                onValueChange = {})
+            UserEmailInput(
+                inputValue = uiState.inputEmail.email,
+                inputEnabled = uiState.inputEmail.isFieldEnabled,
+                onValueChange = onEmailChanged
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                modifier = Modifier,
-                inputValue = "Test2",
-                placeholder = "test",
-                onValueChange = {})
+            UserPasswordInput(
+                inputValue = uiState.inputPassword.password,
+                inputEnabled = uiState.inputPassword.isFieldEnabled,
+                onValueChange = onPasswordChanged
+            )
             Spacer(modifier = Modifier.height(16.dp))
             AuthButton(
                 text = stringResource(id = R.string.enter),
@@ -114,22 +141,47 @@ private fun SignInScreen(onBackClick: () -> Unit) {
 }
 
 @Composable
-fun ColumnScope.UserInfoInput(
+private fun UserEmailInput(
     inputValue: String,
+    inputEnabled: Boolean,
     keyboardController: SoftwareKeyboardController? = null,
     onValueChange: (String) -> Unit,
-    onEnterClick: () -> Unit
-
 ) {
+    LoginTextField(
+        inputValue = inputValue,
+        isEnabled = inputEnabled,
+        placeholder = stringResource(id = R.string.enter_email_hint),
+        onValueChange = onValueChange,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        keyboardActions = KeyboardActions { keyboardController?.hide() }
+    )
+}
 
+@Composable
+private fun UserPasswordInput(
+    inputValue: String,
+    inputEnabled: Boolean,
+    keyboardController: SoftwareKeyboardController? = null,
+    onValueChange: (String) -> Unit,
+) {
+    LoginTextField(
+        inputValue = inputValue,
+        isEnabled = inputEnabled,
+        placeholder = stringResource(id = R.string.enter_password_hint),
+        onValueChange = onValueChange,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        keyboardActions = KeyboardActions { keyboardController?.hide() }
+    )
 }
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun SignInPreview() {
-    SignInScreen {
-
-    }
-
+    SignInScreen(
+        uiState = SignInUIState(),
+        onEmailChanged = {},
+        onPasswordChanged = {},
+        onBackClick = {}
+    )
 }

@@ -5,4 +5,6 @@
     <string name="signin">Керергә</string>
     <string name="back">Кире</string>
     <string name="enter">Керү</string>
+    <string name="enter_email_hint">электрон почта адресын кертегез</string>
+    <string name="enter_password_hint">Серсүз кертегез</string>
 </resources>

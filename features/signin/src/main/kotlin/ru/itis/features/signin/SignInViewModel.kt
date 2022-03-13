@@ -41,6 +41,29 @@ internal class SignInViewModel(
 
     }
 
+    fun onEmailChanged(email: String) {
+        _signInUIState.update {
+            it.copy(
+                inputEmail = SignInUIState.InputEmailField(
+                    email = email,
+                    isFieldEnabled = true
+                )
+            )
+        }
+
+    }
+
+    fun onPasswordChanged(password: String) {
+        _signInUIState.update {
+            it.copy(
+                inputPassword = SignInUIState.InputPasswordField(
+                    password = password,
+                    isFieldEnabled = true
+                )
+            )
+        }
+    }
+
     private fun signInState(signInState: SignInState) {
         when (signInState) {
             is SignInState.SignInStateNone -> {}
@@ -81,6 +104,9 @@ internal class SignInViewModel(
                     signInSuccess = false,
                     signInLoading = false,
                     signInError = true
+                ),
+                inputEmail = SignInUIState.InputEmailField(
+                    isFieldEnabled = true
                 )
             )
         }

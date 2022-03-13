@@ -21,7 +21,7 @@ import ru.itis.core.ui.theme.AppTheme
  */
 
 @Composable
-fun TextField(
+fun LoginTextField(
     modifier: Modifier = Modifier,
     inputValue: String,
     placeholder: String,
@@ -36,7 +36,7 @@ fun TextField(
 ) {
     TextField(
         modifier = modifier
-            .heightIn(min = 52.dp)
+            .heightIn(min = 46.dp)
             .fillMaxWidth(),
         value = inputValue,
         onValueChange = onValueChange,
@@ -50,10 +50,17 @@ fun TextField(
         keyboardActions = keyboardActions,
         singleLine = true,
         maxLines = 1,
+        placeholder = {
+            Text(
+                text = placeholder,
+                style = AppTheme.typography.textField,
+                color = AppTheme.colors.textLowEmphasis
+            )
+        },
         shape = RoundedCornerShape(3.dp),
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = backgroundColor,
-            textColor = AppTheme.colors.textLowEmphasis,
+            textColor = AppTheme.colors.textMediumEmphasis,
             errorCursorColor = Color.Transparent,
             leadingIconColor = Color.Transparent,
             trailingIconColor = Color.Transparent,
@@ -78,5 +85,5 @@ fun TextField(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun TextFieldPreview() {
-    TextField(inputValue = "Test input", placeholder = "Test", onValueChange = {})
+    LoginTextField(inputValue = "Test input", placeholder = "Test", onValueChange = {})
 }

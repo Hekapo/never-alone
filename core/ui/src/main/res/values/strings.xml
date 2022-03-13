@@ -5,4 +5,6 @@
     <string name="signin">Войти</string>
     <string name="back">Назад</string>
     <string name="enter">Вход</string>
+    <string name="enter_email_hint">Введите email</string>
+    <string name="enter_password_hint">Введите пароль</string>
 </resources>
