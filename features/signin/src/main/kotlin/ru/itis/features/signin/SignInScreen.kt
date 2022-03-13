@@ -65,6 +65,7 @@ fun SignInRoute(
         uiState = uiState,
         onEmailChanged = signInViewModel::onEmailChanged,
         onPasswordChanged = signInViewModel::onPasswordChanged,
+        onEnterClick = signInViewModel::onSignInClick,
         onBackClick = onBackClick
     )
 
@@ -75,6 +76,7 @@ private fun SignInScreen(
     uiState: SignInUIState,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
+    onEnterClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
 
@@ -132,11 +134,10 @@ private fun SignInScreen(
                 color = AppTheme.colors.backgroundOnSecondary,
                 style = AppTheme.typography.button
             ) {
-
+                onEnterClick()
             }
         }
     }
-
 
 }
 
@@ -182,6 +183,7 @@ fun SignInPreview() {
         uiState = SignInUIState(),
         onEmailChanged = {},
         onPasswordChanged = {},
+        onEnterClick = {},
         onBackClick = {}
     )
 }

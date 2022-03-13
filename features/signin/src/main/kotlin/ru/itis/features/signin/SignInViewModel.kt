@@ -25,7 +25,7 @@ internal class SignInViewModel(
         signInUseCase.signInState.onEach(this::signInState).launchIn(viewModelScope)
     }
 
-    private fun onSignInClick() {
+    fun onSignInClick() {
         _signInUIState.update {
             it.copy(
                 inputEmail = SignInUIState.InputEmailField(isFieldEnabled = false),
