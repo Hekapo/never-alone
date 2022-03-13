@@ -1,5 +1,6 @@
 package ru.itis.features.signin
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -26,18 +27,18 @@ internal class SignInViewModel(
     }
 
     fun onSignInClick() {
-        _signInUIState.update {
-            it.copy(
-                inputEmail = SignInUIState.InputEmailField(isFieldEnabled = false),
-                inputPassword = SignInUIState.InputPasswordField(isFieldEnabled = false)
-            )
-        }
-
         viewModelScope.launch(dispatchersProvider.IO) {
             val email = _signInUIState.value.inputEmail.email
             val password = _signInUIState.value.inputPassword.password
             signInUseCase.trySignIn(email, password)
         }
+
+//        _signInUIState.update {
+//            it.copy(
+//                inputEmail = SignInUIState.InputEmailField(isFieldEnabled = false),
+//                inputPassword = SignInUIState.InputPasswordField(isFieldEnabled = false)
+//            )
+//        }
 
     }
 
@@ -50,6 +51,7 @@ internal class SignInViewModel(
                 )
             )
         }
+        Log.e("TAG", _signInUIState.value.inputEmail.email)
 
     }
 
@@ -62,6 +64,8 @@ internal class SignInViewModel(
                 )
             )
         }
+        Log.e("TAG", _signInUIState.value.inputPassword.password)
+
     }
 
     private fun signInState(signInState: SignInState) {
