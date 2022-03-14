@@ -18,11 +18,13 @@ fun lightColors(
     successOnPrimary: Color = LightSuccess,
     bottomBarOnPrimary: Color = LightOnBackgroundBNV,
     textFieldOnPrimary: Color = LightOnBackgroundTF,
+    googleButton: Color = LightBackground,
+    googleButtonText: Color = LightTextMediumEmphasis,
     checkBoxOnPrimary: Color = LightOnBackgroundChB,
 ): AppColors = AppColors(
     statusBar = statusBar,
     backgroundPrimary = backgroundPrimary,
-    backgroundOnPrimary = buttonOnPrimary,
+    buttonOnPrimary = buttonOnPrimary,
     backgroundOnSecondary = backgroundOnSecondary,
     textHighEmphasis = textHighEmphasis,
     textMediumEmphasis = textMediumEmphasis,
@@ -32,5 +34,7 @@ fun lightColors(
     bottomBarOnPrimary = bottomBarOnPrimary,
     textFieldOnPrimary = textFieldOnPrimary,
     checkBoxOnPrimary = checkBoxOnPrimary,
-    isLight = true
+    googleButton = googleButton,
+    googleButtonText = googleButtonText,
+    isLight = true,
 )

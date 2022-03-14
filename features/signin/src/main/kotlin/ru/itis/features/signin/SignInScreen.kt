@@ -31,6 +31,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
+import ru.itis.core.ui.components.GoogleButton
 import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.theme.AppTheme
 
@@ -136,6 +137,11 @@ private fun SignInScreen(
             ) {
                 onEnterClick()
             }
+            Spacer(modifier = Modifier.height(24.dp))
+            GoogleButton {
+
+            }
+
         }
     }
 

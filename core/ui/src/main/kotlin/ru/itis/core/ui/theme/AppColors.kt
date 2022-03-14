@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 class AppColors(
     statusBar: Color,
     backgroundPrimary: Color,
-    backgroundOnPrimary: Color,
+    buttonOnPrimary: Color,
     backgroundOnSecondary: Color,
     textHighEmphasis: Color,
     textMediumEmphasis: Color,
@@ -22,6 +22,8 @@ class AppColors(
     bottomBarOnPrimary: Color,
     textFieldOnPrimary: Color,
     checkBoxOnPrimary: Color,
+    googleButton: Color,
+    googleButtonText: Color,
     isLight: Boolean
 ) {
 
@@ -31,7 +33,7 @@ class AppColors(
         private set
     var backgroundOnSecondary by mutableStateOf(backgroundOnSecondary)
         private set
-    var buttonOnPrimary by mutableStateOf(backgroundOnPrimary)
+    var buttonOnPrimary by mutableStateOf(buttonOnPrimary)
         private set
     var textHighEmphasis by mutableStateOf(textHighEmphasis)
         private set
@@ -49,6 +51,10 @@ class AppColors(
         private set
     var checkBoxOnPrimary by mutableStateOf(checkBoxOnPrimary)
         private set
+    var googleButton by mutableStateOf(googleButton)
+        private set
+    var googleButtonText by mutableStateOf(googleButtonText)
+        private set
     var isLight by mutableStateOf(isLight)
         internal set
 
@@ -65,22 +71,26 @@ class AppColors(
         bottomBarOnPrimary: Color = this.bottomBarOnPrimary,
         textFieldOnPrimary: Color = this.textFieldOnPrimary,
         checkBoxOnPrimary: Color = this.checkBoxOnPrimary,
+        googleButton: Color = this.googleButton,
+        googleButtonText: Color = this.googleButtonText,
         isLight: Boolean = this.isLight
 
     ): AppColors = AppColors(
-        statusBar,
-        backgroundPrimary,
-        backgroundOnSecondary,
-        buttonOnPrimary,
-        textHighEmphasis,
-        textMediumEmphasis,
-        textLowEmphasis,
-        errorOnPrimary,
-        successOnPrimary,
-        bottomBarOnPrimary,
-        textFieldOnPrimary,
-        checkBoxOnPrimary,
-        isLight
+        statusBar = statusBar,
+        backgroundPrimary = backgroundPrimary,
+        backgroundOnSecondary = backgroundOnSecondary,
+        buttonOnPrimary = buttonOnPrimary,
+        textHighEmphasis = textHighEmphasis,
+        textMediumEmphasis = textMediumEmphasis,
+        textLowEmphasis = textLowEmphasis,
+        errorOnPrimary = errorOnPrimary,
+        successOnPrimary = successOnPrimary,
+        bottomBarOnPrimary = bottomBarOnPrimary,
+        textFieldOnPrimary = textFieldOnPrimary,
+        checkBoxOnPrimary = checkBoxOnPrimary,
+        googleButton = googleButton,
+        googleButtonText = googleButtonText,
+        isLight = isLight,
     )
 
     fun updateColorsFrom(colors: AppColors) {
@@ -95,7 +105,10 @@ class AppColors(
         successOnPrimary = colors.successOnPrimary
         bottomBarOnPrimary = colors.bottomBarOnPrimary
         textFieldOnPrimary = colors.textFieldOnPrimary
+        googleButton = colors.googleButton
+        googleButtonText = colors.googleButtonText
         checkBoxOnPrimary = colors.checkBoxOnPrimary
 
     }
 }
+
