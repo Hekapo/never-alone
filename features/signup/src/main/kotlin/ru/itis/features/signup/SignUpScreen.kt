@@ -4,6 +4,7 @@ package ru.itis.features.signup
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,6 +22,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +43,8 @@ import ru.itis.core.ui.theme.AppTheme
 fun SignUpRoute(
     signUpDeps: SignUpDeps,
     onNextClick: () -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onTextSignInClick: () -> Unit
 ) {
 
     val signUpComponentViewModel = viewModel<SignUpComponentViewModel>(
@@ -63,7 +66,7 @@ fun SignUpRoute(
 
     SignUpScreen(
         uiState = uiState,
-        onTextSignInClick = {},
+        onTextSignInClick = onTextSignInClick,
         onNextClick = onNextClick,
         onBackClick = onBackClick,
         onEmailChange = signUpViewModel::onEmailChange
@@ -131,6 +134,32 @@ fun SignUpScreen(
                 onNextClick()
             }
         }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 16.dp)
+        ) {
+            Row {
+                Text(
+                    modifier = Modifier.padding(end = 4.dp),
+                    text = stringResource(id = R.string.have_an_account),
+                    color = AppTheme.colors.textMediumEmphasis,
+                    style = AppTheme.typography.textField
+                )
+                Text(
+                    modifier = Modifier.clickable(
+                        role = Role.Button,
+                        onClick = onTextSignInClick
+                    ),
+                    text = stringResource(id = R.string.signin),
+                    color = AppTheme.colors.textHighEmphasis,
+                    style = AppTheme.typography.textField
+                )
+
+            }
+        }
+
     }
 }
 

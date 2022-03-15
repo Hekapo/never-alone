@@ -12,4 +12,5 @@
     <string name="no_account">Don\'t have an account yet?</string>
     <string name="register">Register</string>
     <string name="next">Next</string>
+    <string name="have_an_account">Already have an account?</string>
 </resources>

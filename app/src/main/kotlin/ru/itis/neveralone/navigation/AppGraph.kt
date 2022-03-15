@@ -25,7 +25,11 @@ internal fun AppNavGraph(
     ) {
         composable(route = Destination.SplashDestination.key) {
             LoadingScreen {
-                navController.navigate(Destination.ChooseLoginMethod.key)
+                navController.navigate(Destination.ChooseLoginMethod.key) {
+                    popUpTo(Destination.SplashDestination.key) {
+                        inclusive = true
+                    }
+                }
             }
 
         }
@@ -46,7 +50,8 @@ internal fun AppNavGraph(
             SignUpRoute(
                 signUpDeps = appComponent,
                 onNextClick = { /*TODO*/ },
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onTextSignInClick = { navController.navigate(Destination.SignInDestination.key) }
             )
 
         }
