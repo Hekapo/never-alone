@@ -37,7 +37,9 @@ internal fun AppNavGraph(
         composable(route = Destination.SignInDestination.key) {
             SignInRoute(
                 signInDeps = appComponent,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                // TODO register screen route
+                onTextRegisterClick = { navController.navigate("") }
             )
         }
     }

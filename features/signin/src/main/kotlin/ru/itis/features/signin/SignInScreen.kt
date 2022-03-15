@@ -2,7 +2,10 @@
 
 package ru.itis.features.signin
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -22,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +46,8 @@ import ru.itis.core.ui.theme.AppTheme
 @Composable
 fun SignInRoute(
     signInDeps: SignInDeps,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onTextRegisterClick: () -> Unit
 ) {
 
     val signInComponentViewModel = viewModel<SignInComponentViewModel>(
@@ -67,7 +72,8 @@ fun SignInRoute(
         onEmailChanged = signInViewModel::onEmailChanged,
         onPasswordChanged = signInViewModel::onPasswordChanged,
         onEnterClick = signInViewModel::onSignInClick,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onTextRegisterClick = onTextRegisterClick
     )
 
 }
@@ -78,7 +84,8 @@ private fun SignInScreen(
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onEnterClick: () -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onTextRegisterClick: () -> Unit
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -178,6 +185,10 @@ private fun SignInScreen(
                     style = AppTheme.typography.textField
                 )
                 Text(
+                    modifier = Modifier.clickable(
+                        role = Role.Button,
+                        onClick = onTextRegisterClick
+                    ),
                     text = stringResource(id = R.string.register),
                     color = AppTheme.colors.textHighEmphasis,
                     style = AppTheme.typography.textField
@@ -228,7 +239,7 @@ private fun UserPasswordInput(
 }
 
 @Preview
-//@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun SignInPreview() {
     SignInScreen(
@@ -236,6 +247,7 @@ fun SignInPreview() {
         onEmailChanged = {},
         onPasswordChanged = {},
         onEnterClick = {},
-        onBackClick = {}
+        onBackClick = {},
+        onTextRegisterClick = {}
     )
 }
