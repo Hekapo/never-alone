@@ -1,12 +1,10 @@
 package ru.itis.features.signup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.ISignUpUseCase
 import ru.itis.core.domain.viewstates.SignUpState
@@ -35,6 +33,19 @@ internal class SignUpViewModel(
             is SignUpState.SignUpStateSuccess -> run {}
             is SignUpState.SignUpStateError -> run {}
         }
+
+    }
+
+    fun onEmailChange(email: String) {
+        _signUpUIState.update {
+            it.copy(
+                inputEmail = SignUpUIState.InputEmailField(
+                    email = email,
+                    isFieldEnabled = true
+                )
+            )
+        }
+        Log.e("TAG", _signUpUIState.value.inputEmail.email)
 
     }
 

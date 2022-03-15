@@ -53,6 +53,7 @@ fun SignUpRoute(
     )
 
     val uiState by signUpViewModel.signUpUIState.collectAsState()
+
     LaunchedEffect(uiState.signUpProcess.signUpSuccess) {
         if (uiState.signUpProcess.signUpSuccess) {
             delay(300)
@@ -61,17 +62,21 @@ fun SignUpRoute(
     }
 
     SignUpScreen(
+        uiState = uiState,
         onTextSignInClick = {},
         onNextClick = onNextClick,
         onBackClick = onBackClick,
+        onEmailChange = signUpViewModel::onEmailChange
     )
 }
 
 @Composable
 fun SignUpScreen(
+    uiState: SignUpUIState,
     onTextSignInClick: () -> Unit,
     onNextClick: () -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onEmailChange: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -110,9 +115,10 @@ fun SignUpScreen(
             )
             Spacer(modifier = Modifier.height(48.dp))
             LoginTextField(
-                inputValue = "",
+                inputValue = uiState.inputEmail.email,
+                onValueChange = onEmailChange,
+                isEnabled = uiState.inputEmail.isFieldEnabled,
                 placeholder = stringResource(id = R.string.enter_email_hint),
-                onValueChange = {},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 keyboardActions = KeyboardActions { keyboardController?.hide() }
             )
@@ -133,9 +139,11 @@ fun SignUpScreen(
 @Composable
 fun SignUpPreview() {
     SignUpScreen(
+        uiState = SignUpUIState(),
         onTextSignInClick = {},
         onNextClick = {},
-        onBackClick = {}
+        onBackClick = {},
+        onEmailChange = {}
     )
 
 }

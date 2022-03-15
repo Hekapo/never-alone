@@ -4,7 +4,7 @@ package ru.itis.features.signup
  * Copyright (c) 15.03.2022 Created by Iskandar
  */
 
-internal data class SignUpUIState(
+data class SignUpUIState(
     val inputEmail: InputEmailField = InputEmailField(),
     val signUpProcess: SignUpProcess = SignUpProcess(),
     val networkError: Boolean = false
