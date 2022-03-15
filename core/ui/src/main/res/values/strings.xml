@@ -11,4 +11,5 @@
     <string name="or">ИЛИ</string>
     <string name="no_account">У вас еще нет аккаунта?</string>
     <string name="register">Зарегистрироваться</string>
+    <string name="next">Далее</string>
 </resources>

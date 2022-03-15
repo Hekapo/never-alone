@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ru.itis.features.loginmethod.LoginMethodRoute
 import ru.itis.features.signin.SignInRoute
+import ru.itis.features.signup.SignUpRoute
 import ru.itis.features.splash.LoadingScreen
 import ru.itis.neveralone.di.AppComponent
 
@@ -38,10 +39,17 @@ internal fun AppNavGraph(
             SignInRoute(
                 signInDeps = appComponent,
                 onBackClick = { navController.popBackStack() },
-                // TODO register screen route
-                onTextRegisterClick = { navController.navigate("") }
+                onTextRegisterClick = { navController.navigate(Destination.SignUpDestination.key) }
             )
         }
+        composable(route = Destination.SignUpDestination.key) {
+            SignUpRoute(
+                onNextClick = { /*TODO*/ },
+                onBackClick = { navController.popBackStack() }
+            )
+
+        }
+
     }
 
 }
