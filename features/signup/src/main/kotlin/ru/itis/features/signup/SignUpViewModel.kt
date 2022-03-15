@@ -1,6 +1,8 @@
 package ru.itis.features.signup
 
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import ru.itis.core.dispathers.DispatchersProvider
 
 /**
@@ -11,4 +13,6 @@ import ru.itis.core.dispathers.DispatchersProvider
 internal class SignUpViewModel(
     private val dispatchersProvider: DispatchersProvider
 ) : ViewModel() {
+    private val _signUpUIState = MutableStateFlow(SignUpUIState())
+    val signUpUIState = _signUpUIState.asStateFlow()
 }
