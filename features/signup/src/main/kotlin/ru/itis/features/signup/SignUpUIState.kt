@@ -16,8 +16,8 @@ internal data class SignUpUIState(
     )
 
     data class SignUpProcess(
-        val signInSuccess: Boolean = false,
-        val signInLoading: Boolean = false,
-        val signInError: Boolean = false
+        val signUpSuccess: Boolean = false,
+        val signUpLoading: Boolean = false,
+        val signUpError: Boolean = false
     )
 }

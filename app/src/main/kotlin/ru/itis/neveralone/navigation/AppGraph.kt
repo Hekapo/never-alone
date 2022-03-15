@@ -44,6 +44,7 @@ internal fun AppNavGraph(
         }
         composable(route = Destination.SignUpDestination.key) {
             SignUpRoute(
+                signUpDeps = appComponent,
                 onNextClick = { /*TODO*/ },
                 onBackClick = { navController.popBackStack() }
             )

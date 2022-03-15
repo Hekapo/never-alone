@@ -13,6 +13,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -22,7 +25,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
+import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.components.LoginTextField
@@ -32,12 +37,28 @@ import ru.itis.core.ui.theme.AppTheme
  * Copyright (c) 15.03.2022 Created by Iskandar
  */
 
-
 @Composable
 fun SignUpRoute(
+    signUpDeps: SignUpDeps,
     onNextClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
+
+    val signUpComponentViewModel = viewModel<SignUpComponentViewModel>(
+        factory = SignUpComponentViewModelFactory(signUpDeps)
+    )
+
+    val signUpViewModel = viewModel<SignUpViewModel>(
+        factory = signUpComponentViewModel.signUpComponent.getViewModelFactory()
+    )
+
+    val uiState by signUpViewModel.signUpUIState.collectAsState()
+    LaunchedEffect(uiState.signUpProcess.signUpSuccess) {
+        if (uiState.signUpProcess.signUpSuccess) {
+            delay(300)
+            onBackClick()
+        }
+    }
 
     SignUpScreen(
         onTextSignInClick = {},

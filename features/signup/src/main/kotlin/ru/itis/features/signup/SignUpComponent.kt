@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Component
 import ru.itis.core.annotations.Feature
 import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.domain.usecase.ISignUpUseCase
 
 /**
  * Copyright (c) 15.03.2022 Created by Iskandar
@@ -12,6 +13,8 @@ import ru.itis.core.dispathers.DispatchersProvider
 
 @[Feature Component(dependencies = [SignUpDeps::class])]
 internal interface SignUpComponent {
+
+    fun getViewModelFactory(): SignUpViewModel.SignUpViewModelFactory
 
     @Component.Builder
     interface Builder {
@@ -24,6 +27,7 @@ internal interface SignUpComponent {
 
 interface SignUpDeps {
 
+    val singUpUseCase: ISignUpUseCase
     val dispatchersProvider: DispatchersProvider
 }
 

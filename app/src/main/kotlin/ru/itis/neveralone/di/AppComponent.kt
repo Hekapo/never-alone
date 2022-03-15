@@ -8,7 +8,9 @@ import ru.itis.core.data.di.RepositoryModule
 import ru.itis.core.di.CoroutineModule
 import ru.itis.core.domain.di.UseCaseModule
 import ru.itis.core.domain.usecase.ISignInUseCase
+import ru.itis.core.domain.usecase.ISignUpUseCase
 import ru.itis.features.signin.SignInDeps
+import ru.itis.features.signup.SignUpDeps
 import javax.inject.Singleton
 
 /**
@@ -22,9 +24,10 @@ import javax.inject.Singleton
         CoroutineModule::class,
         NetworkModule::class]
 )]
-interface AppComponent : SignInDeps {
+interface AppComponent : SignInDeps, SignUpDeps {
 
     override val sigInUseCase: ISignInUseCase
+    override val singUpUseCase: ISignUpUseCase
 
     @Component.Builder
     interface Builder {
