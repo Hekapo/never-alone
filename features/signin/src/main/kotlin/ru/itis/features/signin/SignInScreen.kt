@@ -2,11 +2,11 @@
 
 package ru.itis.features.signin
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -137,11 +137,53 @@ private fun SignInScreen(
             ) {
                 onEnterClick()
             }
-            Spacer(modifier = Modifier.height(24.dp))
-            GoogleButton {
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Divider(
+                    color = AppTheme.colors.textLowEmphasis,
+                    thickness = 1.dp,
+                    modifier = Modifier.weight(1f, fill = false)
+                )
+                Text(
+                    modifier = Modifier.padding(4.dp),
+                    text = stringResource(id = R.string.or),
+                    color = AppTheme.colors.textLowEmphasis,
+                    style = AppTheme.typography.text
+                )
+                Divider(
+                    color = AppTheme.colors.textLowEmphasis,
+                    thickness = 1.dp,
+                    modifier = Modifier.weight(1f, fill = false)
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            GoogleButton(text = stringResource(id = R.string.signin_with_google)) {
 
             }
 
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 16.dp)
+        ) {
+            Row {
+                Text(
+                    modifier = Modifier.padding(end = 4.dp),
+                    text = stringResource(id = R.string.no_account),
+                    color = AppTheme.colors.textMediumEmphasis,
+                    style = AppTheme.typography.textField
+                )
+                Text(
+                    text = stringResource(id = R.string.register),
+                    color = AppTheme.colors.textHighEmphasis,
+                    style = AppTheme.typography.textField
+                )
+
+            }
         }
     }
 
@@ -149,12 +191,14 @@ private fun SignInScreen(
 
 @Composable
 private fun UserEmailInput(
+    modifier: Modifier = Modifier,
     inputValue: String,
     inputEnabled: Boolean,
     keyboardController: SoftwareKeyboardController? = null,
     onValueChange: (String) -> Unit,
 ) {
     LoginTextField(
+        modifier = modifier,
         inputValue = inputValue,
         isEnabled = inputEnabled,
         placeholder = stringResource(id = R.string.enter_email_hint),
@@ -166,12 +210,14 @@ private fun UserEmailInput(
 
 @Composable
 private fun UserPasswordInput(
+    modifier: Modifier = Modifier,
     inputValue: String,
     inputEnabled: Boolean,
     keyboardController: SoftwareKeyboardController? = null,
     onValueChange: (String) -> Unit,
 ) {
     LoginTextField(
+        modifier = modifier,
         inputValue = inputValue,
         isEnabled = inputEnabled,
         placeholder = stringResource(id = R.string.enter_password_hint),
@@ -182,7 +228,7 @@ private fun UserPasswordInput(
 }
 
 @Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
+//@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun SignInPreview() {
     SignInScreen(

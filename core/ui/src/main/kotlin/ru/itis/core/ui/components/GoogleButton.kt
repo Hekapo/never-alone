@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.Surface
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -92,7 +91,8 @@ fun GoogleButton(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 text = if (clicked) loadingText else text,
-                color = AppTheme.colors.googleButtonText
+                color = AppTheme.colors.googleButtonText,
+                style = AppTheme.typography.button
             )
             if (clicked) {
 //                TODO progress indicator not working

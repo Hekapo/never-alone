@@ -7,4 +7,8 @@
     <string name="enter">Login</string>
     <string name="enter_email_hint">Enter email</string>
     <string name="enter_password_hint">Enter password</string>
+    <string name="signin_with_google">Sign in with Google</string>
+    <string name="or">OR</string>
+    <string name="no_account">Don\'t have an account yet?</string>
+    <string name="register">Register</string>
 </resources>
