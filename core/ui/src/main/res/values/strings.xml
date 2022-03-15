@@ -5,4 +5,10 @@
     <string name="signin">Войти</string>
     <string name="back">Назад</string>
     <string name="enter">Вход</string>
+    <string name="enter_email_hint">Введите email</string>
+    <string name="enter_password_hint">Введите пароль</string>
+    <string name="signin_with_google">Войти через Google</string>
+    <string name="or">ИЛИ</string>
+    <string name="no_account">У вас еще нет аккаунта?</string>
+    <string name="register">Зарегистрироваться</string>
 </resources>

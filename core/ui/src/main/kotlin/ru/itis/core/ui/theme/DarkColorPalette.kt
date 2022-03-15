@@ -18,12 +18,14 @@ fun darkColors(
     successOnPrimary: Color = LightSuccess,
     bottomBarOnPrimary: Color = DarkOnBackgroundBNV,
     textFieldOnPrimary: Color = DarkOnBackgroundTF,
+    googleButton: Color = DarkOnBackgroundBTN,
+    googleButtonText: Color = DarkOnSecondary,
     checkBoxOnPrimary: Color = DarkOnBackgroundChB,
 ): AppColors = AppColors(
     statusBar = statusBar,
     backgroundPrimary = backgroundPrimary,
     backgroundOnSecondary = backgroundOnSecondary,
-    backgroundOnPrimary = buttonOnPrimary,
+    buttonOnPrimary = buttonOnPrimary,
     textHighEmphasis = textHighEmphasis,
     textMediumEmphasis = textMediumEmphasis,
     textLowEmphasis = textLowEmphasis,
@@ -32,5 +34,7 @@ fun darkColors(
     bottomBarOnPrimary = bottomBarOnPrimary,
     textFieldOnPrimary = textFieldOnPrimary,
     checkBoxOnPrimary = checkBoxOnPrimary,
+    googleButton = googleButton,
+    googleButtonText = googleButtonText,
     isLight = true
 )

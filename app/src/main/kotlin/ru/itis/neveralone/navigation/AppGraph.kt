@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import ru.itis.features.loginmethod.LoginMethodRoute
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.splash.LoadingScreen
+import ru.itis.neveralone.di.AppComponent
 
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
@@ -14,7 +15,8 @@ import ru.itis.features.splash.LoadingScreen
 
 @Composable
 internal fun AppNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    appComponent: AppComponent
 ) {
     NavHost(
         navController = navController,
@@ -33,9 +35,12 @@ internal fun AppNavGraph(
             )
         }
         composable(route = Destination.SignInDestination.key) {
-            SignInRoute {
-                navController.popBackStack()
-            }
+            SignInRoute(
+                signInDeps = appComponent,
+                onBackClick = { navController.popBackStack() },
+                // TODO register screen route
+                onTextRegisterClick = { navController.navigate("") }
+            )
         }
     }
 

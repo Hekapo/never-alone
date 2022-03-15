@@ -28,10 +28,13 @@ fun AuthButton(
     onClick: () -> Unit
 ) {
     Button(
-        modifier = modifier.fillMaxWidth().height(46.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(46.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = AppTheme.colors.buttonOnPrimary
         ),
+        elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
         onClick = { onClick() }
     ) {
         Text(
