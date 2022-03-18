@@ -40,6 +40,9 @@ dependencies {
 
     api(libs.bundles.google.accompanist)
 
+    api(libs.junit4)
+    api(libs.bundles.androidx.test.espresso)
+
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)
 }

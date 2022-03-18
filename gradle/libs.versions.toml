@@ -122,7 +122,8 @@ androidx-compose = [
     "androidx-compose-runtime",
     "androidx-compose-animations",
     "androidx-compose-navigation",
-    "androidx-compose-constraintlayout"
+    "androidx-compose-constraintlayout",
+    "androidx-compose-ui-test-junit4"
 ]
 
 google-accompanist = [
