@@ -35,6 +35,7 @@ fun AppTheme(
     }
 }
 
+@Immutable
 object AppTheme {
     val colors: AppColors
         @Composable
