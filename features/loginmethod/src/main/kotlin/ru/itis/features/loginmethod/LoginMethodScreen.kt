@@ -38,7 +38,7 @@ private fun LoginMethodScreen(onSignInScreen: () -> Unit, onSignUpScreen: () -> 
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.app_name),
-            style = AppTheme.typography.title1,
+            style = AppTheme.typography.text36R,
             textAlign = TextAlign.Center,
             color = AppTheme.colors.textHighEmphasis
         )
@@ -46,7 +46,7 @@ private fun LoginMethodScreen(onSignInScreen: () -> Unit, onSignUpScreen: () -> 
         AuthButton(
             text = stringResource(id = R.string.create_account),
             color = AppTheme.colors.backgroundOnSecondary,
-            style = AppTheme.typography.button
+            style = AppTheme.typography.text14M
         ) {
             onSignUpScreen()
         }
@@ -54,7 +54,7 @@ private fun LoginMethodScreen(onSignInScreen: () -> Unit, onSignUpScreen: () -> 
         AuthButton(
             text = stringResource(id = R.string.signin),
             color = AppTheme.colors.backgroundOnSecondary,
-            style = AppTheme.typography.button
+            style = AppTheme.typography.text14M
         ) {
             onSignInScreen()
         }

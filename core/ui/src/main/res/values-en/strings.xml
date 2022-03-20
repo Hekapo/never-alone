@@ -13,4 +13,7 @@
     <string name="register">Register</string>
     <string name="next">Next</string>
     <string name="have_an_account">Already have an account?</string>
+    <string name="phone">PHONE</string>
+    <string name="email">EMAIL</string>
+    <string name="enter_phone_hint">Phone</string>
 </resources>

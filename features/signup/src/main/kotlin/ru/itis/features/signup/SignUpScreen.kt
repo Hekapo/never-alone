@@ -1,16 +1,13 @@
-@file:OptIn(ExperimentalComposeUiApi::class)
+@file:OptIn(ExperimentalComposeUiApi::class, ExperimentalPagerApi::class)
 
 package ru.itis.features.signup
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -23,17 +20,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.pager.*
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
-import ru.itis.core.ui.components.AuthButton
-import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.theme.AppTheme
+import ru.itis.features.signup.email.EmailRoute
+import ru.itis.features.signup.phone.PhoneRoute
+import ru.itis.features.signup.utils.Constants.PAGE_COUNT
+import ru.itis.features.signup.utils.Constants.PAGE_EMAIL
+import ru.itis.features.signup.utils.Constants.PAGE_PHONE
 
 /**
  * Copyright (c) 15.03.2022 Created by Iskandar
@@ -41,14 +41,15 @@ import ru.itis.core.ui.theme.AppTheme
 
 @Composable
 fun SignUpRoute(
-    signUpDeps: SignUpDeps,
-    onNextClick: () -> Unit,
+    deps: SignUpDeps,
+    onNextWithEmailClick: () -> Unit,
+    onNextWithPhoneClick: () -> Unit,
     onBackClick: () -> Unit,
     onTextSignInClick: () -> Unit
 ) {
 
     val signUpComponentViewModel = viewModel<SignUpComponentViewModel>(
-        factory = SignUpComponentViewModelFactory(signUpDeps)
+        factory = SignUpComponentViewModelFactory(deps)
     )
 
     val signUpViewModel = viewModel<SignUpViewModel>(
@@ -67,21 +68,44 @@ fun SignUpRoute(
     SignUpScreen(
         uiState = uiState,
         onTextSignInClick = onTextSignInClick,
-        onNextClick = onNextClick,
         onBackClick = onBackClick,
-        onEmailChange = signUpViewModel::onEmailChange
+        onTabSelected = signUpViewModel::onTabSelected,
+        onPhoneRoute = {
+            PhoneRoute(
+                uiState = uiState,
+                onNextClick = onNextWithPhoneClick,
+                onPhoneChange = signUpViewModel::onPhoneChange
+            )
+        },
+        onEmailRoute = {
+            EmailRoute(
+                uiState = uiState,
+                onNextClick = onNextWithEmailClick,
+                onEmailChange = signUpViewModel::onEmailChange
+            )
+        }
     )
 }
 
 @Composable
-fun SignUpScreen(
+private fun SignUpScreen(
     uiState: SignUpUIState,
     onTextSignInClick: () -> Unit,
-    onNextClick: () -> Unit,
     onBackClick: () -> Unit,
-    onEmailChange: (String) -> Unit
+    onTabSelected: (Int) -> Unit,
+    onPhoneRoute: @Composable () -> Unit,
+    onEmailRoute: @Composable () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    val pagerState = rememberPagerState(initialPage = uiState.activeTab)
+    LaunchedEffect(key1 = uiState.activeTab) {
+        pagerState.animateScrollToPage(uiState.activeTab)
+    }
+
+    BackHandler(enabled = uiState.activeTab != PAGE_PHONE) {
+        onTabSelected(PAGE_PHONE)
+    }
 
     Box(
         modifier = Modifier
@@ -112,27 +136,21 @@ fun SignUpScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.app_name),
-                style = AppTheme.typography.title1,
+                style = AppTheme.typography.text36R,
                 textAlign = TextAlign.Center,
                 color = AppTheme.colors.textHighEmphasis
             )
-            Spacer(modifier = Modifier.height(48.dp))
-            LoginTextField(
-                inputValue = uiState.inputEmail.email,
-                onValueChange = onEmailChange,
-                isEnabled = uiState.inputEmail.isFieldEnabled,
-                placeholder = stringResource(id = R.string.enter_email_hint),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                keyboardActions = KeyboardActions { keyboardController?.hide() }
+            Spacer(modifier = Modifier.height(24.dp))
+            Tabs(
+                modifier = Modifier.fillMaxWidth(),
+                pagerState = pagerState,
+                onTabClicked = onTabSelected
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            AuthButton(
-                text = stringResource(id = R.string.next),
-                color = AppTheme.colors.backgroundOnSecondary,
-                style = AppTheme.typography.button
-            ) {
-                onNextClick()
-            }
+            SignUpMethodPager(
+                pagerState = pagerState,
+                onPhoneRoute = onPhoneRoute,
+                onEmailRoute = onEmailRoute
+            )
         }
 
         Box(
@@ -145,7 +163,7 @@ fun SignUpScreen(
                     modifier = Modifier.padding(end = 4.dp),
                     text = stringResource(id = R.string.have_an_account),
                     color = AppTheme.colors.textMediumEmphasis,
-                    style = AppTheme.typography.textField
+                    style = AppTheme.typography.text14M
                 )
                 Text(
                     modifier = Modifier.clickable(
@@ -154,12 +172,85 @@ fun SignUpScreen(
                     ),
                     text = stringResource(id = R.string.signin),
                     color = AppTheme.colors.textHighEmphasis,
-                    style = AppTheme.typography.textField
+                    style = AppTheme.typography.text14M
                 )
 
             }
         }
 
+    }
+}
+
+@Composable
+private fun Tabs(
+    modifier: Modifier = Modifier,
+    pagerState: PagerState,
+    onTabClicked: (Int) -> Unit
+) {
+    TabRow(
+        modifier = modifier,
+        backgroundColor = AppTheme.colors.backgroundPrimary,
+        selectedTabIndex = pagerState.currentPage,
+        indicator = { tabPositions ->
+            TabRowDefaults.Indicator(
+                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+            )
+        }
+    ) {
+        repeat(PAGE_COUNT) { index ->
+            when (index) {
+                PAGE_PHONE -> {
+                    Tab(
+                        text = {
+                            Text(
+                                text = stringResource(R.string.phone),
+                                style = AppTheme.typography.text14R,
+                                color = AppTheme.colors.textLowEmphasis
+                            )
+                        },
+                        selected = pagerState.currentPage == index,
+                        selectedContentColor = AppTheme.colors.textHighEmphasis,
+                        onClick = { onTabClicked(PAGE_PHONE) },
+                    )
+                }
+                PAGE_EMAIL -> {
+                    Tab(
+                        text = {
+                            Text(
+                                text = stringResource(R.string.email),
+                                style = AppTheme.typography.text14R,
+                                color = AppTheme.colors.textLowEmphasis
+                            )
+                        },
+                        selected = pagerState.currentPage == index,
+                        selectedContentColor = AppTheme.colors.textHighEmphasis,
+                        onClick = { onTabClicked(PAGE_EMAIL) },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SignUpMethodPager(
+    pagerState: PagerState,
+    onPhoneRoute: @Composable () -> Unit,
+    onEmailRoute: @Composable () -> Unit
+) {
+    HorizontalPager(
+        count = PAGE_COUNT,
+        state = pagerState,
+        itemSpacing = 8.dp
+    ) { page ->
+        when (page) {
+            PAGE_PHONE -> {
+                onPhoneRoute()
+            }
+            PAGE_EMAIL -> {
+                onEmailRoute()
+            }
+        }
     }
 }
 
@@ -170,9 +261,9 @@ fun SignUpPreview() {
     SignUpScreen(
         uiState = SignUpUIState(),
         onTextSignInClick = {},
-        onNextClick = {},
         onBackClick = {},
-        onEmailChange = {}
+        onTabSelected = {},
+        onEmailRoute = {},
+        onPhoneRoute = {}
     )
-
 }

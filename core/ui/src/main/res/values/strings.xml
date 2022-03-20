@@ -13,4 +13,7 @@
     <string name="register">Зарегистрироваться</string>
     <string name="next">Далее</string>
     <string name="have_an_account">Уже есть аккаунт?</string>
+    <string name="phone">ТЕЛЕФОН</string>
+    <string name="email">EMAIL</string>
+    <string name="enter_phone_hint">Телефон</string>
 </resources>

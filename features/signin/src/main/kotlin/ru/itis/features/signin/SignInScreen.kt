@@ -5,7 +5,6 @@ package ru.itis.features.signin
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -120,7 +119,7 @@ private fun SignInScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.app_name),
-                style = AppTheme.typography.title1,
+                style = AppTheme.typography.text36R,
                 textAlign = TextAlign.Center,
                 color = AppTheme.colors.textHighEmphasis
             )
@@ -140,7 +139,7 @@ private fun SignInScreen(
             AuthButton(
                 text = stringResource(id = R.string.enter),
                 color = AppTheme.colors.backgroundOnSecondary,
-                style = AppTheme.typography.button
+                style = AppTheme.typography.text14M
             ) {
                 onEnterClick()
             }
@@ -157,7 +156,7 @@ private fun SignInScreen(
                     modifier = Modifier.padding(4.dp),
                     text = stringResource(id = R.string.or),
                     color = AppTheme.colors.textLowEmphasis,
-                    style = AppTheme.typography.text
+                    style = AppTheme.typography.text12R
                 )
                 Divider(
                     color = AppTheme.colors.textLowEmphasis,
@@ -182,7 +181,7 @@ private fun SignInScreen(
                     modifier = Modifier.padding(end = 4.dp),
                     text = stringResource(id = R.string.no_account),
                     color = AppTheme.colors.textMediumEmphasis,
-                    style = AppTheme.typography.textField
+                    style = AppTheme.typography.text14M
                 )
                 Text(
                     modifier = Modifier.clickable(
@@ -191,7 +190,7 @@ private fun SignInScreen(
                     ),
                     text = stringResource(id = R.string.register),
                     color = AppTheme.colors.textHighEmphasis,
-                    style = AppTheme.typography.textField
+                    style = AppTheme.typography.text14M
                 )
 
             }

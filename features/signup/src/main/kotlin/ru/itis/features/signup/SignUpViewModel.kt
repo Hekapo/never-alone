@@ -26,6 +26,8 @@ internal class SignUpViewModel(
         signUpUseCase.signUpState.onEach(this::signUpState).launchIn(viewModelScope)
     }
 
+    fun onTabSelected(tabIndex: Int) = _signUpUIState.update { it.copy(activeTab = tabIndex) }
+
     private fun signUpState(signUpState: SignUpState) {
         when (signUpState) {
             is SignUpState.SignUpStateNone -> run {}
@@ -34,6 +36,12 @@ internal class SignUpViewModel(
             is SignUpState.SignUpStateError -> run {}
         }
 
+    }
+
+    fun onPhoneChange(phone: String) {
+        _signUpUIState.update {
+            it.copy(inputPhone = SignUpUIState.InputPhoneField(phone = phone))
+        }
     }
 
     fun onEmailChange(email: String) {

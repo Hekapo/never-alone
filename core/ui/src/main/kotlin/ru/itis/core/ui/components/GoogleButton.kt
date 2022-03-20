@@ -92,7 +92,7 @@ fun GoogleButton(
                 textAlign = TextAlign.Center,
                 text = if (clicked) loadingText else text,
                 color = AppTheme.colors.googleButtonText,
-                style = AppTheme.typography.button
+                style = AppTheme.typography.text14M
             )
             if (clicked) {
 //                TODO progress indicator not working

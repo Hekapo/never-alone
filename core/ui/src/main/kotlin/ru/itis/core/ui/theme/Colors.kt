@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
  */
 
 internal val LightBackground = Color(color = 0xFFFFFFFF)
-internal val LightOnBackgroundBTN = Color(color = 0xFF6200EE)
+internal val LightOnBackgroundBTN = Color(color = 0xFF515FE1)
 internal val LightOnBackgroundTF = Color(color = 0xFFE7E0EC)
 internal val LightOnBackgroundChB = Color(color = 0xFF0A7AFF)
 internal val LightOnBackgroundBNV = Color(color = 0xFFF1F5FB)

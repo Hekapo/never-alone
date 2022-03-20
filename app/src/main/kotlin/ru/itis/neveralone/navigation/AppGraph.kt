@@ -48,8 +48,9 @@ internal fun AppNavGraph(
         }
         composable(route = Destination.SignUpDestination.key) {
             SignUpRoute(
-                signUpDeps = appComponent,
-                onNextClick = { /*TODO*/ },
+                deps = appComponent,
+                onNextWithEmailClick = { /*TODO*/ },
+                onNextWithPhoneClick = { /*TODO*/ },
                 onBackClick = { navController.popBackStack() },
                 onTextSignInClick = { navController.navigate(Destination.SignInDestination.key) }
             )

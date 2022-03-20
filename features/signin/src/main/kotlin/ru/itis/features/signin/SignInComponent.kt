@@ -3,7 +3,7 @@ package ru.itis.features.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
-import ru.itis.core.annotations.Feature
+import ru.itis.core.annotations.FeatureScope
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.ISignInUseCase
 
@@ -12,7 +12,7 @@ import ru.itis.core.domain.usecase.ISignInUseCase
  * Created by Iskandar on 11.03.2022.
  */
 
-@[Feature Component(dependencies = [SignInDeps::class])]
+@[FeatureScope Component(dependencies = [SignInDeps::class])]
 internal interface SignInComponent {
 
     fun getViewModelFactory(): SignInViewModel.SignInViewModelFactory

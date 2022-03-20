@@ -13,4 +13,7 @@
     <string name="register">ss</string>
     <string name="next">Алга таба</string>
     <string name="have_an_account">Хисап язмасы бар?</string>
+    <string name="phone">ТЕЛЕФОН</string>
+    <string name="email">EMAIL</string>
+    <string name="enter_phone_hint">Телефон</string>
 </resources>

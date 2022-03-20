@@ -3,7 +3,7 @@ package ru.itis.features.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
-import ru.itis.core.annotations.Feature
+import ru.itis.core.annotations.FeatureScope
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.ISignUpUseCase
 
@@ -11,7 +11,7 @@ import ru.itis.core.domain.usecase.ISignUpUseCase
  * Copyright (c) 15.03.2022 Created by Iskandar
  */
 
-@[Feature Component(dependencies = [SignUpDeps::class])]
+@[FeatureScope Component(dependencies = [SignUpDeps::class])]
 internal interface SignUpComponent {
 
     fun getViewModelFactory(): SignUpViewModel.SignUpViewModelFactory

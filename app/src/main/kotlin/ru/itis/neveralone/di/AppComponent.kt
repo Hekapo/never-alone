@@ -6,6 +6,7 @@ import dagger.Component
 import ru.itis.core.data.di.NetworkModule
 import ru.itis.core.data.di.RepositoryModule
 import ru.itis.core.di.CoroutineModule
+import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.di.UseCaseModule
 import ru.itis.core.domain.usecase.ISignInUseCase
 import ru.itis.core.domain.usecase.ISignUpUseCase
