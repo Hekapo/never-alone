@@ -67,10 +67,10 @@ android {
 dependencies {
     implementation(libs.androidx.core)
 
-    api(project(":core"))
-    api(project(":core:ui"))
-    api(project(":core:domain"))
-    api(project(":core:data"))
+    implementation(project(":core"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
     implementation(project(":features:splash"))
     implementation(project(":features:loginmethod"))
     implementation(project(":features:signin"))

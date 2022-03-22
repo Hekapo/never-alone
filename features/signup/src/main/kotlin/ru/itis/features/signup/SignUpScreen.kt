@@ -3,7 +3,9 @@
 package ru.itis.features.signup
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -29,7 +32,6 @@ import com.google.accompanist.pager.*
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.theme.AppTheme
-import ru.itis.features.signup.email.EmailRoute
 import ru.itis.features.signup.phone.PhoneRoute
 import ru.itis.features.signup.utils.Constants.PAGE_COUNT
 import ru.itis.features.signup.utils.Constants.PAGE_EMAIL
@@ -58,6 +60,8 @@ fun SignUpRoute(
 
     val uiState by signUpViewModel.signUpUIState.collectAsState()
 
+    val context = LocalContext.current
+
     LaunchedEffect(uiState.signUpProcess.signUpSuccess) {
         if (uiState.signUpProcess.signUpSuccess) {
             delay(300)
@@ -73,7 +77,7 @@ fun SignUpRoute(
         onPhoneRoute = {
             PhoneRoute(
                 uiState = uiState,
-                onNextClick = onNextWithPhoneClick,
+                onNextClick = { signUpViewModel.onSendCodeClick(context as ComponentActivity) },
                 onPhoneChange = signUpViewModel::onPhoneChange
             )
         },
@@ -99,6 +103,7 @@ private fun SignUpScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     val pagerState = rememberPagerState(initialPage = uiState.activeTab)
+
     LaunchedEffect(key1 = uiState.activeTab) {
         pagerState.animateScrollToPage(uiState.activeTab)
     }
@@ -209,7 +214,6 @@ private fun Tabs(
                             )
                         },
                         selected = pagerState.currentPage == index,
-                        selectedContentColor = AppTheme.colors.textHighEmphasis,
                         onClick = { onTabClicked(PAGE_PHONE) },
                     )
                 }
@@ -223,7 +227,6 @@ private fun Tabs(
                             )
                         },
                         selected = pagerState.currentPage == index,
-                        selectedContentColor = AppTheme.colors.textHighEmphasis,
                         onClick = { onTabClicked(PAGE_EMAIL) },
                     )
                 }
