@@ -1,6 +1,7 @@
 package ru.itis.core.domain.usecase
 
 import android.app.Activity
+import dagger.Reusable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import ru.itis.core.domain.repository.IPhoneSignUpRepository

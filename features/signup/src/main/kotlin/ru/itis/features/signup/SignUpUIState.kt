@@ -11,7 +11,8 @@ data class SignUpUIState(
     val inputPhone: InputPhoneField = InputPhoneField(),
     val signUpProcess: SignUpProcess = SignUpProcess(),
     val activeTab: Int = PAGE_PHONE,
-    val networkError: Boolean = false
+    val networkError: Boolean = false,
+    val isLoading: Boolean = false
 ) {
 
     data class InputEmailField(

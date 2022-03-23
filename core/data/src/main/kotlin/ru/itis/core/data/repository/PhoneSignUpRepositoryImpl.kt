@@ -49,7 +49,7 @@ internal class PhoneSignUpRepositoryImpl @Inject constructor(
                 override fun onVerificationCompleted(authCredential: PhoneAuthCredential) {
                     signUpWithPhoneProcessState.value = PhoneSignUpState.InProcess
                     firebaseAuth.signInWithCredential(authCredential)
-                        .addOnCompleteListener {
+                        .addOnSuccessListener {
                             signUpWithPhoneProcessState.value = PhoneSignUpState.Success
                         }
                         .addOnFailureListener {

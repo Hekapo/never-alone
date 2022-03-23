@@ -5,7 +5,6 @@ package ru.itis.features.signup
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

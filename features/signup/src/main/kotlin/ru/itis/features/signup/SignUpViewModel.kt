@@ -32,8 +32,8 @@ internal class SignUpViewModel(
     private fun signUpState(phoneSignUpState: PhoneSignUpState) {
         when (phoneSignUpState) {
             is PhoneSignUpState.None -> run {}
-            is PhoneSignUpState.InProcess -> run {}
-            is PhoneSignUpState.CodeSent -> run {}
+            is PhoneSignUpState.InProcess -> run { inProcess() }
+            is PhoneSignUpState.CodeSent -> run { codeSent() }
             is PhoneSignUpState.Success -> run {}
             is PhoneSignUpState.Error -> run {}
             is PhoneSignUpState.InvalidCredential -> run {}
@@ -49,7 +49,7 @@ internal class SignUpViewModel(
         viewModelScope.launch(dispatchersProvider.IO) {
             val phone = _signUpUIState.value.inputPhone.phone
             phoneSignUpUseCase.trySignUpWithPhone(activity, phone)
-            phoneSignUpUseCase.verifyPhoneNumberWithCode()
+//            phoneSignUpUseCase.verifyPhoneNumberWithCode("")
         }
 
     }
@@ -72,6 +72,22 @@ internal class SignUpViewModel(
         Log.e("TAG", _signUpUIState.value.inputEmail.email)
 
     }
+
+    private fun inProcess() {
+        _signUpUIState.update {
+            it.copy(
+                inputPhone = SignUpUIState.InputPhoneField(isFieldEnabled = false),
+                isLoading = true
+            )
+        }
+    }
+
+    private fun codeSent() {
+        _signUpUIState.update {
+            it.copy(isLoading = false)
+        }
+    }
+
 
     class SignUpViewModelFactory @Inject constructor(
         private val signUpUseCase: IPhoneSignUpUseCase,

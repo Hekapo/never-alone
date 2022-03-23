@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":features:signup:viaEmail"))
+    implementation(project(":core:ui"))
 
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)
