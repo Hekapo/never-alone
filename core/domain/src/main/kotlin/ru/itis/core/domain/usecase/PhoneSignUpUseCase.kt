@@ -17,8 +17,10 @@ interface IPhoneSignUpUseCase {
     val phoneSignUpState: Flow<PhoneSignUpState>
     suspend fun trySignUpWithPhone(activity: Activity, phone: String)
     suspend fun verifyPhoneNumberWithCode(code: String)
+    suspend fun resendCode(activity: Activity, phoneNumber: String)
 }
 
+@Reusable
 internal class PhoneSignUpUseCase @Inject constructor(
     private val iSignUpRepository: IPhoneSignUpRepository
 ) : IPhoneSignUpUseCase {
@@ -32,5 +34,9 @@ internal class PhoneSignUpUseCase @Inject constructor(
 
     override suspend fun verifyPhoneNumberWithCode(code: String) {
         iSignUpRepository.verifyPhoneNumberWithCode(code)
+    }
+
+    override suspend fun resendCode(activity: Activity, phoneNumber: String) {
+        iSignUpRepository.resendCode(activity, phoneNumber)
     }
 }

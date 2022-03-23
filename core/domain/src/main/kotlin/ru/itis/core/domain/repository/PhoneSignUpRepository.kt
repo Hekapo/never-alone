@@ -12,4 +12,5 @@ interface IPhoneSignUpRepository {
     val phoneSignUpProcess: Flow<PhoneSignUpState>
     suspend fun trySignUpWithPhone(activity: Activity, phone: String)
     suspend fun verifyPhoneNumberWithCode(code: String)
+    suspend fun resendCode(activity: Activity, phoneNumber: String)
 }

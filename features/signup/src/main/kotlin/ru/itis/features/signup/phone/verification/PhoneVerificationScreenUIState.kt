@@ -1,10 +1,10 @@
-package ru.itis.features.signup.phone
+package ru.itis.features.signup.phone.verification
 
 /**
  * Created by Iskandar on 23.03.2022.
  */
 
-data class PhoneScreenUIState(
+data class PhoneVerificationScreenUIState(
     val requestNewCode: NewCode = NewCode(),
     val inputCode: InputCode = InputCode(),
 ) {

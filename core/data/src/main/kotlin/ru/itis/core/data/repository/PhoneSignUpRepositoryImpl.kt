@@ -93,4 +93,16 @@ internal class PhoneSignUpRepositoryImpl @Inject constructor(
         verificationStateChangedCallbacks.onVerificationCompleted(credential)
 
     }
+
+    override suspend fun resendCode(activity: Activity, phoneNumber: String) {
+        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
+            .setPhoneNumber(phoneNumber)
+            .setTimeout(Constants.AUTH_TIME_OUT, TimeUnit.SECONDS)
+            .setActivity(activity)
+            .setCallbacks(verificationStateChangedCallbacks)
+            .setForceResendingToken(resendToken)
+            .build()
+
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
 }
