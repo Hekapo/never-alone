@@ -1,6 +1,7 @@
 package ru.itis.core.data.repository
 
 import android.app.Activity
+import android.util.Log
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -41,20 +42,26 @@ internal class PhoneSignUpRepositoryImpl @Inject constructor(
                     verificationId: String,
                     token: PhoneAuthProvider.ForceResendingToken
                 ) {
+                    super.onCodeSent(verificationId, token)
                     storedVerificationId = verificationId
                     resendToken = token
                     signUpWithPhoneProcessState.value = PhoneSignUpState.CodeSent
+                    Log.e("TAGG", "Code sent")
+
                 }
 
                 override fun onVerificationCompleted(authCredential: PhoneAuthCredential) {
-                    signUpWithPhoneProcessState.value = PhoneSignUpState.InProcess
+                    signUpWithPhoneProcessState.value = PhoneSignUpState.VerificationInProcess
                     firebaseAuth.signInWithCredential(authCredential)
-                        .addOnSuccessListener {
-                            signUpWithPhoneProcessState.value = PhoneSignUpState.Success
+                        .addOnCompleteListener {
+                            signUpWithPhoneProcessState.value =
+                                PhoneSignUpState.VerificationComplete
+                            Log.e("TAGG", "Complete listener")
                         }
                         .addOnFailureListener {
                             signUpWithPhoneProcessState.value =
-                                PhoneSignUpState.InvalidCredential(it.message)
+                                PhoneSignUpState.VerificationFailure(it.message)
+                            Log.e("TAGG", "Failure listener")
                         }
                 }
 

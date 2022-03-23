@@ -34,7 +34,7 @@ internal class SignUpViewModel(
             is PhoneSignUpState.None -> run {}
             is PhoneSignUpState.InProcess -> run { inProcess() }
             is PhoneSignUpState.CodeSent -> run { codeSent() }
-            is PhoneSignUpState.Success -> run {}
+            is PhoneSignUpState.VerificationComplete -> run {}
             is PhoneSignUpState.Error -> run {}
             is PhoneSignUpState.InvalidCredential -> run {}
             is PhoneSignUpState.TooManyRequests -> run {}

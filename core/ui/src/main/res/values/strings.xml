@@ -16,4 +16,8 @@
     <string name="phone">ТЕЛЕФОН</string>
     <string name="email">EMAIL</string>
     <string name="enter_phone_hint">Телефон</string>
+    <string name="verification_code">Код подтверждения</string>
+    <string name="request_more">Запросить еще</string>
+    <string name="enter_six_digit_code">Введите 6-ти значный код, который мы отправили по номеру phoneNumber</string>
+    <string name="enter_verification_code">Введите код подтвержения</string>
 </resources>
