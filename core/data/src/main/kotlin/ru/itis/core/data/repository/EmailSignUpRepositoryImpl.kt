@@ -11,7 +11,8 @@ import javax.inject.Inject
 /**
  * Created by Iskandar on 24.03.2022.
  */
-class EmailSignUpRepositoryImpl @Inject constructor(
+
+internal class EmailSignUpRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : EmailSignUpRepository {
 
