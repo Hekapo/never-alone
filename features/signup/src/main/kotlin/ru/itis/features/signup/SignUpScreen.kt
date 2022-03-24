@@ -76,7 +76,11 @@ fun SignUpRoute(
         onPhoneRoute = {
             PhoneRoute(
                 uiState = uiState,
-                onNextClick = { signUpViewModel.onSendCodeClick(context as ComponentActivity) },
+                onNextClick = {
+                    signUpViewModel.onSendCodeClick(context as ComponentActivity).also {
+                        onNextWithPhoneClick()
+                    }
+                },
                 onPhoneChange = signUpViewModel::onPhoneChange
             )
         },

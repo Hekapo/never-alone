@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import ru.itis.features.loginmethod.LoginMethodRoute
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
+import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
 import ru.itis.neveralone.di.AppComponent
 
@@ -50,11 +51,18 @@ internal fun AppNavGraph(
             SignUpRoute(
                 deps = appComponent,
                 onNextWithEmailClick = { /*TODO*/ },
-                onNextWithPhoneClick = { /*TODO*/ },
+                onNextWithPhoneClick = { navController.navigate(Destination.PhoneVerificationDestination.key) },
                 onBackClick = { navController.popBackStack() },
                 onTextSignInClick = { navController.navigate(Destination.SignInDestination.key) }
             )
 
+        }
+        composable(route = Destination.PhoneVerificationDestination.key) {
+            PhoneVerificationRoute(
+                deps = appComponent,
+                onNextClick = { /*TODO*/ },
+                onBackClick = { /*TODO*/ }) {
+            }
         }
 
     }

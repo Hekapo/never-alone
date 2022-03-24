@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
 import ru.itis.core.annotations.FeatureScope
+import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 
 /**
@@ -26,6 +27,7 @@ interface PhoneVerificationComponent {
 
 interface PhoneVerificationDeps {
     val singUpUseCase: IPhoneSignUpUseCase
+    val dispatchersProvider: DispatchersProvider
 }
 
 internal class PhoneVerificationComponentViewModel(deps: PhoneVerificationDeps) : ViewModel() {

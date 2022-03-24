@@ -35,6 +35,8 @@ internal class SignUpViewModel(
             is PhoneSignUpState.InProcess -> run { inProcess() }
             is PhoneSignUpState.CodeSent -> run { codeSent() }
             is PhoneSignUpState.VerificationComplete -> run {}
+            is PhoneSignUpState.VerificationInProcess -> run {}
+            is PhoneSignUpState.VerificationFailure -> run {}
             is PhoneSignUpState.Error -> run {}
             is PhoneSignUpState.InvalidCredential -> run {}
             is PhoneSignUpState.TooManyRequests -> run {}
@@ -48,7 +50,11 @@ internal class SignUpViewModel(
 //        }
         viewModelScope.launch(dispatchersProvider.IO) {
             val phone = _signUpUIState.value.inputPhone.phone
-            phoneSignUpUseCase.trySignUpWithPhone(activity, phone)
+            if (phone.isNotEmpty() && phone.isNotBlank()) {
+                phoneSignUpUseCase.trySignUpWithPhone(activity, "+$phone")
+            } else {
+
+            }
 //            phoneSignUpUseCase.verifyPhoneNumberWithCode("")
         }
 

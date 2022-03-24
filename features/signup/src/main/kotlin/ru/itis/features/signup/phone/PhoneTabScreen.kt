@@ -29,7 +29,7 @@ fun PhoneRoute(
     onNextClick: () -> Unit
 ) {
 
-    PhoneScreen(
+    PhoneTabScreen(
         uiState = uiState,
         onNextClick = onNextClick,
         onPhoneChange = onPhoneChange,
@@ -39,7 +39,7 @@ fun PhoneRoute(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun PhoneScreen(
+private fun PhoneTabScreen(
     uiState: SignUpUIState,
     onNextClick: () -> Unit,
     onPhoneChange: (String) -> Unit
@@ -60,9 +60,8 @@ private fun PhoneScreen(
         AuthButton(
             text = stringResource(id = ru.itis.core.ui.R.string.create_account),
             color = AppTheme.colors.backgroundOnSecondary,
-            style = AppTheme.typography.text14M
-        ) {
-            onNextClick()
-        }
+            style = AppTheme.typography.text14M,
+            onClick = { onNextClick() }
+        )
     }
 }
