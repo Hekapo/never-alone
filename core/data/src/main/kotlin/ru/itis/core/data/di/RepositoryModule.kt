@@ -5,7 +5,7 @@ import dagger.Module
 import ru.itis.core.data.repository.SignInRepositoryImpl
 import ru.itis.core.data.repository.PhoneSignUpRepositoryImpl
 import ru.itis.core.domain.repository.ISignInRepository
-import ru.itis.core.domain.repository.IPhoneSignUpRepository
+import ru.itis.core.domain.repository.PhoneSignUpRepository
 
 /**
  * Copyright (c) 10.03.2022 Created by Iskandar
@@ -21,5 +21,5 @@ internal interface RepositoryModuleBinds {
     fun provideSingInRepository(repository: SignInRepositoryImpl): ISignInRepository
 
     @Binds
-    fun provideSignUpModule(repositoryImplPhone: PhoneSignUpRepositoryImpl): IPhoneSignUpRepository
+    fun provideSignUpModule(repositoryImplPhone: PhoneSignUpRepositoryImpl): PhoneSignUpRepository
 }

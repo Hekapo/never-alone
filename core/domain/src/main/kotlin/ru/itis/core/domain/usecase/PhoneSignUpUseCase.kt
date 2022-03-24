@@ -4,7 +4,7 @@ import android.app.Activity
 import dagger.Reusable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import ru.itis.core.domain.repository.IPhoneSignUpRepository
+import ru.itis.core.domain.repository.PhoneSignUpRepository
 import ru.itis.core.domain.viewstates.PhoneSignUpState
 import javax.inject.Inject
 
@@ -22,21 +22,21 @@ interface IPhoneSignUpUseCase {
 
 @Reusable
 internal class PhoneSignUpUseCase @Inject constructor(
-    private val iSignUpRepository: IPhoneSignUpRepository
+    private val signUpRepository: PhoneSignUpRepository
 ) : IPhoneSignUpUseCase {
 
     override val phoneSignUpState: Flow<PhoneSignUpState>
-        get() = iSignUpRepository.phoneSignUpProcess.distinctUntilChanged()
+        get() = signUpRepository.phoneSignUpProcess.distinctUntilChanged()
 
     override suspend fun trySignUpWithPhone(activity: Activity, phone: String) {
-        iSignUpRepository.trySignUpWithPhone(activity, phone)
+        signUpRepository.trySignUpWithPhone(activity, phone)
     }
 
     override suspend fun verifyPhoneNumberWithCode(code: String) {
-        iSignUpRepository.verifyPhoneNumberWithCode(code)
+        signUpRepository.verifyPhoneNumberWithCode(code)
     }
 
     override suspend fun resendCode(activity: Activity, phoneNumber: String) {
-        iSignUpRepository.resendCode(activity, phoneNumber)
+        signUpRepository.resendCode(activity, phoneNumber)
     }
 }

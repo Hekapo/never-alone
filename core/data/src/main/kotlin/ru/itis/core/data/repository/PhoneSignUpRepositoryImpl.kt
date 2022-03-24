@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.itis.core.data.utils.Constants
-import ru.itis.core.domain.repository.IPhoneSignUpRepository
+import ru.itis.core.domain.repository.PhoneSignUpRepository
 import ru.itis.core.domain.viewstates.PhoneSignUpState
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 internal class PhoneSignUpRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
-) : IPhoneSignUpRepository {
+) : PhoneSignUpRepository {
 
     private val signUpWithPhoneProcessState =
         MutableStateFlow<PhoneSignUpState>(PhoneSignUpState.None)
