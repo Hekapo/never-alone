@@ -31,6 +31,7 @@ import com.google.accompanist.pager.*
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.theme.AppTheme
+import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signup.email.EmailRoute
 import ru.itis.features.signup.phone.PhoneRoute
 import ru.itis.features.signup.utils.Constants.PAGE_COUNT
@@ -44,7 +45,7 @@ import ru.itis.features.signup.utils.Constants.PAGE_PHONE
 @Composable
 fun SignUpRoute(
     deps: SignUpDeps,
-    onNextWithEmailClick: () -> Unit,
+    onNextWithEmailClick: (EmailPassData) -> Unit,
     onNextWithPhoneClick: () -> Unit,
     onBackClick: () -> Unit,
     onTextSignInClick: () -> Unit

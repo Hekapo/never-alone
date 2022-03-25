@@ -1,5 +1,6 @@
 package ru.itis.features.signup.email.create_user
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -29,10 +30,12 @@ import ru.itis.core.ui.theme.AppTheme
 
 @Composable
 fun CreateUserRoute(
+    email: String,
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
 ) {
 
+    Log.e("TAGGG", email)
     CreateUserScreen(
         uiState = CreateUserUIState(),
         onNameChange = {},

@@ -17,6 +17,7 @@ import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.theme.AppTheme
+import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signup.SignUpUIState
 
 /**
@@ -27,7 +28,7 @@ import ru.itis.features.signup.SignUpUIState
 fun EmailRoute(
     uiState: SignUpUIState,
     onEmailChange: (String) -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: (EmailPassData) -> Unit
 ) {
 
     EmailScreen(
@@ -42,7 +43,7 @@ fun EmailRoute(
 @Composable
 private fun EmailScreen(
     uiState: SignUpUIState,
-    onNextClick: () -> Unit,
+    onNextClick: (EmailPassData) -> Unit,
     onEmailChange: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -62,7 +63,7 @@ private fun EmailScreen(
             text = stringResource(id = R.string.next),
             color = AppTheme.colors.backgroundOnSecondary,
             style = AppTheme.typography.text14M,
-            onClick = onNextClick
+            onClick = { onNextClick(EmailPassData(uiState.inputEmail.email)) }
         )
     }
 }
