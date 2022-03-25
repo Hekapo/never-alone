@@ -1,4 +1,4 @@
-package ru.itis.features.signup
+package ru.itis.features.signup.email
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +17,7 @@ import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.theme.AppTheme
+import ru.itis.features.signup.SignUpUIState
 
 /**
  * Created by Iskandar on 20.03.2022.
@@ -60,9 +61,8 @@ private fun EmailScreen(
         AuthButton(
             text = stringResource(id = R.string.next),
             color = AppTheme.colors.backgroundOnSecondary,
-            style = AppTheme.typography.text14M
-        ) {
-            onNextClick()
-        }
+            style = AppTheme.typography.text14M,
+            onClick = onNextClick
+        )
     }
 }

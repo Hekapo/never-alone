@@ -3,8 +3,6 @@ package ru.itis.core.domain.di
 import dagger.Binds
 import dagger.Module
 import ru.itis.core.domain.usecase.*
-import ru.itis.core.domain.usecase.PhoneSignUpUseCase
-import ru.itis.core.domain.usecase.SignInUseCase
 
 /**
  * Copyright (c) 10.03.2022 Created by Iskandar
@@ -20,5 +18,8 @@ internal interface UseCaseModuleBinds {
     fun provideSignInUseCase(useCase: SignInUseCase): ISignInUseCase
 
     @Binds
-    fun provideSignUpUseCase(useCasePhone: PhoneSignUpUseCase): IPhoneSignUpUseCase
+    fun providePhoneSignUpUseCase(useCasePhone: PhoneSignUpUseCase): IPhoneSignUpUseCase
+
+    @Binds
+    fun provideEmailSignUpUseCase(useCaseEmail: EmailSignUpUseCase): IEmailSignUpUseCase
 }
