@@ -9,7 +9,7 @@ import androidx.compose.runtime.Stable
 
 @Immutable
 object Constants {
-    const val PAGE_PHONE = 0
+    const val TAB_PHONE = 0
 
     const val PAGE_EMAIL = 1
 

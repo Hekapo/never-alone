@@ -25,13 +25,13 @@ import ru.itis.features.signup.SignUpUIState
  */
 
 @Composable
-fun EmailRoute(
+fun EmailTabRoute(
     uiState: SignUpUIState,
     onEmailChange: (String) -> Unit,
     onNextClick: (EmailPassData) -> Unit
 ) {
 
-    EmailScreen(
+    EmailTabScreen(
         uiState = uiState,
         onNextClick = onNextClick,
         onEmailChange = onEmailChange
@@ -41,7 +41,7 @@ fun EmailRoute(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun EmailScreen(
+private fun EmailTabScreen(
     uiState: SignUpUIState,
     onNextClick: (EmailPassData) -> Unit,
     onEmailChange: (String) -> Unit

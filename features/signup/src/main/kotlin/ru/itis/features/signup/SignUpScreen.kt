@@ -32,11 +32,11 @@ import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.core.ui.utils.EmailPassData
-import ru.itis.features.signup.email.EmailRoute
+import ru.itis.features.signup.email.EmailTabRoute
 import ru.itis.features.signup.phone.PhoneRoute
 import ru.itis.features.signup.utils.Constants.PAGE_COUNT
 import ru.itis.features.signup.utils.Constants.PAGE_EMAIL
-import ru.itis.features.signup.utils.Constants.PAGE_PHONE
+import ru.itis.features.signup.utils.Constants.TAB_PHONE
 
 /**
  * Copyright (c) 15.03.2022 Created by Iskandar
@@ -87,7 +87,7 @@ fun SignUpRoute(
             )
         },
         onEmailRoute = {
-            EmailRoute(
+            EmailTabRoute(
                 uiState = uiState,
                 onNextClick = onNextWithEmailClick,
                 onEmailChange = signUpViewModel::onEmailChange
@@ -113,8 +113,8 @@ private fun SignUpScreen(
         pagerState.animateScrollToPage(uiState.activeTab)
     }
 
-    BackHandler(enabled = uiState.activeTab != PAGE_PHONE) {
-        onTabSelected(PAGE_PHONE)
+    BackHandler(enabled = uiState.activeTab != TAB_PHONE) {
+        onTabSelected(TAB_PHONE)
     }
 
     Box(
@@ -209,7 +209,7 @@ private fun Tabs(
     ) {
         repeat(PAGE_COUNT) { index ->
             when (index) {
-                PAGE_PHONE -> {
+                TAB_PHONE -> {
                     Tab(
                         text = {
                             Text(
@@ -219,7 +219,7 @@ private fun Tabs(
                             )
                         },
                         selected = pagerState.currentPage == index,
-                        onClick = { onTabClicked(PAGE_PHONE) },
+                        onClick = { onTabClicked(TAB_PHONE) },
                     )
                 }
                 PAGE_EMAIL -> {
@@ -252,7 +252,7 @@ private fun SignUpMethodPager(
         itemSpacing = 8.dp
     ) { page ->
         when (page) {
-            PAGE_PHONE -> {
+            TAB_PHONE -> {
                 onPhoneRoute()
             }
             PAGE_EMAIL -> {

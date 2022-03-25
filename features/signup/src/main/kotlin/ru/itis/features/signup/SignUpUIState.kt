@@ -1,6 +1,6 @@
 package ru.itis.features.signup
 
-import ru.itis.features.signup.utils.Constants.PAGE_PHONE
+import ru.itis.features.signup.utils.Constants.TAB_PHONE
 
 /**
  * Copyright (c) 15.03.2022 Created by Iskandar
@@ -10,7 +10,7 @@ data class SignUpUIState(
     val inputEmail: InputEmailField = InputEmailField(),
     val inputPhone: InputPhoneField = InputPhoneField(),
     val signUpProcess: SignUpProcess = SignUpProcess(),
-    val activeTab: Int = PAGE_PHONE,
+    val activeTab: Int = TAB_PHONE,
     val networkError: Boolean = false,
     val isLoading: Boolean = false
 ) {
