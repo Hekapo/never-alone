@@ -20,4 +20,6 @@
     <string name="request_more">Request more</string>
     <string name="enter_six_digit_code">Enter the 6 digit code we sent to phoneNumber</string>
     <string name="enter_verification_code">Enter confirmation code</string>
+    <string name="user_name">User name</string>
+    <string name="continue_text">Continue</string>
 </resources>

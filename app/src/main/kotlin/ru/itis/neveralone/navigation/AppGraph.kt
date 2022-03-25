@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import ru.itis.features.loginmethod.LoginMethodRoute
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
+import ru.itis.features.signup.email.create_user.CreateUserRoute
 import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
 import ru.itis.neveralone.di.AppComponent
@@ -50,7 +51,7 @@ internal fun AppNavGraph(
         composable(route = Destination.SignUpDestination.key) {
             SignUpRoute(
                 deps = appComponent,
-                onNextWithEmailClick = { /*TODO*/ },
+                onNextWithEmailClick = { navController.navigate(Destination.CreateUserDestination.key) },
                 onNextWithPhoneClick = { navController.navigate(Destination.PhoneVerificationDestination.key) },
                 onBackClick = { navController.popBackStack() },
                 onTextSignInClick = { navController.navigate(Destination.SignInDestination.key) }
@@ -64,7 +65,11 @@ internal fun AppNavGraph(
                 onBackClick = { /*TODO*/ }) {
             }
         }
-
+        composable(route = Destination.CreateUserDestination.key) {
+            CreateUserRoute(
+                onNextClick = {},
+                onBackClick = { navController.popBackStack() }
+            )
+        }
     }
-
 }
