@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ru.itis.core.ui.utils.EmailPassData
-import ru.itis.features.loginmethod.LoginMethodRoute
+import ru.itis.features.signup.login_method.LoginMethodRoute
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
 import ru.itis.features.signup.email.create_user.CreateUserRoute

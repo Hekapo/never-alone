@@ -72,7 +72,6 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
     implementation(project(":features:splash"))
-    implementation(project(":features:loginmethod"))
     implementation(project(":features:signin"))
     implementation(project(":features:signup"))
 
