@@ -7,10 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ru.itis.core.ui.utils.EmailPassData
-import ru.itis.features.signup.login_method.LoginMethodRoute
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
 import ru.itis.features.signup.email.create_user.CreateUserRoute
+import ru.itis.features.signup.login_method.LoginMethodRoute
 import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
 import ru.itis.neveralone.di.AppComponent
@@ -83,7 +83,8 @@ internal fun AppNavGraph(
             val email = requireNotNull(it.arguments?.getString(CreateUserDestination.EMAIL))
 
             CreateUserRoute(
-                email = email,
+                email = EmailPassData(email),
+                deps = appComponent,
                 onNextClick = {},
                 onBackClick = { navController.popBackStack() }
             )

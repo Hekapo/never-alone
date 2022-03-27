@@ -1,6 +1,5 @@
 package ru.itis.features.signup.email.create_user
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -10,6 +9,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -18,11 +19,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.theme.AppTheme
+import ru.itis.core.ui.utils.EmailPassData
 
 /**
  * Created by Iskandar on 25.03.2022.
@@ -30,17 +33,32 @@ import ru.itis.core.ui.theme.AppTheme
 
 @Composable
 fun CreateUserRoute(
-    email: String,
+    email: EmailPassData,
+    deps: CreateUserDeps,
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
 ) {
 
-    Log.e("TAGGG", email)
+    val createUserComponentViewModel = viewModel<CreateUserComponentViewModel>(
+        factory = CreateUserComponentViewModelFactory(deps, email)
+    )
+
+    val createUserViewModel = viewModel<CreateUserViewModel>(
+        factory = createUserComponentViewModel.createUserComponent.getViewModelFactory()
+    )
+
+    val uiState by createUserViewModel.emailUIState.collectAsState()
+
     CreateUserScreen(
-        uiState = CreateUserUIState(),
-        onNameChange = {},
-        onPasswordChange = {},
-        onNextClick = onNextClick,
+        uiState = uiState,
+        onNameChange = createUserViewModel::onNameChange,
+        onPasswordChange = createUserViewModel::onPasswordChange,
+        onNextClick = {
+            createUserViewModel.createUser()
+            if (uiState.couldNavigate) {
+                onNextClick()
+            }
+        },
         onBackClick = onBackClick
     )
 
@@ -86,9 +104,9 @@ private fun CreateUserScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LoginTextField(
-                inputValue = uiState.inputPassword.password,
-                onValueChange = onPasswordChange,
-                isEnabled = uiState.inputPassword.isFieldEnabled,
+                inputValue = uiState.inputUserName.name,
+                onValueChange = onNameChange,
+                isEnabled = uiState.inputUserName.isFieldEnabled,
                 placeholder = stringResource(id = R.string.user_name),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 keyboardActions = KeyboardActions { keyboardController?.hide() }
@@ -96,10 +114,10 @@ private fun CreateUserScreen(
             Spacer(modifier = Modifier.height(16.dp))
             LoginTextField(
                 inputValue = uiState.inputPassword.password,
-                onValueChange = onNameChange,
-                isEnabled = uiState.inputUserName.isFieldEnabled,
+                onValueChange = onPasswordChange,
+                isEnabled = uiState.inputPassword.isFieldEnabled,
                 placeholder = stringResource(id = R.string.enter_password_hint),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 keyboardActions = KeyboardActions { keyboardController?.hide() }
             )
             Spacer(modifier = Modifier.height(16.dp))

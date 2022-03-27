@@ -6,8 +6,9 @@ package ru.itis.features.signup.email.create_user
 
 data class CreateUserUIState(
     val inputUserName: InputUserName = InputUserName(),
-    val inputPassword: InputPassword = InputPassword()
-
+    val inputPassword: InputPassword = InputPassword(),
+    val email: String = "",
+    val couldNavigate: Boolean = false
 ) {
 
     data class InputUserName(

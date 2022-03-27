@@ -3,12 +3,11 @@ package ru.itis.features.signup.email.create_user
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import ru.itis.core.domain.usecase.IEmailSignUpUseCase
 import ru.itis.core.domain.viewstates.EmailSignUpState
+import ru.itis.core.ui.utils.EmailPassData
 import javax.inject.Inject
 
 /**
@@ -16,10 +15,11 @@ import javax.inject.Inject
  */
 
 class CreateUserViewModel(
-    private val emailUseCase: IEmailSignUpUseCase
+    private val emailUseCase: IEmailSignUpUseCase,
+    private val emailData: EmailPassData
 ) : ViewModel() {
 
-    private val _emailUIState = MutableStateFlow(CreateUserUIState())
+    private val _emailUIState = MutableStateFlow(CreateUserUIState().copy(email = emailData.email))
     val emailUIState = _emailUIState.asStateFlow()
 
     init {
@@ -28,19 +28,69 @@ class CreateUserViewModel(
 
     private fun emailState(emailSignUpState: EmailSignUpState) {
         when (emailSignUpState) {
-            EmailSignUpState.None -> TODO()
-            EmailSignUpState.InProcess -> TODO()
-            EmailSignUpState.Complete -> TODO()
-            is EmailSignUpState.Error -> TODO()
+            EmailSignUpState.None -> {}
+            EmailSignUpState.InProcess -> inProcess()
+            EmailSignUpState.Complete -> onComplete()
+            is EmailSignUpState.Error -> onError()
         }
     }
 
+    private fun onComplete() {
+        _emailUIState.update {
+            it.copy(couldNavigate = true)
+        }
+
+    }
+
+    private fun onError() {
+        _emailUIState.update {
+            it.copy(couldNavigate = false)
+        }
+    }
+
+    private fun inProcess() {
+
+    }
+
+    fun createUser() {
+        viewModelScope.launch {
+            val email = _emailUIState.value.email
+            val password = _emailUIState.value.inputPassword.password
+            emailUseCase.createUserWithEmailAndPassword(email = email, password = password)
+        }
+    }
+
+    fun onNameChange(name: String) {
+        _emailUIState.update {
+            it.copy(
+                inputUserName = CreateUserUIState.InputUserName(
+                    name = name,
+                    isFieldEnabled = true
+                )
+            )
+        }
+
+    }
+
+    fun onPasswordChange(password: String) {
+        _emailUIState.update {
+            it.copy(
+                inputPassword = CreateUserUIState.InputPassword(
+                    password = password,
+                    isFieldEnabled = true
+                )
+            )
+        }
+
+    }
+
     class CreateUserViewModelFactory @Inject constructor(
-        private val emailUseCase: IEmailSignUpUseCase
+        private val emailUseCase: IEmailSignUpUseCase,
+        private val emailData: EmailPassData
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CreateUserViewModel(emailUseCase) as T
+            return CreateUserViewModel(emailUseCase, emailData) as T
         }
     }
 }
