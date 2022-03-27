@@ -11,6 +11,7 @@ import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 import ru.itis.core.domain.usecase.ISignInUseCase
 import ru.itis.features.signin.SignInDeps
 import ru.itis.features.signup.SignUpDeps
+import ru.itis.features.signup.email.create_user.CreateUserDeps
 import ru.itis.features.signup.phone.verification.PhoneVerificationDeps
 import javax.inject.Singleton
 
@@ -25,7 +26,7 @@ import javax.inject.Singleton
         CoroutineModule::class,
         NetworkModule::class]
 )]
-interface AppComponent : SignInDeps, SignUpDeps, PhoneVerificationDeps {
+interface AppComponent : SignInDeps, SignUpDeps, PhoneVerificationDeps, CreateUserDeps {
 
     override val sigInUseCase: ISignInUseCase
     override val singUpUseCase: IPhoneSignUpUseCase

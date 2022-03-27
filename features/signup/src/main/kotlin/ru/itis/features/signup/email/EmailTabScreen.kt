@@ -25,7 +25,7 @@ import ru.itis.features.signup.SignUpUIState
  */
 
 @Composable
-fun EmailTabRoute(
+internal fun EmailTabRoute(
     uiState: SignUpUIState,
     onEmailChange: (String) -> Unit,
     onNextClick: (EmailPassData) -> Unit
