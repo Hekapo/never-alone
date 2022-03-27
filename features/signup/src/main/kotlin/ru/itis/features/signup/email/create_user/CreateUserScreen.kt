@@ -133,7 +133,7 @@ private fun CreateUserScreen(
 
 @Preview
 @Composable
-fun CreateUserScreenPreview() {
+private fun CreateUserScreenPreview() {
     CreateUserScreen(
         CreateUserUIState(),
         onNameChange = {},

@@ -14,9 +14,9 @@ import javax.inject.Inject
  * Created by Iskandar on 27.03.2022.
  */
 
-class CreateUserViewModel(
+internal class CreateUserViewModel(
     private val emailUseCase: IEmailSignUpUseCase,
-    private val emailData: EmailPassData
+    emailData: EmailPassData
 ) : ViewModel() {
 
     private val _emailUIState = MutableStateFlow(CreateUserUIState().copy(email = emailData.email))
@@ -83,14 +83,14 @@ class CreateUserViewModel(
         }
 
     }
+}
 
-    class CreateUserViewModelFactory @Inject constructor(
-        private val emailUseCase: IEmailSignUpUseCase,
-        private val emailData: EmailPassData
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CreateUserViewModel(emailUseCase, emailData) as T
-        }
+internal class CreateUserViewModelFactory @Inject constructor(
+    private val emailUseCase: IEmailSignUpUseCase,
+    private val emailData: EmailPassData
+) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return CreateUserViewModel(emailUseCase, emailData) as T
     }
 }

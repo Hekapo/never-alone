@@ -14,9 +14,9 @@ import ru.itis.core.ui.utils.EmailPassData
  */
 
 @[FeatureScope Component(dependencies = [CreateUserDeps::class])]
-interface CreateUserComponent {
+internal interface CreateUserComponent {
 
-    fun getViewModelFactory(): CreateUserViewModel.CreateUserViewModelFactory
+    fun getViewModelFactory(): CreateUserViewModelFactory
 
     @Component.Builder
     interface Builder {
