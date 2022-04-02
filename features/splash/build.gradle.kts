@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
 }
 
 android {
@@ -32,6 +31,4 @@ android {
 dependencies {
     implementation(project(":core:ui"))
 
-    implementation(libs.dagger.runtime)
-    kapt(libs.dagger.compiler)
 }

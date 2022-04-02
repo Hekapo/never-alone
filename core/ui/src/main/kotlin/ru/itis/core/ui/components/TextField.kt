@@ -12,6 +12,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.itis.core.ui.theme.AppTheme
@@ -30,6 +31,7 @@ fun LoginTextField(
     isEnabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions(),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     onValueChange: (String) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -40,7 +42,7 @@ fun LoginTextField(
             .fillMaxWidth(),
         value = inputValue,
         onValueChange = onValueChange,
-        textStyle = AppTheme.typography.textField,
+        textStyle = AppTheme.typography.text14M,
         label = null,
         trailingIcon = trailingIcon,
         leadingIcon = leadingIcon,
@@ -48,12 +50,13 @@ fun LoginTextField(
         enabled = isEnabled,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
+        visualTransformation = visualTransformation,
         singleLine = true,
         maxLines = 1,
         placeholder = {
             Text(
                 text = placeholder,
-                style = AppTheme.typography.textField,
+                style = AppTheme.typography.text14M,
                 color = AppTheme.colors.textLowEmphasis
             )
         },

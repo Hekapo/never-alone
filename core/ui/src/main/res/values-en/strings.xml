@@ -11,4 +11,15 @@
     <string name="or">OR</string>
     <string name="no_account">Don\'t have an account yet?</string>
     <string name="register">Register</string>
+    <string name="next">Next</string>
+    <string name="have_an_account">Already have an account?</string>
+    <string name="phone">PHONE</string>
+    <string name="email">EMAIL</string>
+    <string name="enter_phone_hint">Phone</string>
+    <string name="verification_code">Confirmation code</string>
+    <string name="request_more">Request more</string>
+    <string name="enter_six_digit_code">Enter the 6 digit code we sent to phoneNumber</string>
+    <string name="enter_verification_code">Enter confirmation code</string>
+    <string name="user_name">User name</string>
+    <string name="continue_text">Continue</string>
 </resources>

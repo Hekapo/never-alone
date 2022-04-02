@@ -8,7 +8,7 @@ import ru.itis.core.domain.viewstates.SignInState
  */
 
 
-interface ISignInRepository {
+interface SignInRepository {
     val signInProcess: Flow<SignInState>
     suspend fun trySignInWithEmailAndPassword(email: String, password: String)
     suspend fun logout()

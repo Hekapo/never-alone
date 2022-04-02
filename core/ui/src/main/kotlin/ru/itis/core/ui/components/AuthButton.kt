@@ -53,7 +53,7 @@ private fun AuthButtonPreview() {
         modifier = Modifier.background(AppTheme.colors.backgroundPrimary),
         text = "Auth",
         color = AppTheme.colors.backgroundOnSecondary,
-        style = AppTheme.typography.button
+        style = AppTheme.typography.text14M
     ) {
 
     }

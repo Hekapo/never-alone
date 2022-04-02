@@ -11,4 +11,15 @@
     <string name="or">ЯКИ</string>
     <string name="no_account">Хисап язмагыз әле?</string>
     <string name="register">ss</string>
+    <string name="next">Алга таба</string>
+    <string name="have_an_account">Хисап язмасы бар?</string>
+    <string name="phone">ТЕЛЕФОН</string>
+    <string name="email">EMAIL</string>
+    <string name="enter_phone_hint">Телефон</string>
+    <string name="verification_code">Раслау коды</string>
+    <string name="request_more">Күбрәк сорау</string>
+    <string name="enter_six_digit_code">Без телефон номерына җибәргән 6 санлы кодны кертегез</string>
+    <string name="enter_verification_code">Раслау кодын кертегез</string>
+    <string name="user_name">Кулланучы исеме</string>
+    <string name="continue_text">Дәвам ит</string>
 </resources>

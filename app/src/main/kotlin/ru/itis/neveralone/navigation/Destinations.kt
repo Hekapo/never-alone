@@ -9,4 +9,8 @@ internal sealed class Destination(val key: String) {
     object ChooseLoginMethod : Destination("login_method")
     object SignInDestination : Destination("signin")
     object SignUpDestination : Destination("signup")
+    object PhoneVerificationDestination : Destination("phone_verification")
+    object CreateUserDestination : Destination("create_user") {
+        const val EMAIL = "email"
+    }
 }

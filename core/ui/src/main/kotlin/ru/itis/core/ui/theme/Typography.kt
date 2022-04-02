@@ -21,28 +21,27 @@ private val Montserrat = FontFamily(
 
 @Immutable
 data class AppTypography internal constructor(
-    val title1: TextStyle = TextStyle(
+    val text36R: TextStyle = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 36.sp,
         lineHeight = 40.sp,
     ),
-    val button: TextStyle = TextStyle(
+    val text14M: TextStyle = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
         lineHeight = 22.sp,
     ),
-    val textField: TextStyle = TextStyle(
-        fontFamily = Montserrat,
-        fontWeight = FontWeight.Medium,
-        fontSize = 14.sp,
-        lineHeight = 22.sp,
-    ),
-    val text: TextStyle = TextStyle(
+    val text12R: TextStyle = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
+    ),
+    val text14R: TextStyle = TextStyle(
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
     )
 )
 
