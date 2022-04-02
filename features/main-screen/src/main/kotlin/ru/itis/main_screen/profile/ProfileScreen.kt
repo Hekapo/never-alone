@@ -1,4 +1,4 @@
-package ru.itis.main_screen
+package ru.itis.main_screen.profile
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -8,17 +8,17 @@ import androidx.compose.ui.tooling.preview.Preview
  */
 
 @Composable
-fun MainScreenRoute() {
+fun ProfileScreenRoute() {
 
 }
 
 @Composable
-private fun MainScreen() {
+private fun ProfileScreen() {
 
 }
 
 @Preview
 @Composable
-private fun MainScreenPreview() {
+private fun ProfileScreenPreview() {
 
 }
