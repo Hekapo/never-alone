@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.ImageTopAppBar
 import ru.itis.core.ui.theme.AppTheme
@@ -26,7 +27,22 @@ import ru.itis.core.ui.theme.AppTheme
  */
 
 @Composable
-fun ProfileScreenRoute() {
+fun ProfileScreenRoute(
+    deps: ProfileDeps,
+    onMenuClick: () -> Unit
+) {
+
+    val profileComponentViewModel = viewModel<ProfileComponentViewModel>(
+        factory = ProfileComponentViewModelFactory(deps)
+    )
+
+    val profileViewModel = viewModel<ProfileViewModel>(
+        factory = profileComponentViewModel.profileComponent.profileViewModelFactory
+    )
+
+    ProfileScreen(
+        onMenuClick = onMenuClick
+    )
 
 }
 
