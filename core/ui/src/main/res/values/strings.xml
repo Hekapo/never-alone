@@ -22,4 +22,7 @@
     <string name="enter_verification_code">Введите код подтвержения</string>
     <string name="user_name">Имя пользователя</string>
     <string name="continue_text">Продолжить</string>
+    <string name="title_profile">Профиль</string>
+    <string name="title_messenger">Мессенджер</string>
+    <string name="title_home">Главный</string>
 </resources>

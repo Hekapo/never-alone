@@ -13,4 +13,6 @@ internal sealed class Destination(val key: String) {
     object CreateUserDestination : Destination("create_user") {
         const val EMAIL = "email"
     }
+
+    object MainScreenDestination : Destination("main")
 }
