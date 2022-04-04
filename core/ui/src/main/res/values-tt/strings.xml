@@ -25,4 +25,7 @@
     <string name="title_profile">Профиль</string>
     <string name="title_messenger">Мессенджер</string>
     <string name="title_home">Төп</string>
+    <string name="full_name">Исем</string>
+    <string name="social_url">Социаль медиа</string>
+    <string name="email_text">Email</string>
 </resources>
