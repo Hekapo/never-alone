@@ -13,6 +13,7 @@ import ru.itis.features.signup.email.create_user.CreateUserRoute
 import ru.itis.features.signup.login_method.LoginMethodRoute
 import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
+import ru.itis.main_screen.main.MainScreenRoute
 import ru.itis.neveralone.di.AppComponent
 import ru.itis.neveralone.navigation.Destination.*
 
@@ -88,6 +89,9 @@ internal fun AppNavGraph(
                 onNextClick = {},
                 onBackClick = { navController.popBackStack() }
             )
+        }
+        composable(route = MainScreenDestination.key) {
+            MainScreenRoute()
         }
     }
 }

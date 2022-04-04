@@ -13,6 +13,7 @@ import ru.itis.features.signin.SignInDeps
 import ru.itis.features.signup.SignUpDeps
 import ru.itis.features.signup.email.create_user.CreateUserDeps
 import ru.itis.features.signup.phone.verification.PhoneVerificationDeps
+import ru.itis.main_screen.main.MainDeps
 import javax.inject.Singleton
 
 /**
@@ -26,7 +27,7 @@ import javax.inject.Singleton
         CoroutineModule::class,
         NetworkModule::class]
 )]
-interface AppComponent : SignInDeps, SignUpDeps, PhoneVerificationDeps, CreateUserDeps {
+interface AppComponent : SignInDeps, SignUpDeps, PhoneVerificationDeps, CreateUserDeps, MainDeps {
 
     override val sigInUseCase: ISignInUseCase
     override val singUpUseCase: IPhoneSignUpUseCase
