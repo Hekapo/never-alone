@@ -9,20 +9,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.itis.main_screen.main.destinations.MainBottomScreen
-import ru.itis.main_screen.profile.ProfileScreen
+import ru.itis.main_screen.profile.ProfileScreenRoute
 
 /**
  * Created by Iskandar on 02.04.2022.
  */
 
 @Composable
-fun MainScreenRoute() {
+fun MainScreenRoute(deps: MainDeps) {
 
-
+    MainScreen(deps = deps)
 }
 
 @Composable
-private fun MainScreen() {
+private fun MainScreen(deps: MainDeps) {
     var routes by remember { mutableStateOf<MainBottomScreen>(MainBottomScreen.Home) }
 
     Column {
@@ -31,7 +31,7 @@ private fun MainScreen() {
                 MainBottomScreen.Home -> {}
                 MainBottomScreen.Messenger -> {}
                 MainBottomScreen.Profile -> {
-                    ProfileScreen()
+                    ProfileScreenRoute(deps = deps, onMenuClick = {})
                 }
             }
         }

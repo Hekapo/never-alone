@@ -91,7 +91,7 @@ internal fun AppNavGraph(
             )
         }
         composable(route = MainScreenDestination.key) {
-            MainScreenRoute()
+            MainScreenRoute(deps = appComponent)
         }
     }
 }

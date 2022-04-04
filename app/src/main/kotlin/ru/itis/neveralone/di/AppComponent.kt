@@ -27,7 +27,12 @@ import javax.inject.Singleton
         CoroutineModule::class,
         NetworkModule::class]
 )]
-interface AppComponent : SignInDeps, SignUpDeps, PhoneVerificationDeps, CreateUserDeps, MainDeps {
+interface AppComponent :
+    SignInDeps,
+    SignUpDeps,
+    PhoneVerificationDeps,
+    CreateUserDeps,
+    MainDeps {
 
     override val sigInUseCase: ISignInUseCase
     override val singUpUseCase: IPhoneSignUpUseCase
