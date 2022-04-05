@@ -62,6 +62,12 @@ data class AppTypography internal constructor(
         fontSize = 16.sp,
         lineHeight = 18.sp,
     ),
+    val text16R:TextStyle = TextStyle(
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 18.sp,
+    ),
 )
 
 internal val LocalAppTypography = staticCompositionLocalOf { AppTypography() }
