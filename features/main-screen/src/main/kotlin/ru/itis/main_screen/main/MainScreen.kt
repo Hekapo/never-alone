@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.itis.main_screen.main.destinations.MainBottomScreen
+import ru.itis.main_screen.messenger.MessengerScreenRoute
 import ru.itis.main_screen.profile.ProfileScreenRoute
 
 /**
@@ -29,7 +29,9 @@ private fun MainScreen(deps: MainDeps) {
         Box(modifier = Modifier.weight(1f)) {
             when (routes) {
                 MainBottomScreen.Home -> {}
-                MainBottomScreen.Messenger -> {}
+                MainBottomScreen.Messenger -> {
+                    MessengerScreenRoute(deps = deps)
+                }
                 MainBottomScreen.Profile -> {
                     ProfileScreenRoute(deps = deps, onMenuClick = {})
                 }
@@ -48,6 +50,6 @@ private fun MainScreen(deps: MainDeps) {
     }
 }
 
-@Preview
-@Composable
-private fun MainScreenPreview() = MainScreen()
+//@Preview
+//@Composable
+//private fun MainScreenPreview() = MainScreen()

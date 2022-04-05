@@ -27,8 +27,8 @@ import ru.itis.core.ui.theme.AppTheme
 fun ImageTopAppBar(
     modifier: Modifier = Modifier,
     centerImageVector: ImageVector,
-    menuImageVector: ImageVector,
-    onMenuClick: () -> Unit
+    menuImageVector: ImageVector? = null,
+    onMenuClick: (() -> Unit)? = null
 ) {
     Surface(elevation = 1.dp) {
         ConstraintLayout(
@@ -53,23 +53,28 @@ fun ImageTopAppBar(
                     tint = AppTheme.colors.textHighEmphasis
                 )
             }
-
-            Box(modifier = Modifier.constrainAs(menuIcon) {
-                end.linkTo(parent.end, margin = 8.dp)
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-            }, contentAlignment = Alignment.CenterEnd) {
-                IconButton(
-                    content = {
-                        AppBarIcon(
-                            imageVector = menuImageVector,
-                            contentDescription = "",
-                            tint = AppTheme.colors.textHighEmphasis,
+            menuImageVector?.let {
+                Box(modifier = Modifier.constrainAs(menuIcon) {
+                    end.linkTo(parent.end, margin = 8.dp)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                }, contentAlignment = Alignment.CenterEnd) {
+                    if (onMenuClick != null) {
+                        IconButton(
+                            content = {
+                                AppBarIcon(
+                                    imageVector = it,
+                                    contentDescription = "",
+                                    tint = AppTheme.colors.textHighEmphasis,
+                                )
+                            },
+                            onClick = onMenuClick
                         )
-                    },
-                    onClick = onMenuClick
-                )
+                    }
+                }
+
             }
+
         }
     }
 }
