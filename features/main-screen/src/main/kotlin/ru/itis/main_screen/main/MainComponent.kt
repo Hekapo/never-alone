@@ -13,6 +13,8 @@ import ru.itis.main_screen.profile.ProfileDeps
 @Component(dependencies = [MainDeps::class])
 internal interface MainComponent {
 
+    val mainViewModel: MainViewModel.MainViewModelFactory
+
     @Component.Builder
     interface Builder {
 
@@ -27,7 +29,7 @@ interface MainDeps : ProfileDeps, MessengerDeps {
 }
 
 internal class MainComponentViewModel(deps: MainDeps) : ViewModel() {
-    val mainComponent = DaggerMainComponent.builder().deps(deps)
+    val mainComponent = DaggerMainComponent.builder().deps(deps).build()
 }
 
 internal class MainComponentViewModelFactory(

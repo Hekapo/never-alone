@@ -33,6 +33,4 @@ internal fun MessengerViewNoChats() {
 
 @Preview
 @Composable
-private fun MessengerViewNoChatsPreview() {
-    MessengerViewNoChats()
-}
+private fun MessengerViewNoChatsPreview() = MessengerViewNoChats()
