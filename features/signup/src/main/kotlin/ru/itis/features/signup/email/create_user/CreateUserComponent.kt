@@ -4,16 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.BindsInstance
 import dagger.Component
-import ru.itis.core.annotations.FeatureScope
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.IEmailSignUpUseCase
 import ru.itis.core.ui.utils.EmailPassData
+import javax.inject.Scope
 
 /**
  * Created by Iskandar on 27.03.2022.
  */
 
-@[FeatureScope Component(dependencies = [CreateUserDeps::class])]
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+internal annotation class CreateUserScope
+
+@[CreateUserScope Component(dependencies = [CreateUserDeps::class])]
 internal interface CreateUserComponent {
 
     fun getViewModelFactory(): CreateUserViewModelFactory
