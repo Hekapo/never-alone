@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.itis.main_screen.main.destinations.MainBottomScreen
 import ru.itis.main_screen.messenger.MessengerScreenRoute
 import ru.itis.main_screen.profile.ProfileScreenRoute
@@ -18,16 +21,29 @@ import ru.itis.main_screen.profile.ProfileScreenRoute
 @Composable
 fun MainScreenRoute(deps: MainDeps) {
 
-    MainScreen(deps = deps)
+    val mainComponentViewModel = viewModel<MainComponentViewModel>(
+        factory = MainComponentViewModelFactory(deps)
+    )
+
+    val mainViewModel = viewModel<MainViewModel>(
+        factory = mainComponentViewModel.mainComponent.mainViewModel
+    )
+
+    val viewState by mainViewModel.navigation.collectAsState()
+
+    MainScreen(deps = deps, viewState, onRouteChange = mainViewModel::onRouteChange)
 }
 
 @Composable
-private fun MainScreen(deps: MainDeps) {
-    var routes by remember { mutableStateOf<MainBottomScreen>(MainBottomScreen.Home) }
+private fun MainScreen(
+    deps: MainDeps,
+    viewState: MainBottomScreen,
+    onRouteChange: (MainBottomScreen) -> Unit
+) {
 
     Column {
         Box(modifier = Modifier.weight(1f)) {
-            when (routes) {
+            when (viewState) {
                 MainBottomScreen.Home -> {}
                 MainBottomScreen.Messenger -> {
                     MessengerScreenRoute(deps = deps)
@@ -43,8 +59,9 @@ private fun MainScreen(deps: MainDeps) {
                 .height(56.dp)
                 .fillMaxWidth()
         ) {
-            AnimatedBottomBar(currentRoute = routes.route) {
-                routes = it
+
+            AnimatedBottomBar(currentRoute = viewState.route) {
+                onRouteChange(it)
             }
         }
     }
