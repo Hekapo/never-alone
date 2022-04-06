@@ -1,6 +1,7 @@
 package ru.itis.neveralone.di
 
 import android.app.Application
+import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import ru.itis.core.data.di.NetworkModule
@@ -40,7 +41,7 @@ interface AppComponent :
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun application(application: Application): Builder
+        fun application(application: Context): Builder
 
         fun build(): AppComponent
     }

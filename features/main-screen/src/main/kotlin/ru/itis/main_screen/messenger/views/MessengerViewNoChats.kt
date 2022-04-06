@@ -1,10 +1,7 @@
 package ru.itis.main_screen.messenger.views
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,9 +18,8 @@ import ru.itis.core.ui.theme.AppTheme
 internal fun MessengerViewNoChats() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(AppTheme.colors.backgroundPrimary)
-            .height(150.dp),
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -1,6 +1,5 @@
 package ru.itis.main_screen.main
 
-import androidx.compose.ui.input.key.Key.Companion.Home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +18,13 @@ internal class MainViewModel() : ViewModel() {
         MutableStateFlow(MainBottomScreen.Home)
     val navigation: StateFlow<MainBottomScreen> = _navigation
 
-
     fun onRouteChange(route: MainBottomScreen) {
-
+        val prevValue = _navigation.value
+        val nextValue = route
+        if (_navigation.compareAndSet(prevValue, nextValue)) {
+            return
+        }
     }
-
 
     internal class MainViewModelFactory @Inject constructor(
 
