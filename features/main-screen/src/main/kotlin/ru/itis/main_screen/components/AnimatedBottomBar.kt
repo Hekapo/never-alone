@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalAnimationApi::class)
 
-package ru.itis.main_screen.main
+package ru.itis.main_screen.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.itis.core.ui.theme.AppTheme
@@ -30,7 +31,7 @@ import ru.itis.main_screen.main.utils.Constants
 @Composable
 internal fun AnimatedBottomBar(
     destinations: List<MainBottomScreen> = Constants.MAIN_BOTTOM_SCREENS,
-    currentRoute: String = MainBottomScreen.Home.route,
+    currentRoute: MainBottomScreen = MainBottomScreen.Home,
     onItemSelected: (MainBottomScreen) -> Unit
 ) {
     Row(
@@ -43,7 +44,7 @@ internal fun AnimatedBottomBar(
     ) {
 
         destinations.forEach { item ->
-            CustomBottomNavigationItem(item = item, isSelected = item.route == currentRoute) {
+            CustomBottomNavigationItem(item = item, isSelected = item == currentRoute) {
                 onItemSelected(item)
             }
         }
@@ -98,7 +99,7 @@ private fun CustomBottomNavigationItem(
 private fun CustomBottomNavigationPreview() {
     AnimatedBottomBar(
         Constants.MAIN_BOTTOM_SCREENS,
-        MainBottomScreen.Home.route,
+        MainBottomScreen.Home,
         onItemSelected = {}
     )
 }

@@ -1,5 +1,6 @@
 package ru.itis.core.ui.components
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,8 +27,8 @@ import ru.itis.core.ui.theme.AppTheme
 @Composable
 fun ImageTopAppBar(
     modifier: Modifier = Modifier,
-    centerImageVector: ImageVector,
-    menuImageVector: ImageVector? = null,
+    centerImageVector: Int,
+    menuImageVector: Int? = null,
     onMenuClick: (() -> Unit)? = null
 ) {
     Surface(elevation = 1.dp) {
@@ -48,7 +49,7 @@ fun ImageTopAppBar(
                 start.linkTo(parent.start)
             }) {
                 Icon(
-                    imageVector = centerImageVector,
+                    imageVector = ImageVector.vectorResource(id = centerImageVector),
                     contentDescription = "",
                     tint = AppTheme.colors.textHighEmphasis
                 )
@@ -63,7 +64,7 @@ fun ImageTopAppBar(
                         IconButton(
                             content = {
                                 AppBarIcon(
-                                    imageVector = it,
+                                    imageVector = ImageVector.vectorResource(id = it),
                                     contentDescription = "",
                                     tint = AppTheme.colors.textHighEmphasis,
                                 )
@@ -87,12 +88,23 @@ private fun AppBarIcon(
 ) = Icon(imageVector = imageVector, contentDescription = contentDescription, tint = tint)
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun ImageTopAppBarPreview() {
+private fun ImageTopAppBarPreview() {
     ImageTopAppBar(
         modifier = Modifier,
-        centerImageVector = ImageVector.vectorResource(id = R.drawable.leaves),
-        menuImageVector = ImageVector.vectorResource(R.drawable.rows),
+        centerImageVector = R.drawable.leaves,
+        menuImageVector = R.drawable.rows,
         onMenuClick = {}
+    )
+}
+
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun ImageTopAppBarWithoutMenuIconPreview() {
+    ImageTopAppBar(
+        modifier = Modifier,
+        centerImageVector = R.drawable.leaves,
     )
 }

@@ -28,7 +28,7 @@ internal fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = SplashDestination.key
+        startDestination = MainScreenDestination.key
     ) {
         composable(route = SplashDestination.key) {
             LoadingScreen {

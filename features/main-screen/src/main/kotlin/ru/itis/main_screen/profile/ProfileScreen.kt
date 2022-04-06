@@ -1,5 +1,6 @@
 package ru.itis.main_screen.profile
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,15 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.itis.core.ui.R
-import ru.itis.core.ui.components.ImageTopAppBar
 import ru.itis.core.ui.theme.AppTheme
 
 /**
@@ -27,9 +25,8 @@ import ru.itis.core.ui.theme.AppTheme
  */
 
 @Composable
-fun ProfileScreenRoute(
+internal fun ProfileScreenRoute(
     deps: ProfileDeps,
-    onMenuClick: () -> Unit
 ) {
 
     val profileComponentViewModel = viewModel<ProfileComponentViewModel>(
@@ -40,38 +37,23 @@ fun ProfileScreenRoute(
         factory = profileComponentViewModel.profileComponent.profileViewModelFactory
     )
 
-    ProfileScreen(
-        onMenuClick = onMenuClick
-    )
+    ProfileScreen()
 
 }
 
 @Composable
 internal fun ProfileScreen(
-    onMenuClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary)
     ) {
-        ImageTopAppBar(
-            centerImageVector = ImageVector.vectorResource(id = R.drawable.leaves),
-            menuImageVector = ImageVector.vectorResource(
-                id = R.drawable.rows
-            ),
-            onMenuClick = onMenuClick
-        )
-
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = stringResource(id = R.string.title_profile),
-                style = AppTheme.typography.text28R
-            )
             Spacer(modifier = Modifier.height(24.dp))
             Image(
                 modifier = Modifier
@@ -79,9 +61,8 @@ internal fun ProfileScreen(
                     .clip(CircleShape)
                     .border(1.dp, Color.Gray, CircleShape),
                 painter = painterResource(id = R.drawable._7163859),
-                contentDescription = "",
-
-                )
+                contentDescription = ""
+            )
             Spacer(modifier = Modifier.height(18.dp))
             Text(
                 text = "Name",
@@ -118,6 +99,7 @@ internal fun ProfileScreen(
     }
 }
 
-@Preview
+@Preview()
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun ProfileScreenPreview() = ProfileScreen(onMenuClick = {})
+private fun ProfileScreenPreview() = ProfileScreen()
