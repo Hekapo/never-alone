@@ -6,6 +6,7 @@ import dagger.Component
 import ru.itis.core.data.di.NetworkModule
 import ru.itis.core.data.di.RepositoryModule
 import ru.itis.core.di.CoroutineModule
+import ru.itis.core.di.NetworkListenerModule
 import ru.itis.core.domain.di.UseCaseModule
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 import ru.itis.core.domain.usecase.ISignInUseCase
@@ -24,6 +25,7 @@ import javax.inject.Singleton
         RepositoryModule::class,
         UseCaseModule::class,
         CoroutineModule::class,
+        NetworkListenerModule::class,
         NetworkModule::class]
 )]
 interface AppComponent : SignInDeps, SignUpDeps, PhoneVerificationDeps, CreateUserDeps {
