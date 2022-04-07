@@ -33,11 +33,14 @@ fun MessengerScreenRoute(
     when (val state = viewState.value) {
         MessengerViewState.Loading -> ViewLoading()
         MessengerViewState.NoChats -> MessengerViewNoChats()
-        MessengerViewState.Error ->  MessengerViewError()
+        MessengerViewState.Error -> MessengerViewError("")
         is MessengerViewState.Display -> MessengerViewDisplay(
             viewState = state,
-            onChatClicked = {}
+            onChatClicked = {
+                messengerViewModel.obtainEvent(MessengerEvent.OnChatClick(chat = 1L)) // TODO
+            }
         )
+        MessengerViewState.NoInternet -> {}
     }
 
     LaunchedEffect(key1 = viewState, block = {

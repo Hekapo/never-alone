@@ -1,17 +1,15 @@
 package ru.itis.main_screen.messenger.views
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ru.itis.core.ui.R
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.main_screen.messenger.models.MessengerViewState
@@ -23,28 +21,21 @@ import ru.itis.main_screen.messenger.models.MessengerViewState
 @Composable
 internal fun MessengerViewDisplay(
     viewState: MessengerViewState.Display,
-    onChatClicked: () -> Unit
+    onChatClicked: (MessengerChatModel) -> Unit
 ) {
-    val scrollState = rememberScrollState()
-
-    val sr = rememberSwipeRefreshState(isRefreshing = false)
-    SwipeRefresh(state = sr,onRefresh = { sr.isRefreshing = true}){
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AppTheme.colors.backgroundPrimary)
-            ,
-        ) {
-            Spacer(modifier = Modifier.height(24.dp))
-            LazyColumn() {
-                viewState.items.forEach { chatItem ->
-                    item {
-                        OneChatItem(
-                            onChatClick = onChatClicked,
-                            model = chatItem
-                        )
-                    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.backgroundPrimary)
+    ) {
+        Spacer(modifier = Modifier.height(24.dp))
+        LazyColumn {
+            viewState.items.forEach { chatItem ->
+                item {
+                    OneChatItem(
+                        onChatClick = { onChatClicked(chatItem) },
+                        model = chatItem
+                    )
                 }
             }
         }
@@ -64,7 +55,7 @@ private fun MessengerViewDisplayPreview() {
                 ),
 
                 MessengerChatModel(
-                    userName = "Mile",
+                    userName = "Mike",
                     lastMessage = "LOL",
                     icon = R.drawable.ic_loading
                 )

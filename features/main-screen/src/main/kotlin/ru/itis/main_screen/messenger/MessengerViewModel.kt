@@ -38,7 +38,7 @@ internal class MessengerViewModel(
 
     private fun onNetwork(available: Boolean) {
         if (!available) {
-            _messengerViewState.compareAndSet(_messengerViewState.value, MessengerViewState.Error)
+            _messengerViewState.compareAndSet(_messengerViewState.value, MessengerViewState.NoInternet)
         }
         if (available) {
            fetchChats()
@@ -51,6 +51,7 @@ internal class MessengerViewModel(
             is MessengerViewState.Error -> reduce(event, currentViewState)
             is MessengerViewState.NoChats -> reduce(event, currentViewState)
             is MessengerViewState.Display -> reduce(event, currentViewState)
+            is MessengerViewState.NoInternet -> reduce(event, currentViewState)
         }
     }
 
@@ -67,7 +68,7 @@ internal class MessengerViewModel(
         when (event) {
             MessengerEvent.EnterScreen -> fetchChats()
             MessengerEvent.ReloadScreen -> fetchChats()
-            is MessengerEvent.OnChatClick -> {}
+            else -> {}
         }
     }
 
@@ -83,6 +84,14 @@ internal class MessengerViewModel(
             MessengerEvent.EnterScreen -> {
                 fetchChats()
             }
+            else -> throw NotImplementedError("Unknown $event for $currentViewState")
+        }
+    }
+
+    private fun reduce(event: MessengerEvent, currentViewState: MessengerViewState.NoInternet) {
+        when (event) {
+            MessengerEvent.EnterScreen -> fetchChats()
+
             else -> throw NotImplementedError("Unknown $event for $currentViewState")
         }
     }
@@ -105,7 +114,7 @@ internal class MessengerViewModel(
                         MessengerChatModel(
                             "Iskandar2",
                             "last",
-                            icon = ru.itis.core.ui.R.drawable._7163859
+                            icon = R.drawable._7163859
                         ),
                     )
                 )

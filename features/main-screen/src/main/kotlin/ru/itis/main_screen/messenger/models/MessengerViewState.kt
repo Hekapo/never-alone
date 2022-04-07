@@ -13,4 +13,5 @@ sealed class MessengerViewState {
     ) : MessengerViewState()
 
     object NoChats : MessengerViewState()
+    object NoInternet : MessengerViewState()
 }
