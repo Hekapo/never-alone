@@ -3,6 +3,8 @@ package ru.itis.main_screen.messenger
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
+import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.network.NetworkListener
 import javax.inject.Scope
 
 /**
@@ -20,6 +22,7 @@ internal interface MessengerComponent {
 
     @Component.Builder
     interface Builder {
+
         fun deps(deps: MessengerDeps): Builder
 
         fun build(): MessengerComponent
@@ -27,6 +30,8 @@ internal interface MessengerComponent {
 }
 
 interface MessengerDeps {
+    val networkListener: NetworkListener
+    val dispatchersProvider: DispatchersProvider
 
 }
 

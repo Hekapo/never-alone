@@ -38,14 +38,22 @@ fun MainScreenRoute(deps: MainDeps) {
 
     val viewState by mainViewModel.navigation.collectAsState()
 
-    MainScreen(deps = deps, viewState = viewState, onRouteChange = mainViewModel::onRouteChange)
+    MainScreen(
+        viewState = viewState,
+        onRouteChange = mainViewModel::onRouteChange,
+        onHomeRoute = {},
+        onMessengerRoute = { MessengerScreenRoute(deps = deps) },
+        onProfileRoute = { ProfileScreenRoute(deps = deps) }
+    )
 }
 
 @Composable
 private fun MainScreen(
-    deps: MainDeps,
     viewState: MainBottomScreen,
-    onRouteChange: (MainBottomScreen) -> Unit
+    onRouteChange: (MainBottomScreen) -> Unit,
+    onHomeRoute: @Composable () -> Unit,
+    onMessengerRoute: @Composable () -> Unit,
+    onProfileRoute: @Composable () -> Unit,
 ) {
 
     Column {
@@ -75,13 +83,9 @@ private fun MainScreen(
         }
         Box(modifier = Modifier.weight(1f)) {
             when (viewState) {
-                MainBottomScreen.Home -> {}
-                MainBottomScreen.Messenger -> {
-                    MessengerScreenRoute(deps = deps)
-                }
-                MainBottomScreen.Profile -> {
-                    ProfileScreenRoute(deps = deps)
-                }
+                MainBottomScreen.Home -> onHomeRoute()
+                MainBottomScreen.Messenger -> onMessengerRoute()
+                MainBottomScreen.Profile -> onProfileRoute()
             }
         }
 
@@ -101,5 +105,23 @@ private fun MainScreen(
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun MainScreenPreview() =
-    MainScreen(deps = object : MainDeps {}, MainBottomScreen.Profile, onRouteChange = {})
+private fun MainScreenProfilePreview() =
+    MainScreen(
+        viewState = MainBottomScreen.Profile,
+        onRouteChange = {},
+        onHomeRoute = {},
+        onMessengerRoute = {},
+        onProfileRoute = {}
+    )
+
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun MainScreenMessengerPreview() =
+    MainScreen(
+        viewState = MainBottomScreen.Messenger,
+        onRouteChange = {},
+        onHomeRoute = {},
+        onMessengerRoute = {},
+        onProfileRoute = {}
+    )

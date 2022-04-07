@@ -2,6 +2,7 @@ package ru.itis.main_screen.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import dagger.BindsInstance
 import dagger.Component
 
 /**

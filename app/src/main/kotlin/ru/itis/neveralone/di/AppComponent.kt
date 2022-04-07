@@ -1,6 +1,5 @@
 package ru.itis.neveralone.di
 
-import android.app.Application
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
@@ -11,6 +10,7 @@ import ru.itis.core.di.NetworkListenerModule
 import ru.itis.core.domain.di.UseCaseModule
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 import ru.itis.core.domain.usecase.ISignInUseCase
+import ru.itis.core.network.NetworkListener
 import ru.itis.features.signin.SignInDeps
 import ru.itis.features.signup.SignUpDeps
 import ru.itis.features.signup.email.create_user.CreateUserDeps
@@ -37,6 +37,7 @@ interface AppComponent :
     CreateUserDeps,
     MainDeps {
 
+    override val networkListener: NetworkListener
     override val sigInUseCase: ISignInUseCase
     override val singUpUseCase: IPhoneSignUpUseCase
 

@@ -8,6 +8,7 @@ import ru.itis.core.ui.views.ViewLoading
 import ru.itis.main_screen.messenger.models.MessengerEvent
 import ru.itis.main_screen.messenger.models.MessengerViewState
 import ru.itis.main_screen.messenger.views.MessengerViewDisplay
+import ru.itis.main_screen.messenger.views.MessengerViewError
 import ru.itis.main_screen.messenger.views.MessengerViewNoChats
 
 /**
@@ -32,7 +33,7 @@ fun MessengerScreenRoute(
     when (val state = viewState.value) {
         MessengerViewState.Loading -> ViewLoading()
         MessengerViewState.NoChats -> MessengerViewNoChats()
-        MessengerViewState.Error -> {}
+        MessengerViewState.Error ->  MessengerViewError()
         is MessengerViewState.Display -> MessengerViewDisplay(
             viewState = state,
             onChatClicked = {}

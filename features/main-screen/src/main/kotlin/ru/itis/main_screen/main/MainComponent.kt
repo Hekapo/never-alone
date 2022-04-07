@@ -2,6 +2,7 @@ package ru.itis.main_screen.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import dagger.BindsInstance
 import dagger.Component
 import ru.itis.main_screen.messenger.MessengerDeps
 import ru.itis.main_screen.profile.ProfileDeps
