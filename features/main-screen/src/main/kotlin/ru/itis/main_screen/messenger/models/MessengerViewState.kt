@@ -9,7 +9,8 @@ sealed class MessengerViewState {
     object Loading : MessengerViewState()
     object Error : MessengerViewState()
     data class Display(
-        val items: List<MessengerChatModel>,
+        val items: List<MessengerChatModel> = emptyList(),
+        val isNetworkAvailable: Boolean = true
     ) : MessengerViewState()
 
     object NoChats : MessengerViewState()

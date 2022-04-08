@@ -30,6 +30,8 @@ fun MessengerScreenRoute(
 
     val viewState = messengerViewModel.messengerViewState.collectAsState()
 
+    val networkState = messengerViewModel.networkState.collectAsState()
+
     when (val state = viewState.value) {
         MessengerViewState.Loading -> ViewLoading()
         MessengerViewState.NoChats -> MessengerViewNoChats()

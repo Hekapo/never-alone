@@ -11,6 +11,7 @@ import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.network.NetworkListener
 import ru.itis.core.ui.R
 import ru.itis.main_screen.messenger.models.MessengerEvent
+import ru.itis.main_screen.messenger.models.MessengerUIState
 import ru.itis.main_screen.messenger.models.MessengerViewState
 import ru.itis.main_screen.messenger.views.MessengerChatModel
 import javax.inject.Inject
@@ -28,6 +29,9 @@ internal class MessengerViewModel(
         MutableStateFlow(MessengerViewState.Loading)
     val messengerViewState: StateFlow<MessengerViewState> = _messengerViewState
 
+    private val _networkState = MutableStateFlow(MessengerUIState())
+    val networkState = _networkState.asStateFlow()
+
     init {
         networkListener.networkState
             .distinctUntilChanged()
@@ -38,10 +42,18 @@ internal class MessengerViewModel(
 
     private fun onNetwork(available: Boolean) {
         if (!available) {
-            _messengerViewState.compareAndSet(_messengerViewState.value, MessengerViewState.NoInternet)
-        }
-        if (available) {
-           fetchChats()
+            _messengerViewState.compareAndSet(
+                _messengerViewState.value,
+                MessengerViewState.Display().copy(isNetworkAvailable = false)
+            )
+            _networkState.update { it.copy(isNetworkAvailable = false) }
+        } else {
+            _messengerViewState.compareAndSet(
+                _messengerViewState.value,
+                MessengerViewState.Display().copy(isNetworkAvailable = true)
+            )
+            _networkState.update { it.copy(isNetworkAvailable = true) }
+
         }
     }
 
