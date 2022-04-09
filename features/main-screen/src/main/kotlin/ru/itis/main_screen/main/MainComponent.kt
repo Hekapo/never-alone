@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.BindsInstance
 import dagger.Component
+import ru.itis.main_screen.home.HomeDeps
 import ru.itis.main_screen.messenger.MessengerDeps
 import ru.itis.main_screen.profile.ProfileDeps
 
@@ -25,7 +26,7 @@ internal interface MainComponent {
     }
 }
 
-interface MainDeps : ProfileDeps, MessengerDeps {
+interface MainDeps : ProfileDeps, MessengerDeps, HomeDeps {
 
 }
 
