@@ -2,9 +2,11 @@ package ru.itis.core.data.di
 
 import dagger.Binds
 import dagger.Module
+import ru.itis.core.data.repository.DatabaseRepositoryImpl
 import ru.itis.core.data.repository.EmailSignUpRepositoryImpl
 import ru.itis.core.data.repository.PhoneSignUpRepositoryImpl
 import ru.itis.core.data.repository.SignInRepositoryImpl
+import ru.itis.core.domain.repository.DatabaseRepository
 import ru.itis.core.domain.repository.EmailSignUpRepository
 import ru.itis.core.domain.repository.PhoneSignUpRepository
 import ru.itis.core.domain.repository.SignInRepository
@@ -33,4 +35,9 @@ internal interface RepositoryModuleBinds {
     fun provideEmailSignUpRepository(
         emailSignUpRepositoryImpl: EmailSignUpRepositoryImpl
     ): EmailSignUpRepository
+
+    @Binds
+    fun provideDatabaseRepository(
+        databaseRepositoryImpl: DatabaseRepositoryImpl
+    ): DatabaseRepository
 }

@@ -3,11 +3,15 @@ package ru.itis.neveralone.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import ru.itis.core.data.di.DatabaseModule
 import ru.itis.core.data.di.NetworkModule
 import ru.itis.core.data.di.RepositoryModule
 import ru.itis.core.di.CoroutineModule
 import ru.itis.core.di.NetworkListenerModule
+import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.di.UseCaseModule
+import ru.itis.core.domain.usecase.IDatabaseUseCase
+import ru.itis.core.domain.usecase.IEmailSignUpUseCase
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 import ru.itis.core.domain.usecase.ISignInUseCase
 import ru.itis.core.network.NetworkListener
@@ -28,7 +32,9 @@ import javax.inject.Singleton
         UseCaseModule::class,
         CoroutineModule::class,
         NetworkListenerModule::class,
-        NetworkModule::class]
+        NetworkModule::class,
+        DatabaseModule::class
+    ]
 )]
 interface AppComponent :
     SignInDeps,
@@ -36,10 +42,12 @@ interface AppComponent :
     PhoneVerificationDeps,
     CreateUserDeps,
     MainDeps {
-
     override val networkListener: NetworkListener
     override val sigInUseCase: ISignInUseCase
     override val singUpUseCase: IPhoneSignUpUseCase
+    override val databaseUseCase: IDatabaseUseCase
+    override val emailSignUpUseCase: IEmailSignUpUseCase
+    override val dispatchersProvider: DispatchersProvider
 
     @Component.Builder
     interface Builder {

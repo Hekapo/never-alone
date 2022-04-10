@@ -22,4 +22,7 @@ internal interface UseCaseModuleBinds {
 
     @Binds
     fun provideEmailSignUpUseCase(useCaseEmail: EmailSignUpUseCase): IEmailSignUpUseCase
+
+    @Binds
+    fun provideDatabaseUseCase(databaseUseCase: DatabaseUseCase): IDatabaseUseCase
 }
