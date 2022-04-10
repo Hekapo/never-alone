@@ -22,4 +22,10 @@
     <string name="enter_verification_code">Enter confirmation code</string>
     <string name="user_name">User name</string>
     <string name="continue_text">Continue</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_messenger">Messenger</string>
+    <string name="title_home">Home</string>
+    <string name="full_name">Full name</string>
+    <string name="social_url">Social URL</string>
+    <string name="email_text">Email</string>
 </resources>

@@ -3,16 +3,20 @@ package ru.itis.features.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
-import ru.itis.core.annotations.FeatureScope
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.ISignInUseCase
+import javax.inject.Scope
 
 
 /**
  * Created by Iskandar on 11.03.2022.
  */
 
-@[FeatureScope Component(dependencies = [SignInDeps::class])]
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+internal annotation class SignInScope
+
+@[SignInScope Component(dependencies = [SignInDeps::class])]
 internal interface SignInComponent {
 
     fun getViewModelFactory(): SignInViewModel.SignInViewModelFactory

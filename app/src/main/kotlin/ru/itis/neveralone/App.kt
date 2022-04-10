@@ -12,7 +12,7 @@ import ru.itis.neveralone.di.DaggerAppComponent
 class App : Application() {
     val appComponent: AppComponent by lazy(LazyThreadSafetyMode.NONE) {
         DaggerAppComponent.builder()
-            .application(application = this)
+            .application(application = this.applicationContext)
             .build()
     }
 }
