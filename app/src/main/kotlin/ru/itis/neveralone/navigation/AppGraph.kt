@@ -86,7 +86,9 @@ internal fun AppNavGraph(
             CreateUserRoute(
                 email = EmailPassData(email),
                 deps = appComponent,
-                onNextClick = {},
+                onNextClick = {
+                    navController.navigate(MainScreenDestination.key)
+                },
                 onBackClick = { navController.popBackStack() }
             )
         }

@@ -10,7 +10,7 @@ object DatabaseConstants {
 
     const val CHILD_ID = "id"
 
-    const val CHILD_USERNAME = "phone"
+    const val CHILD_USERNAME = "name"
 
     const val CHILD_EMAIL = "email"
 

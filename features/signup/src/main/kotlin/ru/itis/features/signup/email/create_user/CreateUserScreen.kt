@@ -6,6 +6,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -55,9 +57,7 @@ fun CreateUserRoute(
         onPasswordChange = createUserViewModel::onPasswordChange,
         onNextClick = {
             createUserViewModel.createUser()
-            if (uiState.couldNavigate) {
-                onNextClick()
-            }
+            onNextClick()
         },
         onBackClick = onBackClick
     )
@@ -115,6 +115,7 @@ private fun CreateUserScreen(
             LoginTextField(
                 inputValue = uiState.inputPassword.password,
                 onValueChange = onPasswordChange,
+                isError = uiState.inputPassword.showError,
                 isEnabled = uiState.inputPassword.isFieldEnabled,
                 placeholder = stringResource(id = R.string.enter_password_hint),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -125,7 +126,10 @@ private fun CreateUserScreen(
                 text = stringResource(id = R.string.continue_text),
                 color = AppTheme.colors.backgroundOnSecondary,
                 style = AppTheme.typography.text14M,
-                onClick = onNextClick
+                onClick = {
+                        onNextClick()
+
+                }
             )
         }
     }

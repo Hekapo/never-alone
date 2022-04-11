@@ -1,7 +1,17 @@
+import java.util.Properties
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+}
+
+val localProps = Properties()
+val localProperties = File(rootProject.rootDir, "local.properties")
+if (localProperties.exists() && localProperties.isFile) {
+    localProperties.inputStream().use { input ->
+        localProps.load(input)
+    }
 }
 
 android {
@@ -9,6 +19,10 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+
+        val databaseUrl = checkNotNull(localProps.getProperty("database.url") ?: System.getenv("DATABASE_URL"))
+        buildConfigField("String","DATABASE_URL", "\"$databaseUrl\"")
+
     }
 
     buildTypes {

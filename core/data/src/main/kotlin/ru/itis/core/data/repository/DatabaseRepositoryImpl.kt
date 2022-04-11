@@ -1,5 +1,6 @@
 package ru.itis.core.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import ru.itis.core.database_constants.DatabaseConstants.NODE_USERS
@@ -17,7 +18,14 @@ class DatabaseRepositoryImpl @Inject constructor(
 ) : DatabaseRepository {
 
     override suspend fun addUser(user: User) {
-        user.id?.let { databaseReference.child(NODE_USERS).child(it).updateChildren(user.toMap()) }
+        Log.e("DEBUG", user.toString())
+            databaseReference.child(NODE_USERS).child(user.id!!).updateChildren(user.toMap())
+                .addOnCompleteListener {
+                    Log.e("DEBUG", "CREATED")
+                }.addOnFailureListener {
+                    Log.e("DEBUG", "FAIL")
+
+        }
     }
 
     override suspend fun getUsers(): List<User> {
