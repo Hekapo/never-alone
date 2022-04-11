@@ -22,7 +22,6 @@ import javax.inject.Inject
  * Copyright (c) 05.03.2022 Created by Iskandar
  */
 
-@Inject
 @Composable
 internal fun LoginNavGraph(
     navController: NavHostController,
