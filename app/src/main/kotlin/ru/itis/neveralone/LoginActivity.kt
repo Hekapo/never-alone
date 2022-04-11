@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import ru.itis.core.ui.theme.AppTheme
-import ru.itis.neveralone.navigation.AppNavGraph
+import ru.itis.neveralone.navigation.LoginNavGraph
 
 /**
  * Copyright (c) 11.04.2022 Created by Iskandar
@@ -26,7 +26,7 @@ class LoginActivity : ComponentActivity() {
             ProvideWindowInsets(consumeWindowInsets = true) {
                 val navController = rememberNavController()
                 val intent = Intent(this, MainActivity::class.java)
-                AppNavGraph(
+                LoginNavGraph(
                     navController = navController,
                     appComponent = (application as App).appComponent,
                     toMainScreen = {

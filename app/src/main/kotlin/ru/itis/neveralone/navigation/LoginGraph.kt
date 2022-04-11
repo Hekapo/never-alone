@@ -22,7 +22,7 @@ import ru.itis.neveralone.navigation.Destination.*
  */
 
 @Composable
-internal fun AppNavGraph(
+internal fun LoginNavGraph(
     navController: NavHostController,
     appComponent: AppComponent,
     toMainScreen: () -> Unit
