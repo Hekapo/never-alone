@@ -1,6 +1,9 @@
 package ru.itis.core.ui.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -65,9 +68,18 @@ fun LoginTextField(
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = backgroundColor,
             textColor = AppTheme.colors.textMediumEmphasis,
-            focusedLabelColor = AppTheme.colors.textMediumEmphasis,
-            unfocusedLabelColor = AppTheme.colors.textMediumEmphasis,
+            errorLabelColor = Color.Transparent,
             disabledTextColor = AppTheme.colors.textHighEmphasis.copy(alpha = 0.5f),
+            errorCursorColor = Color.Transparent,
+            leadingIconColor = Color.Transparent,
+            placeholderColor = AppTheme.colors.textLowEmphasis,
+            trailingIconColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent,
+            errorLeadingIconColor = Color.Transparent,
+            errorTrailingIconColor = Color.Transparent,
+            disabledPlaceholderColor = AppTheme.colors.textLowEmphasis,
         )
     )
 }
@@ -76,49 +88,54 @@ fun LoginTextField(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun TextFieldPreview() {
-//    LoginTextField(
-//        inputValue = "Test input",
-//        placeholder = "Test",
-//        onValueChange = {},
-//        isError = true,
-//        label = {
-//            Text(text = "error")
-//        }
-//    )
-
-    OutlinedTextField(
-        value = "text",
-        onValueChange = {},
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = AppTheme.colors.textFieldOnPrimary,
-            textColor = AppTheme.colors.textMediumEmphasis
-
-        )
-    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = AppTheme.colors.backgroundPrimary)
+    ) {
+        LoginTextField(inputValue = "test", placeholder = "test", onValueChange = {})
+//        OutlinedTextField(
+//            value = "text",
+//            onValueChange = {},
+//            label = { Text(text = "test")},
+//            colors = TextFieldDefaults.textFieldColors(
+//                backgroundColor = AppTheme.colors.textFieldOnPrimary,
+//                textColor = AppTheme.colors.textMediumEmphasis,
+//                cursorColor = Color.Transparent,
+//                errorIndicatorColor = Color.Transparent,
+//                errorLabelColor = AppTheme.colors.errorOnPrimary,
+//                focusedLabelColor = AppTheme.colors.textLowEmphasis
+//            )
+//        )
+    }
 }
 
 @Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun TextFieldPreview2() {
-//    LoginTextField(
-//        inputValue = "Test input",
-//        placeholder = "Test",
-//        onValueChange = {},
-//        isError = true,
-//        label = {
-//            Text(text = "error")
-//        }
-//    )
+fun TextFieldPreviewError() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = AppTheme.colors.backgroundPrimary)
+    ) {
+        LoginTextField(inputValue = "test", placeholder = "test", onValueChange = {})
 
-    OutlinedTextField(
-        value = "",
-        onValueChange = {},
-        label = { Text(text = "empty field") },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = AppTheme.colors.textFieldOnPrimary,
-            textColor = AppTheme.colors.textMediumEmphasis,
-        ),
-        isError = true
-    )
+//        OutlinedTextField(
+//            value = "text",
+//            onValueChange = {},
+//            label = { Text(text = "test")},
+//            colors = TextFieldDefaults.textFieldColors(
+//                backgroundColor = AppTheme.colors.textFieldOnPrimary,
+//                textColor = AppTheme.colors.textMediumEmphasis,
+//                cursorColor = Color.Transparent,
+//                errorIndicatorColor = Color.Transparent,
+//                errorLabelColor = AppTheme.colors.errorOnPrimary,
+//                focusedLabelColor = AppTheme.colors.textLowEmphasis,
+//                unfocusedLabelColor = AppTheme.colors.textLowEmphasis
+//            ),
+//            isError = true
+//        )
+    }
+
 }

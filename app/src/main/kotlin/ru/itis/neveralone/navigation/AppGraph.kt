@@ -24,7 +24,8 @@ import ru.itis.neveralone.navigation.Destination.*
 @Composable
 internal fun AppNavGraph(
     navController: NavHostController,
-    appComponent: AppComponent
+    appComponent: AppComponent,
+    toMainScreen: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -86,14 +87,9 @@ internal fun AppNavGraph(
             CreateUserRoute(
                 email = EmailPassData(email),
                 deps = appComponent,
-                onNextClick = {
-                    navController.navigate(MainScreenDestination.key)
-                },
+                onNextClick = { toMainScreen() },
                 onBackClick = { navController.popBackStack() }
             )
-        }
-        composable(route = MainScreenDestination.key) {
-            MainScreenRoute(deps = appComponent)
         }
     }
 }
