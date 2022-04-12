@@ -41,7 +41,6 @@ internal class CreateUserViewModel(
 
     private fun onComplete() {
         viewModelScope.launch {
-            Log.e("DEBUG", "${databaseUseCase.getCurrentUserId()}")
             databaseUseCase.addUser(
                 User(
                     id = databaseUseCase.getCurrentUserId(),
