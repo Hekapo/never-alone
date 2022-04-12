@@ -17,7 +17,7 @@ interface IDatabaseUseCase {
 }
 
 @Reusable
-class DatabaseUseCase @Inject constructor(
+internal class DatabaseUseCase @Inject constructor(
     private val databaseRepository: DatabaseRepository
 ) : IDatabaseUseCase {
 
