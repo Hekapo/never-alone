@@ -1,5 +1,6 @@
 package ru.itis.features.signup.email.create_user
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -77,7 +78,8 @@ internal class CreateUserViewModel(
             it.copy(
                 inputUserName = CreateUserUIState.InputUserName(
                     name = name,
-                    isFieldEnabled = true
+                    isFieldEnabled = true,
+                    showError = name.isEmpty()
                 )
             )
         }
@@ -89,7 +91,8 @@ internal class CreateUserViewModel(
             it.copy(
                 inputPassword = CreateUserUIState.InputPassword(
                     password = password,
-                    isFieldEnabled = true
+                    isFieldEnabled = true,
+                    showError = password.isEmpty()
                 )
             )
         }

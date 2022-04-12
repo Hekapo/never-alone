@@ -17,7 +17,7 @@ interface IEmailSignUpUseCase {
 }
 
 @Reusable
-class EmailSignUpUseCase @Inject constructor(
+internal class EmailSignUpUseCase @Inject constructor(
     private val signUpRepository: EmailSignUpRepository
 ) : IEmailSignUpUseCase {
 

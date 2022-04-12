@@ -17,7 +17,7 @@ class DatabaseRepositoryImpl @Inject constructor(
 ) : DatabaseRepository {
 
     override suspend fun addUser(user: User) {
-        user.id?.let { databaseReference.child(NODE_USERS).child(it).updateChildren(user.toMap()) }
+        databaseReference.child(NODE_USERS).child(user.id!!).updateChildren(user.toMap())
     }
 
     override suspend fun getUsers(): List<User> {

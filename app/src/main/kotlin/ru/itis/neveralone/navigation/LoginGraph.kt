@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.google.firebase.auth.FirebaseAuth
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
@@ -13,31 +14,39 @@ import ru.itis.features.signup.email.create_user.CreateUserRoute
 import ru.itis.features.signup.login_method.LoginMethodRoute
 import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
-import ru.itis.main_screen.main.MainScreenRoute
 import ru.itis.neveralone.di.AppComponent
 import ru.itis.neveralone.navigation.Destination.*
+import javax.inject.Inject
 
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
  */
 
 @Composable
-internal fun AppNavGraph(
+internal fun LoginNavGraph(
     navController: NavHostController,
-    appComponent: AppComponent
+    appComponent: AppComponent,
+    toMainScreen: () -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = SplashDestination.key
     ) {
+        val user = FirebaseAuth.getInstance().currentUser
         composable(route = SplashDestination.key) {
-            LoadingScreen {
-                navController.navigate(ChooseLoginMethod.key) {
-                    popUpTo(SplashDestination.key) {
-                        inclusive = true
+            LoadingScreen(
+                onNavigate = {
+                    if (user != null) {
+                        toMainScreen()
+                    } else {
+                        navController.navigate(ChooseLoginMethod.key) {
+                            popUpTo(SplashDestination.key) {
+                                inclusive = true
+                            }
+                        }
                     }
                 }
-            }
+            )
 
         }
         composable(route = ChooseLoginMethod.key) {
@@ -86,12 +95,9 @@ internal fun AppNavGraph(
             CreateUserRoute(
                 email = EmailPassData(email),
                 deps = appComponent,
-                onNextClick = {},
+                onNextClick = { toMainScreen() },
                 onBackClick = { navController.popBackStack() }
             )
-        }
-        composable(route = MainScreenDestination.key) {
-            MainScreenRoute(deps = appComponent)
         }
     }
 }

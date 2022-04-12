@@ -4,6 +4,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
+import ru.itis.core.data.BuildConfig
 import javax.inject.Singleton
 
 /**
@@ -16,7 +17,7 @@ class DatabaseModule {
     @Provides
     @Singleton
     internal fun provideFirebaseDatabase(): FirebaseDatabase {
-        return FirebaseDatabase.getInstance()
+        return FirebaseDatabase.getInstance(BuildConfig.DATABASE_URL)
     }
 
     @Provides

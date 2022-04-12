@@ -125,3 +125,15 @@ private fun MainScreenMessengerPreview() =
         onMessengerRoute = {},
         onProfileRoute = {}
     )
+
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun MainScreenHomePreview() =
+    MainScreen(
+        viewState = MainBottomScreen.Home,
+        onRouteChange = {},
+        onHomeRoute = {},
+        onMessengerRoute = {},
+        onProfileRoute = {}
+    )
