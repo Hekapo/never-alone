@@ -1,22 +1,18 @@
 package ru.itis.main_screen.messenger.views
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
-import ru.itis.core.ui.components.LoadingAnimation
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.main_screen.messenger.models.MessengerViewState
 import kotlin.math.roundToInt

@@ -5,19 +5,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.ImageTopAppBar
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.main_screen.components.AnimatedBottomBar
 import ru.itis.main_screen.main.destinations.MainBottomScreen
+import ru.itis.main_screen.main.destinations.asTitle
 import ru.itis.main_screen.messenger.MessengerScreenRoute
 import ru.itis.main_screen.profile.ProfileScreenRoute
 
@@ -36,11 +41,10 @@ fun MainScreenRoute(deps: MainDeps) {
         factory = mainComponentViewModel.mainComponent.mainViewModel
     )
 
-    val viewState by mainViewModel.navigation.collectAsState()
+    val childNavController = rememberNavController()
 
     MainScreen(
-        viewState = viewState,
-        onRouteChange = mainViewModel::onRouteChange,
+        childNavController = childNavController,
         onHomeRoute = {},
         onMessengerRoute = { MessengerScreenRoute(deps = deps) },
         onProfileRoute = { ProfileScreenRoute(deps = deps) }
@@ -49,12 +53,13 @@ fun MainScreenRoute(deps: MainDeps) {
 
 @Composable
 private fun MainScreen(
-    viewState: MainBottomScreen,
-    onRouteChange: (MainBottomScreen) -> Unit,
+    childNavController: NavHostController,
     onHomeRoute: @Composable () -> Unit,
     onMessengerRoute: @Composable () -> Unit,
     onProfileRoute: @Composable () -> Unit,
 ) {
+    val navBackStackEntry by childNavController.currentBackStackEntryAsState()
+    val context = LocalContext.current
 
     Column {
         Column(
@@ -64,7 +69,7 @@ private fun MainScreen(
         ) {
             ImageTopAppBar(
                 centerImageVector = R.drawable.leaves,
-                menuImageVector = if (viewState is MainBottomScreen.Profile)
+                menuImageVector = if (navBackStackEntry?.destination?.route == MainBottomScreen.Profile.route)
                     R.drawable.rows else null,
                 onMenuClick = {}
             )
@@ -74,18 +79,32 @@ private fun MainScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = stringResource(id = viewState.resourceId),
-                    style = AppTheme.typography.text28R,
-                    color = AppTheme.colors.textHighEmphasis
-                )
+                navBackStackEntry?.destination?.route?.asTitle(context)?.let {
+                    Text(
+                        text = it,
+                        style = AppTheme.typography.text28R,
+                        color = AppTheme.colors.textHighEmphasis
+                    )
+                }
             }
         }
         Box(modifier = Modifier.weight(1f)) {
-            when (viewState) {
-                MainBottomScreen.Home -> onHomeRoute()
-                MainBottomScreen.Messenger -> onMessengerRoute()
-                MainBottomScreen.Profile -> onProfileRoute()
+            NavHost(
+                navController = childNavController,
+                startDestination = MainBottomScreen.Home.route
+            ) {
+
+                composable(route = MainBottomScreen.Home.route) {
+                    onHomeRoute()
+                }
+
+                composable(route = MainBottomScreen.Messenger.route) {
+                    onMessengerRoute()
+                }
+
+                composable(route = MainBottomScreen.Profile.route) {
+                    onProfileRoute()
+                }
             }
         }
 
@@ -95,9 +114,10 @@ private fun MainScreen(
                 .fillMaxWidth()
         ) {
 
-            AnimatedBottomBar(currentRoute = viewState) {
-                onRouteChange(it)
-            }
+            AnimatedBottomBar(
+                navController = childNavController,
+                navBackStackEntry = navBackStackEntry,
+            )
         }
     }
 }
@@ -107,33 +127,8 @@ private fun MainScreen(
 @Composable
 private fun MainScreenProfilePreview() =
     MainScreen(
-        viewState = MainBottomScreen.Profile,
-        onRouteChange = {},
         onHomeRoute = {},
         onMessengerRoute = {},
-        onProfileRoute = {}
-    )
-
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun MainScreenMessengerPreview() =
-    MainScreen(
-        viewState = MainBottomScreen.Messenger,
-        onRouteChange = {},
-        onHomeRoute = {},
-        onMessengerRoute = {},
-        onProfileRoute = {}
-    )
-
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun MainScreenHomePreview() =
-    MainScreen(
-        viewState = MainBottomScreen.Home,
-        onRouteChange = {},
-        onHomeRoute = {},
-        onMessengerRoute = {},
-        onProfileRoute = {}
+        onProfileRoute = {},
+        childNavController = rememberNavController()
     )
