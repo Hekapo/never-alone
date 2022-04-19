@@ -99,7 +99,7 @@ internal fun ProfileScreen(
     }
 }
 
-@Preview()
+@Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun ProfileScreenPreview() = ProfileScreen()
