@@ -1,6 +1,7 @@
 package ru.itis.neveralone.di
 
 import android.content.Context
+import com.example.settings_screen.SettingsDeps
 import dagger.BindsInstance
 import dagger.Component
 import ru.itis.core.data.di.DatabaseModule
@@ -41,7 +42,8 @@ interface AppComponent :
     SignUpDeps,
     PhoneVerificationDeps,
     CreateUserDeps,
-    MainDeps {
+    MainDeps,
+    SettingsDeps {
     override val networkListener: NetworkListener
     override val sigInUseCase: ISignInUseCase
     override val singUpUseCase: IPhoneSignUpUseCase

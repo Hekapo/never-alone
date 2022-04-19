@@ -75,6 +75,7 @@ dependencies {
     implementation(project(":features:signin"))
     implementation(project(":features:signup"))
     implementation(project(":features:main-screen"))
+    implementation(project(":features:settings-screen"))
 
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.crashlytics)
