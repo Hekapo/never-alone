@@ -1,5 +1,6 @@
 package ru.itis.main_screen.profile
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,24 +37,25 @@ fun ProfileRowInfo(
             .background(AppTheme.colors.backgroundPrimary),
     ) {
         Text(
-            modifier = Modifier.padding(start = 8.dp, top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp),
             text = title,
             color = titleColor,
             style = titleTextStyle
         )
         Text(
-            modifier = Modifier.padding(start = 8.dp, top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp),
             text = mainText,
             color = mainTextColor,
             style = mainTextStyle
         )
         if (needRow) {
-            Divider(modifier = Modifier.padding(start = 8.dp, top = 8.dp, bottom = 4.dp))
+            Divider(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp).background(color = AppTheme.colors.textLowEmphasis))
         }
     }
 }
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun ProfileRowInfoPreview() {
     Column {
