@@ -26,6 +26,7 @@ fun BottomSheet() {
     )
 
     val coroutineScope = rememberCoroutineScope()
+
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         sheetContent = {
@@ -33,7 +34,7 @@ fun BottomSheet() {
                 Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .background(Color.Green)
+                    .background(Color.White)
             ) {
                 Column(
                     Modifier.fillMaxSize(),
