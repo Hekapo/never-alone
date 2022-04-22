@@ -15,4 +15,5 @@ internal sealed class Destination(val key: String) {
     }
 
     object MainScreenDestination : Destination("main")
+    object SettingsScreenDestination : Destination("settings")
 }

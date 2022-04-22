@@ -28,7 +28,7 @@ fun SearchField(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(44.dp),
+            .height(48.dp),
         backgroundColor = backgroundColor,
         shape = RoundedCornerShape(16.dp),
         elevation = 0.dp

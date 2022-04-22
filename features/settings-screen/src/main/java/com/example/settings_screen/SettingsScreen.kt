@@ -7,9 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -42,7 +40,7 @@ fun SettingsScreenRoute(deps: SettingsDeps) {
     val settingsViewModel = viewModel<SettingsViewModel>(
         factory = settingsComponentViewModel.settingsComponent.settingsViewModelFactory
     )
-
+SettingsScreen()
 }
 
 @Composable
@@ -102,7 +100,7 @@ private fun SettingsTopSearchField(
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
-            LoginTextField(
+            ru.itis.core.ui.components.TextField(
                 inputValue = inputText,
                 placeholder = stringResource(id = R.string.search_settings),
                 onValueChange = onTextChanged,

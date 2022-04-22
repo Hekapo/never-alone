@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.settings_screen.SettingsScreenRoute
 import com.google.firebase.auth.FirebaseAuth
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signin.SignInRoute
@@ -30,9 +31,12 @@ internal fun LoginNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = SplashDestination.key
+        startDestination = SettingsScreenDestination.key
     ) {
         val user = FirebaseAuth.getInstance().currentUser
+        composable(route = SettingsScreenDestination.key){
+            SettingsScreenRoute(deps = appComponent)
+        }
         composable(route = SplashDestination.key) {
             LoadingScreen(
                 onNavigate = {
