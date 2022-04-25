@@ -7,20 +7,22 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -50,6 +52,7 @@ fun SettingsScreenRoute(deps: SettingsDeps) {
     SettingsScreen(
         uiState = uiState,
         searchValueChanged = settingsViewModel::searchValueChanged,
+        onSearchFieldClick = {},
         onClick = {}
     )
 }
@@ -58,6 +61,7 @@ fun SettingsScreenRoute(deps: SettingsDeps) {
 private fun SettingsScreen(
     uiState: SettingsUIState,
     searchValueChanged: (String) -> Unit,
+    onSearchFieldClick: () -> Unit,
     onClick: () -> Unit
 ) {
 
@@ -77,7 +81,7 @@ private fun SettingsScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Settings",
+                text = stringResource(id = R.string.title_settings),
                 style = AppTheme.typography.text28R,
                 color = AppTheme.colors.textHighEmphasis
             )
@@ -89,7 +93,8 @@ private fun SettingsScreen(
         ) {
             SettingsTopSearchField(
                 inputText = uiState.searchFieldText,
-                onTextChanged = searchValueChanged
+                onTextChanged = searchValueChanged,
+                onClick = onSearchFieldClick
             )
             LazyColumn(
                 modifier = Modifier.padding(top = 56.dp),
@@ -111,16 +116,23 @@ private fun SettingsScreen(
 private fun SettingsTopSearchField(
     inputText: String,
     keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
+    onClick: () -> Unit,
     onTextChanged: (String) -> Unit
 ) {
-    SearchField(onClick = { /*TODO*/ }) {
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
+    SearchField(onClick = onClick) {
         Row(
             modifier = Modifier.padding(end = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             Spacer(modifier = Modifier.width(8.dp))
-            IconButton(onClick = { keyboardController?.hide() }) {
+            IconButton(onClick = {
+                keyboardController?.hide()
+                focusManager.clearFocus()
+            }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_search_18),
                     contentDescription = "",
@@ -129,25 +141,10 @@ private fun SettingsTopSearchField(
             }
             BasicTextField(
                 inputValue = inputText,
-                placeholder = "asdasdasdasd",
+                placeholder = stringResource(id = R.string.search_settings),
                 onValueChange = onTextChanged,
-//                trailingIcon = {
-//                    AnimatedVisibility(
-//                        visible = showCloseIcon,
-//                        enter = scaleIn(),
-//                        exit = scaleOut()
-//                    ) {
-//                        ClickableIcon(
-//                            backgroundColor = AppTheme.colors.backgroundPrimary,
-//                            imageVector = Icons.Default.Close,
-//                            iconTint = AppTheme.colors.buttonPrimary,
-//                            contentDescription = stringResource(id = androidx.compose.foundation.layout.R.string.descriptionIconClose),
-//                            onClick = { onTextChanged("") }
-//                        )
-//                    }
-//                }
+                focusRequester = focusRequester
             )
-
         }
     }
 }
@@ -156,5 +153,5 @@ private fun SettingsTopSearchField(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun SettingsScreenPreview() {
-    SettingsScreen(uiState = SettingsUIState(), onClick = {}, searchValueChanged = {})
+    SettingsScreen(uiState = SettingsUIState(), onClick = {}, searchValueChanged = {}, onSearchFieldClick = {})
 }
