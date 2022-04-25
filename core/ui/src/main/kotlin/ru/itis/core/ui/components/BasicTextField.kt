@@ -36,7 +36,7 @@ fun BasicTextField(
         keyboardOptions = keyboardOptions,
         decorationBox = { innerTextField ->
             Row(modifier = Modifier.fillMaxWidth()) {
-                if (inputValue.isNullOrEmpty()) {
+                if (inputValue.isBlank() || inputValue.isEmpty()) {
                     Text(
                         text = placeholder,
                         color = AppTheme.colors.textFieldOnPrimary,
@@ -52,5 +52,5 @@ fun BasicTextField(
 @Preview
 @Composable
 fun Preview() {
-    BasicTextField(inputValue = "hello", placeholder = "fuck", onValueChange = {})
+    BasicTextField(inputValue = " ", placeholder = "fuck", onValueChange = {})
 }
