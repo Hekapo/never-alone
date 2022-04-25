@@ -3,12 +3,16 @@
 package com.example.settings_screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -21,8 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.itis.core.ui.R
+import ru.itis.core.ui.components.BasicTextField
 import ru.itis.core.ui.components.ImageTopAppBar
-import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.components.SearchField
 import ru.itis.core.ui.theme.AppTheme
 
@@ -40,11 +44,22 @@ fun SettingsScreenRoute(deps: SettingsDeps) {
     val settingsViewModel = viewModel<SettingsViewModel>(
         factory = settingsComponentViewModel.settingsComponent.settingsViewModelFactory
     )
-SettingsScreen()
+
+    val uiState by settingsViewModel.searchValue.collectAsState()
+
+    SettingsScreen(
+        uiState = uiState,
+        searchValueChanged = settingsViewModel::searchValueChanged,
+        onClick = {}
+    )
 }
 
 @Composable
-private fun SettingsScreen() {
+private fun SettingsScreen(
+    uiState: SettingsUIState,
+    searchValueChanged: (String) -> Unit,
+    onClick: () -> Unit
+) {
 
     Column(
         modifier = Modifier
@@ -71,12 +86,23 @@ private fun SettingsScreen() {
         Box(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp)
         ) {
             SettingsTopSearchField(
                 inputText = "",
-                onTextChanged = {}
+                onTextChanged = searchValueChanged
             )
+            LazyColumn(
+                modifier = Modifier.padding(top = 56.dp),
+            ) {
+                Constants.settingsList.forEach { (key, value) ->
+                    item {
+                        SettingsListItem(title = value) {
+                            Log.e("DEBUG", key.toString())
+                            onClick()
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -89,7 +115,9 @@ private fun SettingsTopSearchField(
 ) {
     SearchField(onClick = { /*TODO*/ }) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.padding(end = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             Spacer(modifier = Modifier.width(8.dp))
             IconButton(onClick = { keyboardController?.hide() }) {
@@ -99,11 +127,13 @@ private fun SettingsTopSearchField(
                     tint = AppTheme.colors.textLowEmphasis
                 )
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            ru.itis.core.ui.components.TextField(
-                inputValue = inputText,
+            val test = remember { mutableStateOf("") }
+            BasicTextField(
+                inputValue = test.value,
                 placeholder = stringResource(id = R.string.search_settings),
-                onValueChange = onTextChanged,
+                onValueChange = {
+                    test.value = it
+                },
                 keyboardActions = KeyboardActions { keyboardController?.hide() },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
 //                trailingIcon = {
@@ -122,6 +152,7 @@ private fun SettingsTopSearchField(
 //                    }
 //                }
             )
+
         }
     }
 }
@@ -130,5 +161,5 @@ private fun SettingsTopSearchField(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun SettingsScreenPreview() {
-    SettingsScreen()
+    SettingsScreen(uiState = SettingsUIState(), onClick = {}, searchValueChanged = {})
 }
