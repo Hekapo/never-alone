@@ -2,6 +2,9 @@ package com.example.settings_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 /**
@@ -10,6 +13,14 @@ import javax.inject.Inject
 
 internal class SettingsViewModel() : ViewModel() {
 
+    private val _searchValue = MutableStateFlow(SettingsUIState())
+    val searchValue = _searchValue.asStateFlow()
+
+    fun searchValueChanged(value: String) {
+        _searchValue.update {
+            it.copy(searchFieldText = value)
+        }
+    }
 
     internal class SettingsViewModelFactory @Inject constructor() : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

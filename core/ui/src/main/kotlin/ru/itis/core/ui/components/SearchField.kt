@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
@@ -28,7 +29,8 @@ fun SearchField(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(48.dp),
+            .height(40.dp)
+            .padding(horizontal = 16.dp),
         backgroundColor = backgroundColor,
         shape = RoundedCornerShape(16.dp),
         elevation = 0.dp
