@@ -29,4 +29,5 @@
     <string name="social_url">Social URL</string>
     <string name="email_text">Email</string>
     <string name="search_settings">Search settings</string>
+    <string name="title_settings">Settings</string>
 </resources>
