@@ -88,7 +88,7 @@ private fun SettingsScreen(
                 .weight(1f)
         ) {
             SettingsTopSearchField(
-                inputText = "",
+                inputText = uiState.searchFieldText,
                 onTextChanged = searchValueChanged
             )
             LazyColumn(
@@ -127,15 +127,10 @@ private fun SettingsTopSearchField(
                     tint = AppTheme.colors.textLowEmphasis
                 )
             }
-            val test = remember { mutableStateOf("") }
             BasicTextField(
-                inputValue = test.value,
-                placeholder = stringResource(id = R.string.search_settings),
-                onValueChange = {
-                    test.value = it
-                },
-                keyboardActions = KeyboardActions { keyboardController?.hide() },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                inputValue = inputText,
+                placeholder = "asdasdasdasd",
+                onValueChange = onTextChanged,
 //                trailingIcon = {
 //                    AnimatedVisibility(
 //                        visible = showCloseIcon,
