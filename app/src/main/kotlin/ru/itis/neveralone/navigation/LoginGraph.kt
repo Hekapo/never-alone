@@ -6,7 +6,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.settings_screen.SettingsScreenRoute
 import com.google.firebase.auth.FirebaseAuth
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signin.SignInRoute
@@ -17,7 +16,6 @@ import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
 import ru.itis.neveralone.di.AppComponent
 import ru.itis.neveralone.navigation.LoginDestinations.*
-import javax.inject.Inject
 
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
