@@ -16,7 +16,7 @@ import ru.itis.features.signup.login_method.LoginMethodRoute
 import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
 import ru.itis.neveralone.di.AppComponent
-import ru.itis.neveralone.navigation.Destination.*
+import ru.itis.neveralone.navigation.LoginDestinations.*
 import javax.inject.Inject
 
 /**
@@ -31,20 +31,18 @@ internal fun LoginNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = SettingsScreenDestination.key
+        startDestination = SplashDestination.route
     ) {
         val user = FirebaseAuth.getInstance().currentUser
-        composable(route = SettingsScreenDestination.key){
-            SettingsScreenRoute(deps = appComponent)
-        }
-        composable(route = SplashDestination.key) {
+
+        composable(route = SplashDestination.route) {
             LoadingScreen(
                 onNavigate = {
                     if (user != null) {
                         toMainScreen()
                     } else {
-                        navController.navigate(ChooseLoginMethod.key) {
-                            popUpTo(SplashDestination.key) {
+                        navController.navigate(ChooseLoginMethod.route) {
+                            popUpTo(SplashDestination.route) {
                                 inclusive = true
                             }
                         }
@@ -53,32 +51,32 @@ internal fun LoginNavGraph(
             )
 
         }
-        composable(route = ChooseLoginMethod.key) {
+        composable(route = ChooseLoginMethod.route) {
             LoginMethodRoute(
-                onSignInScreen = { navController.navigate(route = SignInDestination.key) },
-                onSignUpScreen = { navController.navigate(route = SignUpDestination.key) }
+                onSignInScreen = { navController.navigate(route = SignInDestination.route) },
+                onSignUpScreen = { navController.navigate(route = SignUpDestination.route) }
             )
         }
-        composable(route = SignInDestination.key) {
+        composable(route = SignInDestination.route) {
             SignInRoute(
                 signInDeps = appComponent,
                 onBackClick = { navController.popBackStack() },
-                onTextRegisterClick = { navController.navigate(SignUpDestination.key) }
+                onTextRegisterClick = { navController.navigate(SignUpDestination.route) }
             )
         }
-        composable(route = SignUpDestination.key) {
+        composable(route = SignUpDestination.route) {
             SignUpRoute(
                 deps = appComponent,
                 onNextWithEmailClick = {
                     navController.navigate(setNavigationPath(emailPassData = it))
                 },
-                onNextWithPhoneClick = { navController.navigate(PhoneVerificationDestination.key) },
+                onNextWithPhoneClick = { navController.navigate(PhoneVerificationDestination.route) },
                 onBackClick = { navController.popBackStack() },
-                onTextSignInClick = { navController.navigate(SignInDestination.key) }
+                onTextSignInClick = { navController.navigate(SignInDestination.route) }
             )
 
         }
-        composable(route = PhoneVerificationDestination.key) {
+        composable(route = PhoneVerificationDestination.route) {
             PhoneVerificationRoute(
                 deps = appComponent,
                 onNextClick = { /*TODO*/ },
@@ -86,7 +84,7 @@ internal fun LoginNavGraph(
             }
         }
         composable(
-            route = CreateUserDestination.key.plus("/{${CreateUserDestination.EMAIL}}"),
+            route = CreateUserDestination.route.plus("/{${CreateUserDestination.EMAIL}}"),
             arguments = listOf(
                 navArgument(
                     CreateUserDestination.EMAIL,
@@ -107,5 +105,5 @@ internal fun LoginNavGraph(
 }
 
 private fun setNavigationPath(emailPassData: EmailPassData): String {
-    return CreateUserDestination.key.plus("/${emailPassData.email}")
+    return CreateUserDestination.route.plus("/${emailPassData.email}")
 }
