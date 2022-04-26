@@ -26,6 +26,7 @@ import ru.itis.core.ui.R
 import ru.itis.core.ui.components.ImageTopAppBar
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.main_screen.components.AnimatedBottomBar
+import ru.itis.main_screen.home.HomeScreenRoute
 import ru.itis.main_screen.main.destinations.MainBottomScreen
 import ru.itis.main_screen.main.destinations.asTitle
 import ru.itis.main_screen.messenger.MessengerScreenRoute
@@ -50,7 +51,7 @@ fun MainScreenRoute(deps: MainDeps) {
 
     MainScreen(
         childNavController = childNavController,
-        onHomeRoute = {},
+        onHomeRoute = { HomeScreenRoute(deps = deps) },
         onMessengerRoute = { MessengerScreenRoute(deps = deps) },
         onProfileRoute = { ProfileScreenRoute(deps = deps) }
     )
