@@ -85,8 +85,9 @@ private fun MainScreen(
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     LazyColumn(
-                        modifier = Modifier.fillMaxSize()
-
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         (1..3).forEach {
                             item {
@@ -97,7 +98,6 @@ private fun MainScreen(
                                 )
                             }
                         }
-
                     }
                 }
             }
