@@ -3,6 +3,7 @@ package ru.itis.main_screen.main
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -81,15 +82,23 @@ private fun MainScreen(
                     .background(Color.White)
             ) {
                 Column(
-                    Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier.fillMaxSize(),
                 ) {
-                    Text(
-                        text = "Hello I am BottomSheet",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+
+                    ) {
+                        (1..3).forEach {
+                            item {
+                                Text(
+                                    text = "Hello I am BottomSheet $it",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+
+                    }
                 }
             }
         }
