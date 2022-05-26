@@ -25,29 +25,24 @@ import ru.itis.neveralone.navigation.LoginDestinations.*
 internal fun LoginNavGraph(
     navController: NavHostController,
     appComponent: AppComponent,
-    toMainScreen: () -> Unit
+    toMainScreen: (showOnBoarding: Boolean) -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = SplashDestination.route
     ) {
-        val user = FirebaseAuth.getInstance().currentUser
-
         composable(route = SplashDestination.route) {
             LoadingScreen(
-                onNavigate = {
-                    if (user != null) {
-                        toMainScreen()
-                    } else {
-                        navController.navigate(ChooseLoginMethod.route) {
-                            popUpTo(SplashDestination.route) {
-                                inclusive = true
-                            }
+                deps = appComponent,
+                toMainScreen = { toMainScreen(it) },
+                toRegistration = {
+                    navController.navigate(ChooseLoginMethod.route) {
+                        popUpTo(SplashDestination.route) {
+                            inclusive = true
                         }
                     }
                 }
             )
-
         }
         composable(route = ChooseLoginMethod.route) {
             LoginMethodRoute(
@@ -95,7 +90,7 @@ internal fun LoginNavGraph(
             CreateUserRoute(
                 email = EmailPassData(email),
                 deps = appComponent,
-                onNextClick = { toMainScreen() },
+                onNextClick = { toMainScreen(true) },
                 onBackClick = { navController.popBackStack() }
             )
         }

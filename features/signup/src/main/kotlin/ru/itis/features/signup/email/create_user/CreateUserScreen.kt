@@ -128,7 +128,6 @@ private fun CreateUserScreen(
             Spacer(modifier = Modifier.height(16.dp))
             AuthButton(
                 text = stringResource(id = R.string.continue_text),
-                color = AppTheme.colors.backgroundOnSecondary,
                 style = AppTheme.typography.text14M,
                 onClick = {
                     onNextClick()

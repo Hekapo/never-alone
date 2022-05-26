@@ -20,6 +20,8 @@ androix-paging = "3.1.0"
 androix-paging-compose = "1.0.0-alpha14"
 androidx-hilt = "1.0.0"
 
+datastore-preferences = "1.0.0"
+
 google-material = "1.5.0"
 
 constraint-layout = "1.0.0"
@@ -79,6 +81,8 @@ androidx-paging-compose = { module = "androidx.paging:paging-compose", version.r
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0-alpha03" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version = "1.0.0" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version = "1.0.0" }
 
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
 
@@ -103,8 +107,8 @@ google-accompanist-systemuicontroller = { module = "com.google.accompanist:accom
 google-accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "google-accompanist" }
 google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "google-accompanist" }
 google-accompanist-swipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "google-accompanist" }
-google-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "google-accompanist"}
-google-accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "google-accompanist"}
+google-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "google-accompanist" }
+google-accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "google-accompanist" }
 
 google-firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 google-firebase-database = { module = "com.google.firebase:firebase-database-ktx" }

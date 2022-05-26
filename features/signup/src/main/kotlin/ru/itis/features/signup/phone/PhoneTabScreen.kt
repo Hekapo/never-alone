@@ -59,7 +59,6 @@ private fun PhoneTabScreen(
         Spacer(modifier = Modifier.height(16.dp))
         AuthButton(
             text = stringResource(id = ru.itis.core.ui.R.string.create_account),
-            color = AppTheme.colors.backgroundOnSecondary,
             style = AppTheme.typography.text14M,
             onClick = { onNextClick() }
         )

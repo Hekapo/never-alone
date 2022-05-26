@@ -30,7 +30,7 @@ class LoginActivity : ComponentActivity() {
                     navController = navController,
                     appComponent = (application as App).appComponent,
                     toMainScreen = {
-                        startActivity(intent).also {
+                        startActivity(intent.putExtra("showOnBoarding", it)).also {
                             finish()
                         }
                     }

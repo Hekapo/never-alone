@@ -23,8 +23,8 @@ import ru.itis.core.ui.theme.AppTheme
 fun AuthButton(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color,
-    style: TextStyle,
+    color: Color = AppTheme.colors.backgroundOnSecondary,
+    style: TextStyle = AppTheme.typography.text14M,
     onClick: () -> Unit
 ) {
     Button(
@@ -52,8 +52,6 @@ private fun AuthButtonPreview() {
     AuthButton(
         modifier = Modifier.background(AppTheme.colors.backgroundPrimary),
         text = "Auth",
-        color = AppTheme.colors.backgroundOnSecondary,
-        style = AppTheme.typography.text14M
     ) {
 
     }

@@ -20,9 +20,11 @@ class MainActivity : ComponentActivity() {
         AppTheme {
             ProvideWindowInsets(consumeWindowInsets = true) {
                 val navController = rememberNavController()
+                val showOnBoarding = intent.extras?.getBoolean("showOnBoarding")
                 MainNavGraph(
                     navController = navController,
                     appComponent = (application as App).appComponent,
+                    showOnBoarding = showOnBoarding
                 )
             }
         }

@@ -51,6 +51,8 @@ dependencies {
     api(libs.google.firebase.analytics)
     api(libs.google.firebase.auth)
     api(libs.google.firebase.crashlytics)
+    api(libs.androidx.datastore.core)
+    api(libs.androidx.datastore.preferences)
 
     api(libs.dagger.runtime)
     kapt(libs.dagger.compiler)

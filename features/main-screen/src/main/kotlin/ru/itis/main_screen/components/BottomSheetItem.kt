@@ -29,7 +29,7 @@ internal class BottomSheetItem(
     @DrawableRes val icon: Int,
     val title: String
 ) {
-    class Settings : BottomSheetItem()
+//    class Settings : BottomSheetItem()
 }
 
 @Composable
