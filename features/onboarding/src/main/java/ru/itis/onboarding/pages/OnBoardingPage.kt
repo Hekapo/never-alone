@@ -1,6 +1,8 @@
 package ru.itis.onboarding.pages
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.compose.runtime.Stable
 import ru.itis.core.ui.R
 
 
@@ -8,27 +10,30 @@ import ru.itis.core.ui.R
  * Created by Iskandar on 26.05.2022.
  */
 
+@Stable
 sealed class OnBoardingPage(
     @DrawableRes
     val image: Int,
-    val title: String,
-    val description: String
+    @StringRes
+    val title: Int,
+    @StringRes
+    val description: Int
 ) {
     object First : OnBoardingPage(
         image = R.drawable.leaves,
-        title = "Meet",
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
+        title = R.string.app_name,
+        description = R.string.onboarding_first
     )
 
     object Second : OnBoardingPage(
-        image = R.drawable.ic_google_logo,
-        title = "Coordination",
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
+        image = R.drawable.people_in_love,
+        title = R.string.meet,
+        description = R.string.onboarding_second
     )
 
     object Third : OnBoardingPage(
         image = R.drawable.leaves,
-        title = "Dialogue",
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
+        title = R.string.be_bold,
+        description = R.string.onboarding_third
     )
 }

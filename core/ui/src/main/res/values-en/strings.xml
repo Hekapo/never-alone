@@ -31,4 +31,10 @@
     <string name="search_settings">Search settings</string>
     <string name="title_settings">Settings</string>
     <string name="finish">Finish!</string>
+    <string name="onboarding_first">This is a multi-user service for new acquaintances.</string>
+    <string name="meet">Date</string>
+    <string name="onboarding_second">Like, chat with new people!</string>
+    <string name="onboarding_third">The more likes, the more likely you will be answered!</string>
+    <string name="be_bold">Be bold</string>
+    <string name="fill_out_form">Fill out a form</string>
 </resources>

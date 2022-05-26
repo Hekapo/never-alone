@@ -2,15 +2,15 @@
 
 package ru.itis.onboarding
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -95,8 +95,8 @@ private fun PagerScreen(onBoardingPage: OnBoardingPage) {
         Text(
             modifier = Modifier
                 .fillMaxWidth(),
-            text = onBoardingPage.title,
-            style = AppTheme.typography.text28R,
+            text = stringResource(id = onBoardingPage.title),
+            style = AppTheme.typography.text36R,
             textAlign = TextAlign.Center,
             color = AppTheme.colors.textHighEmphasis
         )
@@ -105,7 +105,7 @@ private fun PagerScreen(onBoardingPage: OnBoardingPage) {
                 .fillMaxWidth()
                 .padding(horizontal = 40.dp)
                 .padding(top = 20.dp),
-            text = onBoardingPage.description,
+            text = stringResource(id = onBoardingPage.description),
             textAlign = TextAlign.Center,
             style = AppTheme.typography.text20M,
             color = AppTheme.colors.textHighEmphasis
@@ -130,7 +130,7 @@ private fun FinishButton(
             modifier = Modifier.fillMaxWidth(),
             visible = pagerState.currentPage == 2
         ) {
-            AuthButton(text = stringResource(id = R.string.finish)) {
+            AuthButton(text = stringResource(id = R.string.fill_out_form)) {
                 onClick()
             }
         }
@@ -138,7 +138,7 @@ private fun FinishButton(
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 fun FirstOnBoardingScreenPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         PagerScreen(onBoardingPage = OnBoardingPage.First)
@@ -146,7 +146,7 @@ fun FirstOnBoardingScreenPreview() {
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 fun SecondOnBoardingScreenPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         PagerScreen(onBoardingPage = OnBoardingPage.Second)
@@ -154,7 +154,7 @@ fun SecondOnBoardingScreenPreview() {
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 fun ThirdOnBoardingScreenPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         PagerScreen(onBoardingPage = OnBoardingPage.Third)

@@ -31,4 +31,10 @@
     <string name="search_settings">Эзләү көйләүләре</string>
     <string name="title_settings">Көйләүләр</string>
     <string name="finish">Алга!</string>
+    <string name="onboarding_first">Это многополользовательский сервис для новых знакомств.</string>
+    <string name="meet">Встречайся</string>
+    <string name="onboarding_second">Лайкай, общайся с новыми людьми!</string>
+    <string name="onboarding_third">Чем больше лайков, тем больше вероятность, что тебе ответят!</string>
+    <string name="be_bold">Будь смелее</string>
+    <string name="fill_out_form">Заполнить анкету</string>
 </resources>
