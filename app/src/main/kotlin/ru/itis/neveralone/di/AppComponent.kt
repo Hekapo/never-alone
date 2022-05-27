@@ -20,6 +20,7 @@ import ru.itis.features.signup.phone.verification.PhoneVerificationDeps
 import ru.itis.features.splash.LoadingDeps
 import ru.itis.main_screen.main.MainDeps
 import ru.itis.onboarding.OnBoardingDeps
+import ru.itis.user_form.UserFormDeps
 import javax.inject.Singleton
 
 /**
@@ -44,7 +45,8 @@ interface AppComponent :
     MainDeps,
     SettingsDeps,
     OnBoardingDeps,
-    LoadingDeps {
+    LoadingDeps,
+    UserFormDeps {
     override val networkListener: NetworkListener
     override val sigInUseCase: ISignInUseCase
     override val singUpUseCase: IPhoneSignUpUseCase
