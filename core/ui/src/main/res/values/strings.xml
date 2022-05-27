@@ -37,4 +37,5 @@
     <string name="onboarding_third">Чем больше лайков, тем больше вероятность, что тебе ответят!</string>
     <string name="be_bold">Будь смелее</string>
     <string name="fill_out_form">Заполнить анкету</string>
+    <string name="my_birthday"><![CDATA[\nкогда твой \nдень рождения]]></string>
 </resources>

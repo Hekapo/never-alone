@@ -3,6 +3,7 @@ package ru.itis.user_form
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
+import ru.itis.core.domain.usecase.IDatabaseUseCase
 
 /**
  * Created by Iskandar on 27.05.2022.
@@ -21,7 +22,9 @@ internal interface UserFormComponent {
     }
 }
 
-interface UserFormDeps
+interface UserFormDeps {
+    val databaseUseCase: IDatabaseUseCase
+}
 
 internal class UserFormComponentViewModel(deps: UserFormDeps) : ViewModel() {
     val userFormingComponent = DaggerUserFormComponent.builder().deps(deps).build

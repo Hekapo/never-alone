@@ -8,6 +8,8 @@ object DatabaseConstants {
 
     const val NODE_USERS = "users"
 
+    const val NODE_CURRENT_USER = "current_user"
+
     const val CHILD_ID = "id"
 
     const val CHILD_USERNAME = "name"

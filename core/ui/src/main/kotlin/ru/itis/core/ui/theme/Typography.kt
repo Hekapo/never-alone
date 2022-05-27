@@ -50,6 +50,12 @@ data class AppTypography internal constructor(
         fontSize = 28.sp,
         lineHeight = 30.sp,
     ),
+    val text28M:TextStyle = TextStyle(
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        fontSize = 28.sp,
+        lineHeight = 30.sp,
+    ),
     val text20M:TextStyle = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
