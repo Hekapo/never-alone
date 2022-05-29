@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,8 +28,8 @@ import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.user_form.add_photo.AddPhotoScreen
-import ru.itis.user_form.birth.BirthScreen
-import ru.itis.user_form.gender.GenderScreen
+import ru.itis.user_form.birth.BirthScreenRoute
+import ru.itis.user_form.gender.GenderScreenRoute
 import ru.itis.user_form.interests.InterestsScreen
 
 /**
@@ -47,15 +48,14 @@ fun UserFormRoute(deps: UserFormDeps, toMainScreen: () -> Unit) {
 
     val uiState by userFormViewModel.userFormScreen.collectAsState()
     val userState by userFormViewModel.userInfo.collectAsState()
+    val context = LocalContext.current
 
     UserFormScreen(
         uiState = uiState,
         userState = userState,
-        onBackClick = { userFormViewModel.navigateBack() },
-        onForwardClick = { userFormViewModel.navigateForward() },
+        userFormViewModel = userFormViewModel,
         toMainScreen = toMainScreen
     )
-
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -63,9 +63,8 @@ fun UserFormRoute(deps: UserFormDeps, toMainScreen: () -> Unit) {
 private fun UserFormScreen(
     uiState: UserFormScreens,
     userState: User,
-    onBackClick: () -> Unit,
-    onForwardClick: () -> Unit,
-    toMainScreen: () -> Unit
+    userFormViewModel: UserFormViewModel?,
+    toMainScreen: () -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -77,7 +76,7 @@ private fun UserFormScreen(
     ) {
         IconButton(
             onClick = {
-                onBackClick()
+                userFormViewModel?.navigateBack()
             },
             content = {
                 Icon(
@@ -87,21 +86,23 @@ private fun UserFormScreen(
                 )
             }
         )
-        when (uiState) {
-            is UserFormScreens.BirthScreen -> {
-                BirthScreen(userState, keyboardController)
-            }
-            is UserFormScreens.GenderScreen -> {
-                GenderScreen()
-            }
-            is UserFormScreens.InterestsScreen -> {
-                InterestsScreen()
-            }
-            is UserFormScreens.AddPhotoScreen -> {
-                AddPhotoScreen()
-            }
-            is UserFormScreens.None -> {
-                toMainScreen()
+        if (userFormViewModel != null) {
+            when (uiState) {
+                is UserFormScreens.BirthScreen -> {
+                    BirthScreenRoute(userState, keyboardController, userFormViewModel)
+                }
+                is UserFormScreens.GenderScreen -> {
+                    GenderScreenRoute(userFormViewModel)
+                }
+                is UserFormScreens.InterestsScreen -> {
+                    InterestsScreen()
+                }
+                is UserFormScreens.AddPhotoScreen -> {
+                    AddPhotoScreen()
+                }
+                is UserFormScreens.None -> {
+                    toMainScreen()
+                }
             }
         }
         Box(
@@ -112,13 +113,13 @@ private fun UserFormScreen(
                 modifier = Modifier.padding(16.dp),
                 text = stringResource(id = R.string.continue_text)
             ) {
-                onForwardClick()
+                userFormViewModel?.navigateForward()
             }
         }
     }
 
     BackHandler(enabled = true) {
-        onBackClick()
+        userFormViewModel?.navigateBack()
     }
 }
 
@@ -129,8 +130,7 @@ private fun UserFormScreenBirthPreview() {
     UserFormScreen(
         uiState = UserFormScreens.BirthScreen,
         userState = User(),
-        onBackClick = {},
-        onForwardClick = {},
+        userFormViewModel = null,
         toMainScreen = {}
     )
 }
@@ -143,8 +143,7 @@ private fun UserFormScreenGenderPreview() {
     UserFormScreen(
         uiState = UserFormScreens.GenderScreen,
         userState = User(),
-        onBackClick = {},
-        onForwardClick = {},
+        userFormViewModel = null,
         toMainScreen = {}
     )
 }
@@ -156,8 +155,7 @@ private fun UserFormScreenInterestsPreview() {
     UserFormScreen(
         uiState = UserFormScreens.InterestsScreen,
         userState = User(),
-        onBackClick = {},
-        onForwardClick = {},
+        userFormViewModel = null,
         toMainScreen = {}
     )
 }
@@ -169,8 +167,7 @@ private fun UserFormScreenAddPhotoPreview() {
     UserFormScreen(
         uiState = UserFormScreens.AddPhotoScreen,
         userState = User(),
-        onBackClick = {},
-        onForwardClick = {},
+        userFormViewModel = null,
         toMainScreen = {}
     )
 }

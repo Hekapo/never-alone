@@ -38,4 +38,6 @@
     <string name="be_bold">Будь смелее</string>
     <string name="fill_out_form">Заполнить анкету</string>
     <string name="my_birthday"><![CDATA[\nкогда твой \nдень рождения]]></string>
+    <string name="man">Парень</string>
+    <string name="woman">Девушка</string>
 </resources>
