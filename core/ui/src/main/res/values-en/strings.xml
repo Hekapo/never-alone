@@ -38,6 +38,14 @@
     <string name="be_bold">Be bold</string>
     <string name="fill_out_form">Fill out a form</string>
     <string name="my_birthday"><br>My</br> <br>birthday</br></string>
-    <string name="man">Парень</string>
-    <string name="woman">Девушка</string>
+    <string name="man">Man</string>
+    <string name="woman">Woman</string>
+    <string name="interests">Interest</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="add_at_least_2_photo">Добавьте хотя бы 2 фото, чтобы продолжить</string>
+    <string name="input_field_empty_error">Input field cannot be empty</string>
+    <string name="check_is_phone_correct_error">Check phone number correctness</string>
+    <string name="check_is_email_correct_error">Проверьте правильность емейла</string>
+    <string name="error">Ошибка</string>
+    <string name="short_password_error">Пароль слишком короткий</string>
 </resources>

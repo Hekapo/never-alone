@@ -20,6 +20,7 @@ fun lightColors(
     textFieldOnPrimary: Color = LightOnBackgroundTF,
     googleButton: Color = LightBackground,
     googleButtonText: Color = LightTextMediumEmphasis,
+    disabledButton: Color = LightOnBackgroundBTNDisabled,
     checkBoxOnPrimary: Color = LightOnBackgroundChB,
 ): AppColors = AppColors(
     statusBar = statusBar,
@@ -36,5 +37,6 @@ fun lightColors(
     checkBoxOnPrimary = checkBoxOnPrimary,
     googleButton = googleButton,
     googleButtonText = googleButtonText,
+    disabledButton = disabledButton,
     isLight = true,
 )

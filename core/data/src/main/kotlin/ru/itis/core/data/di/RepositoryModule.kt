@@ -39,4 +39,9 @@ internal interface RepositoryModuleBinds {
     fun provideDatastoreRepository(
         datastoreRepositoryImpl: DatastoreRepositoryImpl
     ): DatastoreRepository
+
+    @Binds
+    fun provideMainUsersRepository(
+        mainUsersRepositoryImpl: MainUsersRepositoryImpl
+    ): MainUsersRepository
 }

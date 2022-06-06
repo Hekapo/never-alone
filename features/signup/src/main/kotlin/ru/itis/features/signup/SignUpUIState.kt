@@ -1,5 +1,6 @@
 package ru.itis.features.signup
 
+import ru.itis.core.ui.common.FieldCorrectnessCheck
 import ru.itis.features.signup.utils.Constants.TAB_PHONE
 
 /**
@@ -18,11 +19,13 @@ data class SignUpUIState(
     data class InputEmailField(
         val email: String = "",
         val isFieldEnabled: Boolean = true,
+        val isError: FieldCorrectnessCheck = FieldCorrectnessCheck.None
     )
 
     data class InputPhoneField(
         val phone: String = "",
-        val isFieldEnabled: Boolean = true
+        val isFieldEnabled: Boolean = true,
+        val isError: FieldCorrectnessCheck = FieldCorrectnessCheck.None
     )
 
     data class SignUpProcess(

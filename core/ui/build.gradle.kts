@@ -40,6 +40,11 @@ dependencies {
 
     api(libs.bundles.google.accompanist)
 
+    implementation(libs.coil.compose)
+    implementation(libs.coil.core)
+
+    api(libs.bundles.androidx.camera)
+
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)
 }

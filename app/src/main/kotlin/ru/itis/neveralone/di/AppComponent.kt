@@ -53,6 +53,7 @@ interface AppComponent :
     override val databaseUseCase: IDatabaseUseCase
     override val emailSignUpUseCase: IEmailSignUpUseCase
     override val dispatchersProvider: DispatchersProvider
+    override val mainUsersUseCase: IMainUsersUseCase
     override val datastoreUseCase: IDatastoreUseCase
 
     @Component.Builder

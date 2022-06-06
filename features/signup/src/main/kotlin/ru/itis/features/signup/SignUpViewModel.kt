@@ -10,6 +10,8 @@ import kotlinx.coroutines.launch
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 import ru.itis.core.domain.viewstates.PhoneSignUpState
+import ru.itis.core.ui.common.isEmailCorrect
+import ru.itis.core.ui.common.isPhoneNumberCorrect
 import javax.inject.Inject
 
 /**
@@ -62,7 +64,13 @@ internal class SignUpViewModel(
 
     fun onPhoneChange(phone: String) {
         _signUpUIState.update {
-            it.copy(inputPhone = SignUpUIState.InputPhoneField(phone = phone))
+            it.copy(
+                inputPhone =
+                SignUpUIState.InputPhoneField(
+                    phone = phone,
+                    isError = phone.isPhoneNumberCorrect()
+                )
+            )
         }
     }
 
@@ -71,7 +79,8 @@ internal class SignUpViewModel(
             it.copy(
                 inputEmail = SignUpUIState.InputEmailField(
                     email = email,
-                    isFieldEnabled = true
+                    isFieldEnabled = true,
+                    isError = email.isEmailCorrect()
                 )
             )
         }

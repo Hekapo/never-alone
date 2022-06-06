@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.google.firebase.auth.FirebaseAuth
+import ru.itis.core.common.buildPath
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
@@ -61,7 +61,7 @@ internal fun LoginNavGraph(
             SignUpRoute(
                 deps = appComponent,
                 onNextWithEmailClick = {
-                    navController.navigate(setNavigationPath(emailPassData = it))
+                    navController.navigate(CreateUserDestination.route buildPath it.email)
                 },
                 onNextWithPhoneClick = { navController.navigate(PhoneVerificationDestination.route) },
                 onBackClick = { navController.popBackStack() },
@@ -95,8 +95,4 @@ internal fun LoginNavGraph(
             )
         }
     }
-}
-
-private fun setNavigationPath(emailPassData: EmailPassData): String {
-    return CreateUserDestination.route.plus("/${emailPassData.email}")
 }

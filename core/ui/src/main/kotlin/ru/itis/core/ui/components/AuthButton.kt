@@ -25,6 +25,7 @@ fun AuthButton(
     text: String,
     color: Color = AppTheme.colors.backgroundOnSecondary,
     style: TextStyle = AppTheme.typography.text14M,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
@@ -32,8 +33,10 @@ fun AuthButton(
             .fillMaxWidth()
             .height(46.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = AppTheme.colors.buttonOnPrimary
+            backgroundColor = AppTheme.colors.buttonOnPrimary,
+            disabledBackgroundColor = AppTheme.colors.disabledButton,
         ),
+        enabled = enabled,
         elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
         onClick = { onClick() }
     ) {
@@ -52,6 +55,7 @@ private fun AuthButtonPreview() {
     AuthButton(
         modifier = Modifier.background(AppTheme.colors.backgroundPrimary),
         text = "Auth",
+        enabled = false
     ) {
 
     }

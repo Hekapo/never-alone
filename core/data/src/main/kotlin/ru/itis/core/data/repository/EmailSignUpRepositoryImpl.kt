@@ -4,8 +4,9 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import ru.itis.core.domain.repository.EmailSignUpRepository
-import ru.itis.core.domain.viewstates.EmailSignUpState
+import ru.itis.core.domain.viewstates.ResultState
 import javax.inject.Inject
 
 /**
@@ -17,18 +18,18 @@ internal class EmailSignUpRepositoryImpl @Inject constructor(
 ) : EmailSignUpRepository {
 
     private val signUpWithEmailAndPasswordProcessState =
-        MutableStateFlow<EmailSignUpState>(EmailSignUpState.None)
+        MutableStateFlow<ResultState<String, String>>(ResultState.None)
 
-    override val emailSignUpProcess: Flow<EmailSignUpState>
+    override val emailSignUpProcess: Flow<ResultState<String, String>>
         get() = signUpWithEmailAndPasswordProcessState.asStateFlow()
 
     override suspend fun createUserWithEmailAndPassword(email: String, password: String) {
-        signUpWithEmailAndPasswordProcessState.value = EmailSignUpState.InProcess
+        signUpWithEmailAndPasswordProcessState.update { ResultState.InProcess }
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                signUpWithEmailAndPasswordProcessState.value = EmailSignUpState.Complete
-            }.addOnFailureListener {
-                signUpWithEmailAndPasswordProcessState.value = EmailSignUpState.Error(it.message)
+            .addOnSuccessListener {
+                signUpWithEmailAndPasswordProcessState.update { ResultState.Success(data = "") }
+            }.addOnFailureListener { ex ->
+                signUpWithEmailAndPasswordProcessState.update { ResultState.Error(message = ex.message) }
             }
     }
 }

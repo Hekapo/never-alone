@@ -2,10 +2,12 @@ package ru.itis.user_form
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import ru.itis.core.domain.models.User
 import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.viewstates.ResultState
@@ -28,11 +30,76 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
     private val _dateOfBirth = MutableStateFlow("")
     val dateOfBirth = _dateOfBirth.asStateFlow()
 
+    private val _showSnackBar = MutableStateFlow<Pair<String?, Boolean>>(Pair("", false))
+    val showSnackBar = _showSnackBar.asStateFlow()
+
+    private val _genderFlow = MutableStateFlow("")
+    val genderFlow = _genderFlow.asStateFlow()
+
+    private val _interests = MutableStateFlow(listOf<String>())
+    val interests = _interests.asStateFlow()
+
+    private val _photoUris =
+        MutableStateFlow<MutableSet<Pair<Int?, String?>>>(mutableSetOf(Pair(0, "")))
+    val photoUris = _photoUris.asStateFlow()
+
     init {
+        viewModelScope.launch {
+            databaseUseCase.fetchCurrentUser()
+            _userInfo.update {
+                it.copy(id = databaseUseCase.getCurrentUserId())
+            }
+        }
+
+        databaseUseCase.snackBarFlow.onEach(this::snackBarState).launchIn(viewModelScope)
         databaseUseCase.userFlow.onEach(this::userState).launchIn(viewModelScope)
     }
 
+    private fun snackBarState(snackBarState: ResultState<String, String>) {
+        when (snackBarState) {
+            is ResultState.None -> {}
+            is ResultState.InProcess -> {}
+            is ResultState.Success -> {
+                _showSnackBar.update {
+                    Pair(snackBarState.data, true)
+                }
+            }
+            is ResultState.Error -> {
+                _showSnackBar.update {
+                    Pair(snackBarState.message, true)
+                }
+            }
+        }
+    }
+
+    fun fillInterests(interests: List<String>) {
+        _userInfo.update {
+            it.copy(interests = interests)
+        }
+        _interests.value += interests
+    }
+
+    fun addPhoto(position: Int?, uri: String?) {
+        Log.e("DEBUG", photoUris.value.toString())
+        _photoUris.value.forEach {
+            if (it.first != position) {
+                _photoUris.value.plusAssign(Pair(position, uri))
+            }
+        }
+        Log.e("DEBUG", "after " + photoUris.value.toString())
+
+    }
+
+    fun setGender(gender: String) {
+        _userInfo.update {
+            it.copy(sex = gender)
+        }
+    }
+
     fun setBirthdayDate(date: String) {
+        _userInfo.update {
+            it.copy(age = 10L)
+        }
         _dateOfBirth.value = date
     }
 
@@ -64,6 +131,9 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
         DatePickerDialog(
             context, { _, year, month, day ->
                 _dateOfBirth.value = getPickedDateAsString(year, month, day)
+                _userInfo.update {
+                    it.copy(age = day.toLong())
+                }
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -73,10 +143,15 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
 
     private fun userState(userState: ResultState<User, Any>) {
         when (userState) {
-            is ResultState.None -> {}
-            is ResultState.InProcess -> {}
-            is ResultState.Error -> {}
+            is ResultState.None -> Log.e("DEBUG", "None")
+            is ResultState.InProcess -> {
+                Log.e("DEBUG", "InProcess")
+            }
+            is ResultState.Error -> {
+                Log.e("DEBUG", "Error")
+            }
             is ResultState.Success -> {
+                Log.e("DEBUG", userState.data.toString())
                 val userData = userState.data
                 _userInfo.update {
                     it.copy(
@@ -87,47 +162,9 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
         }
     }
 
-    fun navigateBack() {
-        _userFormScreen.update {
-            when (it) {
-                UserFormScreens.BirthScreen -> {
-                    UserFormScreens.BirthScreen
-                }
-                is UserFormScreens.GenderScreen -> {
-                    UserFormScreens.BirthScreen
-                }
-                is UserFormScreens.InterestsScreen -> {
-                    UserFormScreens.GenderScreen
-                }
-                is UserFormScreens.AddPhotoScreen -> {
-                    UserFormScreens.None
-                }
-                else -> {
-                    UserFormScreens.None
-                }
-            }
-        }
-    }
-
-    fun navigateForward() {
-        _userFormScreen.update {
-            when (it) {
-                UserFormScreens.BirthScreen -> {
-                    UserFormScreens.GenderScreen
-                }
-                is UserFormScreens.GenderScreen -> {
-                    UserFormScreens.InterestsScreen
-                }
-                is UserFormScreens.InterestsScreen -> {
-                    UserFormScreens.AddPhotoScreen
-                }
-                is UserFormScreens.AddPhotoScreen -> {
-                    UserFormScreens.None
-                }
-                else -> {
-                    UserFormScreens.None
-                }
-            }
+    fun updateUserData() {
+        viewModelScope.launch {
+            databaseUseCase.updateUser(_userInfo.value)
         }
     }
 
@@ -139,5 +176,4 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
             return UserFormViewModel(databaseUseCase) as T
         }
     }
-
 }

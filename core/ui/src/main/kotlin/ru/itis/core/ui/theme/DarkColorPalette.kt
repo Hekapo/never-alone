@@ -20,6 +20,7 @@ fun darkColors(
     textFieldOnPrimary: Color = DarkOnBackgroundTF,
     googleButton: Color = DarkOnBackgroundBTN,
     googleButtonText: Color = DarkOnSecondary,
+    disabledButton: Color = DarkOnBackgroundBTNDisabled,
     checkBoxOnPrimary: Color = DarkOnBackgroundChB,
 ): AppColors = AppColors(
     statusBar = statusBar,
@@ -36,5 +37,6 @@ fun darkColors(
     checkBoxOnPrimary = checkBoxOnPrimary,
     googleButton = googleButton,
     googleButtonText = googleButtonText,
+    disabledButton = disabledButton,
     isLight = true
 )

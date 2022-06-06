@@ -20,6 +20,7 @@ interface IDatabaseUseCase {
     suspend fun fetchCurrentUser()
 
     val userFlow: Flow<ResultState<User, Any>>
+    val snackBarFlow: Flow<ResultState<String, String>>
 }
 
 @Reusable
@@ -49,4 +50,7 @@ internal class DatabaseUseCase @Inject constructor(
 
     override val userFlow: Flow<ResultState<User, Any>>
         get() = databaseRepository.userFlowProcess.distinctUntilChanged()
+
+    override val snackBarFlow: Flow<ResultState<String, String>>
+        get() = databaseRepository.showSnackBar.distinctUntilChanged()
 }

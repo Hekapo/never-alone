@@ -18,8 +18,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
@@ -105,7 +106,7 @@ private fun SignUpScreen(
     onPhoneRoute: @Composable () -> Unit,
     onEmailRoute: @Composable () -> Unit
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
 
     val pagerState = rememberPagerState(initialPage = uiState.activeTab)
 
@@ -114,6 +115,7 @@ private fun SignUpScreen(
     }
 
     BackHandler(enabled = uiState.activeTab != TAB_PHONE) {
+        focusManager.clearFocus()
         onTabSelected(TAB_PHONE)
     }
 
@@ -125,7 +127,7 @@ private fun SignUpScreen(
     ) {
         IconButton(
             onClick = {
-                keyboardController?.hide()
+                focusManager.clearFocus()
                 onBackClick()
             },
             content = {
@@ -154,7 +156,8 @@ private fun SignUpScreen(
             Tabs(
                 modifier = Modifier.fillMaxWidth(),
                 pagerState = pagerState,
-                onTabClicked = onTabSelected
+                onTabClicked = onTabSelected,
+                focusManager = focusManager
             )
             SignUpMethodPager(
                 pagerState = pagerState,
@@ -162,7 +165,6 @@ private fun SignUpScreen(
                 onEmailRoute = onEmailRoute
             )
         }
-
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -195,6 +197,7 @@ private fun SignUpScreen(
 private fun Tabs(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
+    focusManager: FocusManager,
     onTabClicked: (Int) -> Unit
 ) {
     TabRow(
@@ -215,11 +218,14 @@ private fun Tabs(
                             Text(
                                 text = stringResource(R.string.phone),
                                 style = AppTheme.typography.text14R,
-                                color = AppTheme.colors.textLowEmphasis
+                                color = if (pagerState.currentPage == index) AppTheme.colors.textHighEmphasis else AppTheme.colors.textLowEmphasis
                             )
                         },
                         selected = pagerState.currentPage == index,
-                        onClick = { onTabClicked(TAB_PHONE) },
+                        onClick = {
+                            focusManager.clearFocus()
+                            onTabClicked(TAB_PHONE)
+                        },
                     )
                 }
                 PAGE_EMAIL -> {
@@ -228,11 +234,14 @@ private fun Tabs(
                             Text(
                                 text = stringResource(R.string.email),
                                 style = AppTheme.typography.text14R,
-                                color = AppTheme.colors.textLowEmphasis
+                                color = if (pagerState.currentPage == index) AppTheme.colors.textHighEmphasis else AppTheme.colors.textLowEmphasis
                             )
                         },
                         selected = pagerState.currentPage == index,
-                        onClick = { onTabClicked(PAGE_EMAIL) },
+                        onClick = {
+                            focusManager.clearFocus()
+                            onTabClicked(PAGE_EMAIL)
+                        },
                     )
                 }
             }
@@ -247,6 +256,7 @@ private fun SignUpMethodPager(
     onEmailRoute: @Composable () -> Unit
 ) {
     HorizontalPager(
+        modifier = Modifier,
         count = PAGE_COUNT,
         state = pagerState,
         itemSpacing = 8.dp

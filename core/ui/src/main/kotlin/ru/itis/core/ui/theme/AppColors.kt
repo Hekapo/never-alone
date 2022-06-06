@@ -26,6 +26,7 @@ class AppColors(
     checkBoxOnPrimary: Color,
     googleButton: Color,
     googleButtonText: Color,
+    disabledButton: Color,
     isLight: Boolean
 ) {
 
@@ -59,6 +60,8 @@ class AppColors(
         private set
     var isLight by mutableStateOf(isLight)
         internal set
+    var disabledButton by mutableStateOf(disabledButton)
+        internal set
 
     fun copy(
         statusBar: Color = this.statusBar,
@@ -75,6 +78,7 @@ class AppColors(
         checkBoxOnPrimary: Color = this.checkBoxOnPrimary,
         googleButton: Color = this.googleButton,
         googleButtonText: Color = this.googleButtonText,
+        disabledButton: Color = this.disabledButton,
         isLight: Boolean = this.isLight
 
     ): AppColors = AppColors(
@@ -92,6 +96,7 @@ class AppColors(
         checkBoxOnPrimary = checkBoxOnPrimary,
         googleButton = googleButton,
         googleButtonText = googleButtonText,
+        disabledButton = disabledButton,
         isLight = isLight,
     )
 
@@ -109,6 +114,7 @@ class AppColors(
         textFieldOnPrimary = colors.textFieldOnPrimary
         googleButton = colors.googleButton
         googleButtonText = colors.googleButtonText
+        disabledButton = colors.disabledButton
         checkBoxOnPrimary = colors.checkBoxOnPrimary
 
     }

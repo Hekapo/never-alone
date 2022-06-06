@@ -29,4 +29,6 @@ internal interface UseCaseModuleBinds {
     @Binds
     fun provideDatastoreUseCase(datastoreUseCase: DatastoreUseCase): IDatastoreUseCase
 
+    @Binds
+    fun provideMainUsersUseCase(mainUsersUseCase: MainUsersUseCase): IMainUsersUseCase
 }

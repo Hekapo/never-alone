@@ -32,6 +32,8 @@ android {
 dependencies {
     implementation(project(":core:ui"))
 
+    implementation(libs.bundles.androidx.camera)
+
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)
 }

@@ -1,9 +1,12 @@
 package ru.itis.neveralone.navigation
 
+import androidx.compose.runtime.Stable
+
 /**
  * Created by Iskandar on 26.04.2022.
  */
 
+@Stable
 internal sealed class LoginDestinations(val route: String) {
     object SplashDestination : LoginDestinations("splash")
     object ChooseLoginMethod : LoginDestinations("login_method")

@@ -1,30 +1,35 @@
 package ru.itis.features.signup.email.create_user
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
 import ru.itis.core.ui.R
+import ru.itis.core.ui.common.FieldCorrectnessCheck
+import ru.itis.core.ui.components.AppTextField
 import ru.itis.core.ui.components.AuthButton
-import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.core.ui.utils.EmailPassData
 
@@ -49,6 +54,8 @@ fun CreateUserRoute(
     )
 
     val uiState by createUserViewModel.emailUIState.collectAsState()
+
+    val snackBarState by createUserViewModel.showSnackBar.collectAsState()
 
     LaunchedEffect(key1 = uiState.couldNavigate) {
         if (uiState.couldNavigate) {
@@ -80,6 +87,8 @@ private fun CreateUserScreen(
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    var isPasswordVisible by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .statusBarsPadding()
@@ -107,31 +116,59 @@ private fun CreateUserScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LoginTextField(
-                inputValue = uiState.inputUserName.name,
-                onValueChange = onNameChange,
+            AppTextField(
+                text = uiState.inputUserName.name,
+                onChange = onNameChange,
                 isEnabled = uiState.inputUserName.isFieldEnabled,
                 placeholder = stringResource(id = R.string.user_name),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 keyboardActions = KeyboardActions { keyboardController?.hide() }
             )
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, top = 4.dp),
+                text = "Введенное имя изменить нельзя",
+                textAlign = TextAlign.Start,
+                color = AppTheme.colors.textMediumEmphasis,
+                style = AppTheme.typography.text14R
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            LoginTextField(
-                inputValue = uiState.inputPassword.password,
-                onValueChange = onPasswordChange,
+            AppTextField(
+                text = uiState.inputPassword.password,
+                onChange = onPasswordChange,
                 isError = uiState.inputPassword.showError,
+                visualTransformation = if (isPasswordVisible)
+                    VisualTransformation.None
+                else
+                    PasswordVisualTransformation(),
                 isEnabled = uiState.inputPassword.isFieldEnabled,
                 placeholder = stringResource(id = R.string.enter_password_hint),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                keyboardActions = KeyboardActions { keyboardController?.hide() }
+                keyboardActions = KeyboardActions { keyboardController?.hide() },
+                leadingIcon = {
+                    IconButton(
+                        onClick = {
+                            isPasswordVisible = !isPasswordVisible
+                        }) {
+                        Icon(
+                            imageVector = if (isPasswordVisible)
+                                Icons.Filled.Visibility
+                            else
+                                Icons.Filled.VisibilityOff,
+                            contentDescription = "Password Visibility",
+                            tint = AppTheme.colors.textMediumEmphasis
+                        )
+                    }
+                },
             )
             Spacer(modifier = Modifier.height(16.dp))
             AuthButton(
                 text = stringResource(id = R.string.continue_text),
                 style = AppTheme.typography.text14M,
+                enabled = uiState.inputPassword.showError is FieldCorrectnessCheck.Success,
                 onClick = {
                     onNextClick()
-
                 }
             )
         }
@@ -139,6 +176,7 @@ private fun CreateUserScreen(
 }
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun CreateUserScreenPreview() {
     CreateUserScreen(

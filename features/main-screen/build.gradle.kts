@@ -32,6 +32,8 @@ android {
 dependencies {
     implementation(project(":core:ui"))
 
+    implementation(libs.twyper)
+
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)
 }

@@ -14,8 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import ru.itis.core.ui.R
+import ru.itis.core.ui.common.FieldCorrectnessCheck
+import ru.itis.core.ui.components.AppTextField
 import ru.itis.core.ui.components.AuthButton
-import ru.itis.core.ui.components.LoginTextField
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signup.SignUpUIState
@@ -50,18 +51,21 @@ private fun EmailTabScreen(
 
     Column(modifier = Modifier.height(140.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.height(24.dp))
-        LoginTextField(
-            inputValue = uiState.inputEmail.email,
-            onValueChange = onEmailChange,
-            isEnabled = uiState.inputEmail.isFieldEnabled,
+        AppTextField(
+            text = uiState.inputEmail.email,
             placeholder = stringResource(id = R.string.enter_email_hint),
+            onChange = onEmailChange,
+            isError = uiState.inputEmail.isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            keyboardActions = KeyboardActions { keyboardController?.hide() }
+            keyboardActions = KeyboardActions { keyboardController?.hide() },
+            isEnabled = uiState.inputEmail.isFieldEnabled
         )
+
         Spacer(modifier = Modifier.height(16.dp))
         AuthButton(
             text = stringResource(id = R.string.next),
             style = AppTheme.typography.text14M,
+            enabled = uiState.inputEmail.isError is FieldCorrectnessCheck.Success,
             onClick = { onNextClick(EmailPassData(uiState.inputEmail.email)) }
         )
     }

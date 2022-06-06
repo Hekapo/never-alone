@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import ru.itis.core.database_constants.DatabaseConstants.NODE_CURRENT_USER
 import ru.itis.core.database_constants.DatabaseConstants.NODE_USERS
 import ru.itis.core.domain.models.User
 import ru.itis.core.domain.repository.DatabaseRepository
@@ -27,10 +26,20 @@ class DatabaseRepositoryImpl @Inject constructor(
 ) : DatabaseRepository {
 
     private val _userFlowProcessState = MutableStateFlow<ResultState<User, Any>>(ResultState.None)
+    private val _showSnackBarWithMessage =
+        MutableStateFlow<ResultState<String, String>>(ResultState.None)
 
     override suspend fun addUser(user: User) {
+//        if (isUserExists()) {
+//            _showSnackBarWithMessage.update {
+//                ResultState.Error("User already exists")
+//            }
+//        } else {
+//            _showSnackBarWithMessage.update {
+//                ResultState.Success(data = "Success")
+//            }
         databaseReference.child(NODE_USERS).child(user.id!!).setValue(user.toMap())
-        databaseReference.child(NODE_CURRENT_USER).child(user.id!!).setValue(user.toMap())
+//        }
     }
 
     override suspend fun getUsers(): List<User> {
@@ -38,7 +47,7 @@ class DatabaseRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateUser(user: User) {
-        TODO("Not yet implemented")
+        databaseReference.child(NODE_USERS).child(user.id!!).setValue(user.toMap())
     }
 
     override suspend fun getCurrentUserId(): String? {
@@ -47,28 +56,48 @@ class DatabaseRepositoryImpl @Inject constructor(
 
     override suspend fun fetchCurrentUser() {
         _userFlowProcessState.update { ResultState.InProcess }
-        databaseReference.child(NODE_CURRENT_USER)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    _userFlowProcessState.update {
-                        val user = snapshot.getValue<User>()
-                        if (user != null) {
-                            ResultState.Success(data = user)
-                        } else {
-                            ResultState.Error(message = "User not found")
+        getCurrentUserId()?.let {
+            databaseReference.child(NODE_USERS).child(it)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        _userFlowProcessState.update {
+                            val user = snapshot.getValue<User>()
+                            if (user != null) {
+                                ResultState.Success(data = user)
+                            } else {
+                                ResultState.Error(message = "User not found")
+                            }
                         }
                     }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _userFlowProcessState.update {
+                            ResultState.Error(message = error.message)
+                        }
+                    }
+                })
+        }
+    }
+
+    private suspend fun isUserExists(): Boolean {
+        var exists = false
+        databaseReference.child(NODE_USERS).child(getCurrentUserId()!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    exists = snapshot.exists()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    _userFlowProcessState.update {
-                        ResultState.Error(message = error.message)
-                    }
+                    exists = false
                 }
             })
+        return exists
+
     }
 
     override val userFlowProcess: Flow<ResultState<User, Any>>
         get() = _userFlowProcessState.asStateFlow()
 
+    override val showSnackBar: Flow<ResultState<String, String>>
+        get() = _showSnackBarWithMessage.asStateFlow()
 }

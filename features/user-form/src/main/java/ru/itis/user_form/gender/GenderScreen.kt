@@ -1,21 +1,29 @@
 package ru.itis.user_form.gender
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.statusBarsPadding
+import ru.itis.core.ui.R
+import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.components.ClickableCard
 import ru.itis.core.ui.theme.AppTheme
+import ru.itis.core.ui.utils.toListOfString
 import ru.itis.user_form.UserFormViewModel
 
 /**
@@ -23,71 +31,117 @@ import ru.itis.user_form.UserFormViewModel
  */
 
 @Composable
-internal fun GenderScreenRoute(userFormViewModel: UserFormViewModel) {
+internal fun GenderScreenRoute(
+    userFormViewModel: UserFormViewModel,
+    onNext: () -> Unit,
+    onBack: () -> Unit,
+) {
 
-
-    GenderScreen()
+    GenderScreen(
+        saveGender = { userFormViewModel.setGender(it) },
+        onNext = onNext,
+        onBack = onBack
+    )
 
 }
 
 @Composable
-private fun GenderScreen() {
+private fun GenderScreen(
+    saveGender: (String) -> Unit,
+    onNext: () -> Unit,
+    onBack: () -> Unit,
+) {
+    val context = LocalContext.current
 
-    val cards = listOf("Male", "Female")
-    var isSelected by remember {
-        mutableStateOf("")
+    val options = remember {
+        listOf(R.string.man, R.string.woman).toListOfString(context)
     }
-
     var selectedOption by remember {
         mutableStateOf(0)
     }
 
-    Column(
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
+            .statusBarsPadding()
             .background(color = AppTheme.colors.backgroundPrimary)
-            .padding(top = 52.dp, start = 16.dp, end = 16.dp)
     ) {
-        Text(
-            modifier = Modifier.padding(top = 16.dp),
-            text = "Я",
-            style = AppTheme.typography.text28M,
-            textAlign = TextAlign.Start
+        IconButton(
+            onClick = {
+                onBack()
+            },
+            content = {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = stringResource(id = R.string.back),
+                    tint = AppTheme.colors.textHighEmphasis
+                )
+            }
         )
-        Column(
+        Box(
             modifier = Modifier
-                .weight(1f)
-                .padding(bottom = 152.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .padding(horizontal = 32.dp, vertical = 32.dp)
         ) {
-            LazyColumn() {
-                itemsIndexed(items = cards) { selected, item ->
-
-                    ClickableCard(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = item,
-                        selectedValue = cards[selectedOption]
-                    ) {
-                        selectedOption = selected
-//                        isSelected = it
+            Text(
+                modifier = Modifier.padding(top = 16.dp),
+                text = "Я",
+                color = AppTheme.colors.textHighEmphasis,
+                style = AppTheme.typography.text36R,
+                textAlign = TextAlign.Start
+            )
+            Box(
+                modifier = Modifier
+                    .align(Alignment.Center)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    LazyColumn {
+                        itemsIndexed(items = options) { selected: Int, item: String ->
+                            ClickableCard(
+                                text = item,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp)
+                                    .height(46.dp),
+                                selectedValue = options[selectedOption],
+                                onSelect = {
+                                    saveGender(it)
+                                    selectedOption = selected
+                                }
+                            )
+                        }
                     }
                 }
             }
+
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+            ) {
+                AuthButton(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    text = stringResource(id = R.string.continue_text)
+                ) {
+                    onNext()
+                }
+            }
         }
-
-
-//            ClickableCard(
-//                modifier = Modifier.fillMaxWidth(),
-//                text = stringResource(id = R.string.woman),
-//                isClicked = false
-//            ) {
-//            }
-
     }
 }
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun GenderScreenPreview() {
-    GenderScreen()
+    GenderScreen(
+        onNext = {},
+        onBack = {},
+        saveGender = {}
+    )
 }

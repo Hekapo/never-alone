@@ -1,9 +1,12 @@
 package ru.itis.core.domain.models
 
 import ru.itis.core.database_constants.DatabaseConstants.CHILD_AGE
+import ru.itis.core.database_constants.DatabaseConstants.CHILD_CITY
 import ru.itis.core.database_constants.DatabaseConstants.CHILD_EMAIL
 import ru.itis.core.database_constants.DatabaseConstants.CHILD_ID
+import ru.itis.core.database_constants.DatabaseConstants.CHILD_INTERESTS
 import ru.itis.core.database_constants.DatabaseConstants.CHILD_PHONE
+import ru.itis.core.database_constants.DatabaseConstants.CHILD_SEX
 import ru.itis.core.database_constants.DatabaseConstants.CHILD_USERNAME
 
 /**
@@ -12,8 +15,10 @@ import ru.itis.core.database_constants.DatabaseConstants.CHILD_USERNAME
 
 data class User(
     val id: String? = "",
+    val age: Long = -1,
     val name: String = "",
-    val age: Long = 0,
+    val city: String = "",
+    val interests: List<String> = emptyList(),
     val sex: String = "",
     val email: String = "",
     val phone: String = ""
@@ -24,5 +29,8 @@ data class User(
         Pair(CHILD_AGE, age),
         Pair(CHILD_EMAIL, email),
         Pair(CHILD_PHONE, phone),
+        Pair(CHILD_SEX, sex),
+        Pair(CHILD_CITY, city),
+        Pair(CHILD_INTERESTS, interests)
     )
 }
