@@ -36,8 +36,8 @@ class DatastoreRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun readOnBoardingState(): Flow<Boolean> {
-        return dataStore.data
+    override val readOnBoardingState: Flow<Boolean>
+        get() = dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
                     emit(emptyPreferences())
@@ -48,5 +48,4 @@ class DatastoreRepositoryImpl @Inject constructor(
                 val onBoardingState = preferences[PreferencesKey.onBoardingKey] ?: false
                 onBoardingState
             }
-    }
 }

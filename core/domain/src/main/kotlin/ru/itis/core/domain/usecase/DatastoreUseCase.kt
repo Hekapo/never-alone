@@ -25,6 +25,6 @@ internal class DatastoreUseCase @Inject constructor(
     }
 
     override suspend fun readOnBoardingState(): Flow<Boolean> {
-        return datastoreRepository.readOnBoardingState().distinctUntilChanged()
+        return datastoreRepository.readOnBoardingState.distinctUntilChanged()
     }
 }
