@@ -47,6 +47,7 @@ interface AppComponent :
     OnBoardingDeps,
     LoadingDeps,
     UserFormDeps {
+
     override val networkListener: NetworkListener
     override val sigInUseCase: ISignInUseCase
     override val singUpUseCase: IPhoneSignUpUseCase

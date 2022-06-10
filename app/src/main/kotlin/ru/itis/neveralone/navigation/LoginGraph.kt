@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ru.itis.core.common.buildPath
+import ru.itis.core.ui.destinations.LoginDestinations.*
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
@@ -15,7 +16,7 @@ import ru.itis.features.signup.login_method.LoginMethodRoute
 import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
 import ru.itis.neveralone.di.AppComponent
-import ru.itis.neveralone.navigation.LoginDestinations.*
+import ru.itis.onboarding.navigation.onBoardingNavGraph
 
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
@@ -25,7 +26,7 @@ import ru.itis.neveralone.navigation.LoginDestinations.*
 internal fun LoginNavGraph(
     navController: NavHostController,
     appComponent: AppComponent,
-    toMainScreen: (showOnBoarding: Boolean) -> Unit
+    toMainScreen: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -34,9 +35,9 @@ internal fun LoginNavGraph(
         composable(route = SplashDestination.route) {
             LoadingScreen(
                 deps = appComponent,
-                toMainScreen = { toMainScreen(it) },
+                toMainScreen = { toMainScreen() },
                 toRegistration = {
-                    navController.navigate(ChooseLoginMethod.route) {
+                    navController.navigate(OnBoardingScreenDestination.route) {
                         popUpTo(SplashDestination.route) {
                             inclusive = true
                         }
@@ -44,6 +45,12 @@ internal fun LoginNavGraph(
                 }
             )
         }
+
+        onBoardingNavGraph(
+            deps = appComponent,
+            navController = navController
+        )
+
         composable(route = ChooseLoginMethod.route) {
             LoginMethodRoute(
                 onSignInScreen = { navController.navigate(route = SignInDestination.route) },
@@ -90,7 +97,7 @@ internal fun LoginNavGraph(
             CreateUserRoute(
                 email = EmailPassData(email),
                 deps = appComponent,
-                onNextClick = { toMainScreen(true) },
+                onNextClick = { toMainScreen() },
                 onBackClick = { navController.popBackStack() }
             )
         }

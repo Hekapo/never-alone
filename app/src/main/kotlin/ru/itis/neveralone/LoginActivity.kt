@@ -25,12 +25,11 @@ class LoginActivity : ComponentActivity() {
         AppTheme {
             ProvideWindowInsets(consumeWindowInsets = true) {
                 val navController = rememberNavController()
-                val intent = Intent(this, MainActivity::class.java)
                 LoginNavGraph(
                     navController = navController,
                     appComponent = (application as App).appComponent,
                     toMainScreen = {
-                        startActivity(intent.putExtra("showOnBoarding", it)).also {
+                        startActivity(Intent(this, MainActivity::class.java)).also {
                             finish()
                         }
                     }

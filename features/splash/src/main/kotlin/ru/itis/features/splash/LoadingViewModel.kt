@@ -30,8 +30,8 @@ internal class LoadingViewModel(
         viewModelScope.launch(dispatcher.IO) {
             val currentUser = databaseUseCase.getCurrentUserId()
             datastoreUseCase.readOnBoardingState().collect { completed ->
+                Log.e("DEBUG", "onBoarding completed: $completed")
                 if (completed && currentUser != null) {
-                    Log.e("DEBUG", completed.toString())
                     _navigateMain.update { true }
                 } else {
                     _navigateMain.update { false }
@@ -46,7 +46,7 @@ internal class LoadingViewModel(
         private val dispatcher: DispatchersProvider
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return LoadingViewModel(databaseUseCase, datastoreUseCase, dispatcher) as T
         }
     }

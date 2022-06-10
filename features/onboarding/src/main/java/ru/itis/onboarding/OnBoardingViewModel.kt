@@ -28,7 +28,7 @@ internal class OnBoardingViewModel(
         private val dispatcher: DispatchersProvider
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return OnBoardingViewModel(datastoreUseCase, dispatcher) as T
         }
     }
