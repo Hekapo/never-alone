@@ -28,4 +28,24 @@
     <string name="full_name">Имя</string>
     <string name="email_text">Email</string>
     <string name="social_url">Социальные сети</string>
+    <string name="search_settings">Поиск настроек</string>
+    <string name="title_settings">Настройки</string>
+    <string name="finish">Вперед!</string>
+    <string name="onboarding_first">Это многополользовательский сервис для новых знакомств.</string>
+    <string name="meet">Встречайся</string>
+    <string name="onboarding_second">Лайкай, общайся с новыми людьми!</string>
+    <string name="onboarding_third">Чем больше лайков, тем больше вероятность, что тебе ответят!</string>
+    <string name="be_bold">Будь смелее</string>
+    <string name="fill_out_form">Заполнить анкету</string>
+    <string name="my_birthday"><![CDATA[\nкогда твой \nдень рождения?]]></string>
+    <string name="man">Мужчина</string>
+    <string name="woman">Женщина</string>
+    <string name="interests">Интересы</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="add_at_least_2_photo">Добавьте хотя бы 2 фото, чтобы продолжить</string>
+    <string name="input_field_empty_error">Поле не может быть пустым</string>
+    <string name="check_is_phone_correct_error">Проверьте правильность номера телефона</string>
+    <string name="check_is_email_correct_error">Проверьте правильность емейла</string>
+    <string name="error">Ошибка</string>
+    <string name="short_password_error">Пароль слишком короткий</string>
 </resources>

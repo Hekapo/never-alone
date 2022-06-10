@@ -87,39 +87,8 @@ fun LoginTextField(
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun TextFieldPreview() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = AppTheme.colors.backgroundPrimary)
-    ) {
-        LoginTextField(inputValue = "test", placeholder = "test", onValueChange = {})
-//        OutlinedTextField(
-//            value = "text",
-//            onValueChange = {},
-//            label = { Text(text = "test")},
-//            colors = TextFieldDefaults.textFieldColors(
-//                backgroundColor = AppTheme.colors.textFieldOnPrimary,
-//                textColor = AppTheme.colors.textMediumEmphasis,
-//                cursorColor = Color.Transparent,
-//                errorIndicatorColor = Color.Transparent,
-//                errorLabelColor = AppTheme.colors.errorOnPrimary,
-//                focusedLabelColor = AppTheme.colors.textLowEmphasis
-//            )
-//        )
-    }
-}
-
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
 fun TextFieldPreviewError() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = AppTheme.colors.backgroundPrimary)
-    ) {
-        LoginTextField(inputValue = "test", placeholder = "test", onValueChange = {})
+    LoginTextField(inputValue = "test", placeholder = "test", onValueChange = {})
 
 //        OutlinedTextField(
 //            value = "text",
@@ -136,6 +105,5 @@ fun TextFieldPreviewError() {
 //            ),
 //            isError = true
 //        )
-    }
-
 }
+

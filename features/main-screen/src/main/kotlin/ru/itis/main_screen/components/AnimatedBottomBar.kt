@@ -7,10 +7,12 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -91,7 +93,10 @@ private fun CustomBottomNavigationItem(
         modifier = Modifier
             .clip(CircleShape)
             .background(background)
-            .clickable(onClick = onClick)
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = rememberRipple(bounded = true),
+                onClick = onClick)
     ) {
         Row(
             modifier = Modifier

@@ -1,8 +1,11 @@
 package ru.itis.core.domain.usecase
 
 import dagger.Reusable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import ru.itis.core.domain.models.User
 import ru.itis.core.domain.repository.DatabaseRepository
+import ru.itis.core.domain.viewstates.ResultState
 import javax.inject.Inject
 
 /**
@@ -14,6 +17,10 @@ interface IDatabaseUseCase {
     suspend fun updateUser(user: User)
     suspend fun getUsers(): List<User>
     suspend fun getCurrentUserId(): String?
+    suspend fun fetchCurrentUser()
+
+    val userFlow: Flow<ResultState<User, Any>>
+    val snackBarFlow: Flow<ResultState<String, String>>
 }
 
 @Reusable
@@ -36,4 +43,14 @@ internal class DatabaseUseCase @Inject constructor(
     override suspend fun getCurrentUserId(): String? {
         return databaseRepository.getCurrentUserId()
     }
+
+    override suspend fun fetchCurrentUser() {
+        databaseRepository.fetchCurrentUser()
+    }
+
+    override val userFlow: Flow<ResultState<User, Any>>
+        get() = databaseRepository.userFlowProcess.distinctUntilChanged()
+
+    override val snackBarFlow: Flow<ResultState<String, String>>
+        get() = databaseRepository.showSnackBar.distinctUntilChanged()
 }

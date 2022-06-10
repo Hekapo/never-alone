@@ -45,7 +45,6 @@ private fun LoginMethodScreen(onSignInScreen: () -> Unit, onSignUpScreen: () -> 
         Spacer(modifier = Modifier.height(48.dp))
         AuthButton(
             text = stringResource(id = R.string.create_account),
-            color = AppTheme.colors.backgroundOnSecondary,
             style = AppTheme.typography.text14M
         ) {
             onSignUpScreen()
@@ -53,7 +52,6 @@ private fun LoginMethodScreen(onSignInScreen: () -> Unit, onSignUpScreen: () -> 
         Spacer(modifier = Modifier.height(16.dp))
         AuthButton(
             text = stringResource(id = R.string.signin),
-            color = AppTheme.colors.backgroundOnSecondary,
             style = AppTheme.typography.text14M
         ) {
             onSignInScreen()

@@ -2,6 +2,7 @@ package ru.itis.main_screen.messenger.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
@@ -34,7 +35,8 @@ internal fun OneChatItem(
         modifier = Modifier
             .fillMaxWidth()
             .background(AppTheme.colors.backgroundPrimary)
-            .repeatingClickable(onClick = onChatClick)
+            .clickable(enabled = true, onClick = {})
+//            .repeatingClickable(onClick = onChatClick)
     ) {
         Box(modifier = Modifier.padding(8.dp)) {
             Image(

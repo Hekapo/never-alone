@@ -1,6 +1,5 @@
 package ru.itis.features.signup.email.create_user
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,8 @@ import kotlinx.coroutines.launch
 import ru.itis.core.domain.models.User
 import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.usecase.IEmailSignUpUseCase
-import ru.itis.core.domain.viewstates.EmailSignUpState
+import ru.itis.core.domain.viewstates.ResultState
+import ru.itis.core.ui.common.checkPasswordLength
 import ru.itis.core.ui.utils.EmailPassData
 import javax.inject.Inject
 
@@ -26,16 +26,37 @@ internal class CreateUserViewModel(
     private val _emailUIState = MutableStateFlow(CreateUserUIState().copy(email = emailData.email))
     val emailUIState = _emailUIState.asStateFlow()
 
+    private val _showSnackBar = MutableStateFlow<Pair<String?, Boolean>>(Pair("", false))
+    val showSnackBar = _showSnackBar.asStateFlow()
+
     init {
+        databaseUseCase.snackBarFlow.onEach(this::snackBarState).launchIn(viewModelScope)
         emailUseCase.emailSignUpState.onEach(this::emailState).launchIn(viewModelScope)
     }
 
-    private fun emailState(emailSignUpState: EmailSignUpState) {
+    private fun snackBarState(snackBarState: ResultState<String, String>) {
+        when (snackBarState) {
+            is ResultState.None -> {}
+            is ResultState.InProcess -> {}
+            is ResultState.Success -> {
+                _showSnackBar.update {
+                    Pair(snackBarState.data, true)
+                }
+            }
+            is ResultState.Error -> {
+                _showSnackBar.update {
+                    Pair(snackBarState.message, true)
+                }
+            }
+        }
+    }
+
+    private fun emailState(emailSignUpState: ResultState<String, String>) {
         when (emailSignUpState) {
-            EmailSignUpState.None -> {}
-            EmailSignUpState.InProcess -> inProcess()
-            EmailSignUpState.Complete -> onComplete()
-            is EmailSignUpState.Error -> onError()
+            is ResultState.None -> {}
+            is ResultState.InProcess -> inProcess()
+            is ResultState.Success -> onComplete()
+            is ResultState.Error -> onError()
         }
     }
 
@@ -79,7 +100,7 @@ internal class CreateUserViewModel(
                 inputUserName = CreateUserUIState.InputUserName(
                     name = name,
                     isFieldEnabled = true,
-                    showError = name.isEmpty()
+//                    showError = name.isEmpty()
                 )
             )
         }
@@ -92,11 +113,10 @@ internal class CreateUserViewModel(
                 inputPassword = CreateUserUIState.InputPassword(
                     password = password,
                     isFieldEnabled = true,
-                    showError = password.isEmpty()
+                    showError = password.checkPasswordLength()
                 )
             )
         }
-
     }
 }
 

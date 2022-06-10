@@ -6,7 +6,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.google.firebase.auth.FirebaseAuth
+import ru.itis.core.common.buildPath
+import ru.itis.core.ui.destinations.LoginDestinations.*
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
@@ -15,8 +16,7 @@ import ru.itis.features.signup.login_method.LoginMethodRoute
 import ru.itis.features.signup.phone.verification.PhoneVerificationRoute
 import ru.itis.features.splash.LoadingScreen
 import ru.itis.neveralone.di.AppComponent
-import ru.itis.neveralone.navigation.Destination.*
-import javax.inject.Inject
+import ru.itis.onboarding.navigation.onBoardingNavGraph
 
 /**
  * Copyright (c) 05.03.2022 Created by Iskandar
@@ -30,51 +30,53 @@ internal fun LoginNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = SplashDestination.key
+        startDestination = SplashDestination.route
     ) {
-        val user = FirebaseAuth.getInstance().currentUser
-        composable(route = SplashDestination.key) {
+        composable(route = SplashDestination.route) {
             LoadingScreen(
-                onNavigate = {
-                    if (user != null) {
-                        toMainScreen()
-                    } else {
-                        navController.navigate(ChooseLoginMethod.key) {
-                            popUpTo(SplashDestination.key) {
-                                inclusive = true
-                            }
+                deps = appComponent,
+                toMainScreen = { toMainScreen() },
+                toRegistration = {
+                    navController.navigate(OnBoardingScreenDestination.route) {
+                        popUpTo(SplashDestination.route) {
+                            inclusive = true
                         }
                     }
                 }
             )
-
         }
-        composable(route = ChooseLoginMethod.key) {
+
+        onBoardingNavGraph(
+            deps = appComponent,
+            navController = navController
+        )
+
+        composable(route = ChooseLoginMethod.route) {
             LoginMethodRoute(
-                onSignInScreen = { navController.navigate(route = SignInDestination.key) },
-                onSignUpScreen = { navController.navigate(route = SignUpDestination.key) }
+                onSignInScreen = { navController.navigate(route = SignInDestination.route) },
+                onSignUpScreen = { navController.navigate(route = SignUpDestination.route) }
             )
         }
-        composable(route = SignInDestination.key) {
+        composable(route = SignInDestination.route) {
             SignInRoute(
                 signInDeps = appComponent,
                 onBackClick = { navController.popBackStack() },
-                onTextRegisterClick = { navController.navigate(SignUpDestination.key) }
+                onTextRegisterClick = { navController.navigate(SignUpDestination.route) }
             )
         }
-        composable(route = SignUpDestination.key) {
+        composable(route = SignUpDestination.route) {
             SignUpRoute(
                 deps = appComponent,
                 onNextWithEmailClick = {
-                    navController.navigate(setNavigationPath(emailPassData = it))
+                    navController.navigate(CreateUserDestination.route buildPath it.email)
                 },
-                onNextWithPhoneClick = { navController.navigate(PhoneVerificationDestination.key) },
+                onNextWithPhoneClick = { navController.navigate(PhoneVerificationDestination.route) },
                 onBackClick = { navController.popBackStack() },
-                onTextSignInClick = { navController.navigate(SignInDestination.key) }
+                onTextSignInClick = { navController.navigate(SignInDestination.route) }
             )
 
         }
-        composable(route = PhoneVerificationDestination.key) {
+        composable(route = PhoneVerificationDestination.route) {
             PhoneVerificationRoute(
                 deps = appComponent,
                 onNextClick = { /*TODO*/ },
@@ -82,7 +84,7 @@ internal fun LoginNavGraph(
             }
         }
         composable(
-            route = CreateUserDestination.key.plus("/{${CreateUserDestination.EMAIL}}"),
+            route = CreateUserDestination.route.plus("/{${CreateUserDestination.EMAIL}}"),
             arguments = listOf(
                 navArgument(
                     CreateUserDestination.EMAIL,
@@ -100,8 +102,4 @@ internal fun LoginNavGraph(
             )
         }
     }
-}
-
-private fun setNavigationPath(emailPassData: EmailPassData): String {
-    return CreateUserDestination.key.plus("/${emailPassData.email}")
 }

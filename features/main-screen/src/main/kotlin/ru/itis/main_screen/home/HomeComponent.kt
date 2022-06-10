@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
 import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.domain.usecase.IMainUsersUseCase
 import ru.itis.core.network.NetworkListener
 import javax.inject.Scope
 
@@ -32,6 +33,7 @@ internal interface HomeComponent {
 interface HomeDeps {
     val networkListener: NetworkListener
     val dispatchersProvider: DispatchersProvider
+    val mainUsersUseCase: IMainUsersUseCase
 
 }
 

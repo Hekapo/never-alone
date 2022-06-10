@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +31,9 @@ fun ImageTopAppBar(
     modifier: Modifier = Modifier,
     centerImageVector: Int,
     menuImageVector: Int? = null,
-    onMenuClick: (() -> Unit)? = null
+    onMenuClick: (() -> Unit)? = null,
+    backArrow: ImageVector = Icons.Default.ArrowBack,
+    backArrowClick: (() -> Unit)? = null
 ) {
     Surface(elevation = 1.dp) {
         ConstraintLayout(
@@ -40,7 +44,7 @@ fun ImageTopAppBar(
 
             ) {
 
-            val (icon, menuIcon) = createRefs()
+            val (icon, menuIcon, arrowBack) = createRefs()
 
             Box(modifier = Modifier.constrainAs(icon) {
                 top.linkTo(parent.top)
@@ -72,6 +76,24 @@ fun ImageTopAppBar(
                             onClick = onMenuClick
                         )
                     }
+                }
+            }
+            Box(modifier = Modifier.constrainAs(arrowBack) {
+                start.linkTo(parent.start, margin = 8.dp)
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+            }, contentAlignment = Alignment.Center) {
+                if (backArrowClick != null) {
+                    IconButton(
+                        content = {
+                            AppBarIcon(
+                                imageVector = backArrow,
+                                contentDescription = "back",
+                                tint = AppTheme.colors.textHighEmphasis
+                            )
+                        },
+                        onClick = backArrowClick
+                    )
                 }
 
             }
@@ -106,5 +128,6 @@ private fun ImageTopAppBarWithoutMenuIconPreview() {
     ImageTopAppBar(
         modifier = Modifier,
         centerImageVector = R.drawable.leaves,
+        backArrowClick = {}
     )
 }

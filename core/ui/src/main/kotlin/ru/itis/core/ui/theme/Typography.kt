@@ -44,25 +44,31 @@ data class AppTypography internal constructor(
         fontSize = 36.sp,
         lineHeight = 40.sp,
     ),
-    val text28R:TextStyle = TextStyle(
+    val text28R: TextStyle = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 28.sp,
         lineHeight = 30.sp,
     ),
-    val text20M:TextStyle = TextStyle(
+    val text28M: TextStyle = TextStyle(
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        fontSize = 28.sp,
+        lineHeight = 28.sp,
+    ),
+    val text20M: TextStyle = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
-        lineHeight = 22.sp,
+        lineHeight = 20.sp,
     ),
-    val text16M:TextStyle = TextStyle(
+    val text16M: TextStyle = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         lineHeight = 18.sp,
     ),
-    val text16R:TextStyle = TextStyle(
+    val text16R: TextStyle = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,

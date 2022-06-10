@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.itis.main_screen.home.models.HomeEvent
 import ru.itis.main_screen.home.models.HomeViewState
-import ru.itis.main_screen.messenger.models.MessengerEvent
+import ru.itis.main_screen.home.views.display.HomeViewDisplayUsers
 
 /**
  * Created by Iskandar on 08.04.2022.
@@ -32,7 +32,9 @@ internal fun HomeScreenRoute(
         HomeViewState.Loading -> {}
         HomeViewState.Error -> {}
         HomeViewState.NoInternet -> {}
-        is HomeViewState.Display -> {}
+        is HomeViewState.Display -> {
+            HomeViewDisplayUsers(viewState = state, fetchMoreUsers = { homeViewModel.fetchMoreUsers() })
+        }
     }
     LaunchedEffect(key1 = viewState, block = {
         homeViewModel.obtainEvent(event = HomeEvent.EnterScreen)

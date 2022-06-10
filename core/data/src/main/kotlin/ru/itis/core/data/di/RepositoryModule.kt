@@ -2,14 +2,8 @@ package ru.itis.core.data.di
 
 import dagger.Binds
 import dagger.Module
-import ru.itis.core.data.repository.DatabaseRepositoryImpl
-import ru.itis.core.data.repository.EmailSignUpRepositoryImpl
-import ru.itis.core.data.repository.PhoneSignUpRepositoryImpl
-import ru.itis.core.data.repository.SignInRepositoryImpl
-import ru.itis.core.domain.repository.DatabaseRepository
-import ru.itis.core.domain.repository.EmailSignUpRepository
-import ru.itis.core.domain.repository.PhoneSignUpRepository
-import ru.itis.core.domain.repository.SignInRepository
+import ru.itis.core.data.repository.*
+import ru.itis.core.domain.repository.*
 
 /**
  * Copyright (c) 10.03.2022 Created by Iskandar
@@ -40,4 +34,14 @@ internal interface RepositoryModuleBinds {
     fun provideDatabaseRepository(
         databaseRepositoryImpl: DatabaseRepositoryImpl
     ): DatabaseRepository
+
+    @Binds
+    fun provideDatastoreRepository(
+        datastoreRepositoryImpl: DatastoreRepositoryImpl
+    ): DatastoreRepository
+
+    @Binds
+    fun provideMainUsersRepository(
+        mainUsersRepositoryImpl: MainUsersRepositoryImpl
+    ): MainUsersRepository
 }

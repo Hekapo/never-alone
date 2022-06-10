@@ -138,7 +138,6 @@ private fun SignInScreen(
             Spacer(modifier = Modifier.height(16.dp))
             AuthButton(
                 text = stringResource(id = R.string.enter),
-                color = AppTheme.colors.backgroundOnSecondary,
                 style = AppTheme.typography.text14M
             ) {
                 onEnterClick()
