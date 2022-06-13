@@ -3,10 +3,10 @@ android-compileSdk = "32"
 android-minSdk = "21"
 android-tagetSdk = "32"
 
-kotlin = "1.6.21"
+kotlin = "1.6.10"
 
-dagger = "2.42"
-compose = "1.2.0-beta03"
+dagger = "2.41"
+compose = "1.1.0"
 
 androidx-core = "1.7.0"
 androidx-appcompat = "1.4.1"
