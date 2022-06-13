@@ -43,22 +43,16 @@ fun OnBoardingRoute(
         factory = onBoardingComponentViewModel.onBoardingComponent.factory
     )
 
-    val pages = listOf(
-        OnBoardingPage.First,
-        OnBoardingPage.Second,
-        OnBoardingPage.Third
-    )
-
     val pagerState = rememberPagerState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         HorizontalPager(
             modifier = Modifier.weight(10f),
-            count = 3,
+            count = onBoardingViewModel.pages.size,
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) { position ->
-            PagerScreen(onBoardingPage = pages[position])
+            PagerScreen(onBoardingPage = onBoardingViewModel.pages[position])
         }
         HorizontalPagerIndicator(
             modifier = Modifier
