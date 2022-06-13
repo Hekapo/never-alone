@@ -65,6 +65,8 @@ android {
 }
 
 dependencies {
+    detektPlugins("ru.kode:detekt-rules-compose:1.0.1")
+
     implementation(libs.androidx.core)
 
     implementation(project(":core"))
@@ -84,4 +86,36 @@ dependencies {
 
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)
+}
+
+detekt {
+    description = "Runs detekt for each module."
+    parallel = true
+
+    source = files("app/src/main/kotlin")
+    config = files("config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+
+//
+//    include("/*.kt")
+//    include("/*.kts")
+//    exclude("/resources/")
+//    exclude("/build/")
+
+//    reports {
+//        txt.required.set(false)
+//        xml.required.set(false)
+//        sarif.required.set(false)
+//        html {
+//            required.set(true)
+//            outputLocation.set(file("build/reports/detekt.html"))
+//        }
+//    }
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    jvmTarget = "1.8"
+}
+tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
+    jvmTarget = "1.8"
 }
