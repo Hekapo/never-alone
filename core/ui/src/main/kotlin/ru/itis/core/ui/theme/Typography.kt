@@ -42,7 +42,13 @@ data class AppTypography internal constructor(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 36.sp,
-        lineHeight = 40.sp,
+        lineHeight = 38.sp,
+    ),
+    val text36M: TextStyle = TextStyle(
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        fontSize = 36.sp,
+        lineHeight = 38.sp,
     ),
     val text28R: TextStyle = TextStyle(
         fontFamily = Montserrat,

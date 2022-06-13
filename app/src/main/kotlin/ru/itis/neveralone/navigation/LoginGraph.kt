@@ -53,6 +53,7 @@ internal fun LoginNavGraph(
 
         composable(route = ChooseLoginMethod.route) {
             LoginMethodRoute(
+                deps = appComponent,
                 onSignInScreen = { navController.navigate(route = SignInDestination.route) },
                 onSignUpScreen = { navController.navigate(route = SignUpDestination.route) }
             )
