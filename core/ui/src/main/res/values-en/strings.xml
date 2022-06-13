@@ -46,6 +46,7 @@
     <string name="input_field_empty_error">Input field cannot be empty</string>
     <string name="check_is_phone_correct_error">Check phone number correctness</string>
     <string name="check_is_email_correct_error">Проверьте правильность емейла</string>
-    <string name="error">Ошибка</string>
+    <string name="error">Error</string>
     <string name="short_password_error">Пароль слишком короткий</string>
+    <string name="no_internet">No internet connection</string>
 </resources>

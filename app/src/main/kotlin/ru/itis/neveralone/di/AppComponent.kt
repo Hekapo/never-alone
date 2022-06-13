@@ -16,6 +16,7 @@ import ru.itis.core.network.NetworkListener
 import ru.itis.features.signin.SignInDeps
 import ru.itis.features.signup.SignUpDeps
 import ru.itis.features.signup.email.create_user.CreateUserDeps
+import ru.itis.features.signup.login_method.LoginMethodDeps
 import ru.itis.features.signup.phone.verification.PhoneVerificationDeps
 import ru.itis.features.splash.LoadingDeps
 import ru.itis.main_screen.main.MainDeps
@@ -46,7 +47,8 @@ interface AppComponent :
     SettingsDeps,
     OnBoardingDeps,
     LoadingDeps,
-    UserFormDeps {
+    UserFormDeps,
+    LoginMethodDeps {
 
     override val networkListener: NetworkListener
     override val sigInUseCase: ISignInUseCase
