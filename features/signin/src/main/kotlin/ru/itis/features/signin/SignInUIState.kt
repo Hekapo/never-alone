@@ -1,5 +1,7 @@
 package ru.itis.features.signin
 
+import ru.itis.core.ui.common.FieldCorrectnessCheck
+
 /**
  * Created by Iskandar on 12.03.2022.
  */
@@ -8,23 +10,32 @@ data class SignInUIState(
     val inputEmail: InputEmailField = InputEmailField(),
     val inputPassword: InputPasswordField = InputPasswordField(),
     val signInProcess: SignInProcess = SignInProcess(),
-    val networkError: Boolean = false
+    val snackBar: SnackBar = SnackBar(),
+    val internetAvailable: Boolean = true,
+    val isLoading: Boolean = false
 ) {
 
     data class InputEmailField(
         val email: String = "",
         val isFieldEnabled: Boolean = true,
+        val showError: FieldCorrectnessCheck = FieldCorrectnessCheck.None
     )
 
     data class InputPasswordField(
         val password: String = "",
         val isFieldEnabled: Boolean = true,
-        val isPasswordVisible: Boolean = false
+        val showError: FieldCorrectnessCheck = FieldCorrectnessCheck.None
     )
 
     data class SignInProcess(
         val signInSuccess: Boolean = false,
         val signInLoading: Boolean = false,
         val signInError: Boolean = false
+    )
+
+    data class SnackBar(
+        val show: Boolean = false,
+        val message: String = "",
+        val isError: Boolean = true
     )
 }

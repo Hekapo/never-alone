@@ -1,7 +1,6 @@
 package ru.itis.core.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.itis.core.domain.viewstates.EmailSignUpState
 import ru.itis.core.domain.viewstates.ResultState
 
 /**

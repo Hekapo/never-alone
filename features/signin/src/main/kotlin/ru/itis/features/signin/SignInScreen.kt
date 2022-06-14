@@ -14,28 +14,26 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
-import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
-import ru.itis.core.ui.components.AuthButton
-import ru.itis.core.ui.components.GoogleButton
-import ru.itis.core.ui.components.LoginTextField
+import ru.itis.core.ui.common.FieldCorrectnessCheck
+import ru.itis.core.ui.components.*
 import ru.itis.core.ui.theme.AppTheme
 
 /**
@@ -59,12 +57,11 @@ fun SignInRoute(
 
     val uiState by signInViewModel.signInUIState.collectAsState()
 
-    LaunchedEffect(uiState.signInProcess.signInSuccess) {
-        if (uiState.signInProcess.signInSuccess) {
-            delay(300)
-            onBackClick()
-        }
-    }
+//    LaunchedEffect(uiState.signInProcess.signInSuccess) {
+//        if (uiState.signInProcess.signInSuccess) {
+//            delay(300)
+//        }
+//    }
 
     SignInScreen(
         uiState = uiState,
@@ -87,6 +84,8 @@ private fun SignInScreen(
     onTextRegisterClick: () -> Unit
 ) {
 
+    var isPasswordVisible by remember { mutableStateOf(false) }
+
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
@@ -95,19 +94,22 @@ private fun SignInScreen(
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary)
     ) {
-        IconButton(
-            onClick = {
-                keyboardController?.hide()
-                onBackClick()
-            },
-            content = {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back),
-                    tint = AppTheme.colors.textHighEmphasis
-                )
-            }
-        )
+        Column {
+            NoInternetWarn(internetAvailable = uiState.internetAvailable)
+            IconButton(
+                onClick = {
+                    keyboardController?.hide()
+                    onBackClick()
+                },
+                content = {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.back),
+                        tint = AppTheme.colors.textHighEmphasis
+                    )
+                }
+            )
+        }
 
         Column(
             modifier = Modifier
@@ -124,24 +126,55 @@ private fun SignInScreen(
                 color = AppTheme.colors.textHighEmphasis
             )
             Spacer(modifier = Modifier.height(48.dp))
-            UserEmailInput(
-                inputValue = uiState.inputEmail.email,
-                inputEnabled = uiState.inputEmail.isFieldEnabled,
-                onValueChange = onEmailChanged
+            AppTextField(
+                text = uiState.inputEmail.email,
+                isEnabled = uiState.inputEmail.isFieldEnabled,
+                placeholder = stringResource(id = R.string.enter_email_hint),
+                onChange = onEmailChanged,
+                isError = uiState.inputEmail.showError,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                keyboardActions = KeyboardActions { keyboardController?.hide() }
             )
             Spacer(modifier = Modifier.height(16.dp))
-            UserPasswordInput(
-                inputValue = uiState.inputPassword.password,
-                inputEnabled = uiState.inputPassword.isFieldEnabled,
-                onValueChange = onPasswordChanged
+            AppTextField(
+                text = uiState.inputPassword.password,
+                isEnabled = uiState.inputPassword.isFieldEnabled,
+                placeholder = stringResource(id = R.string.enter_password_hint),
+                onChange = onPasswordChanged,
+                visualTransformation = if (isPasswordVisible)
+                    VisualTransformation.None
+                else
+                    PasswordVisualTransformation(),
+                isError = uiState.inputPassword.showError,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                keyboardActions = KeyboardActions { keyboardController?.hide() },
+                leadingIcon = {
+                    IconButton(
+                        onClick = {
+                            isPasswordVisible = !isPasswordVisible
+                        }) {
+                        Icon(
+                            imageVector = if (isPasswordVisible)
+                                Icons.Filled.Visibility
+                            else
+                                Icons.Filled.VisibilityOff,
+                            contentDescription = "Password Visibility",
+                            tint = AppTheme.colors.textMediumEmphasis
+                        )
+                    }
+                },
             )
             Spacer(modifier = Modifier.height(16.dp))
             AuthButton(
                 text = stringResource(id = R.string.enter),
-                style = AppTheme.typography.text14M
-            ) {
-                onEnterClick()
-            }
+                style = AppTheme.typography.text14M,
+                isLoading = uiState.isLoading,
+                enabled = !uiState.isLoading &&
+                        uiState.inputPassword.showError is FieldCorrectnessCheck.Success &&
+                        uiState.inputEmail.showError is FieldCorrectnessCheck.Success &&
+                        uiState.internetAvailable,
+                onClick = onEnterClick
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -194,46 +227,18 @@ private fun SignInScreen(
 
             }
         }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
+        ) {
+            Snackbar(
+                message = uiState.snackBar.message,
+                isError = uiState.snackBar.isError,
+                visible = uiState.snackBar.show
+            )
+        }
     }
-
-}
-
-@Composable
-private fun UserEmailInput(
-    modifier: Modifier = Modifier,
-    inputValue: String,
-    inputEnabled: Boolean,
-    keyboardController: SoftwareKeyboardController? = null,
-    onValueChange: (String) -> Unit,
-) {
-    LoginTextField(
-        modifier = modifier,
-        inputValue = inputValue,
-        isEnabled = inputEnabled,
-        placeholder = stringResource(id = R.string.enter_email_hint),
-        onValueChange = onValueChange,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-        keyboardActions = KeyboardActions { keyboardController?.hide() }
-    )
-}
-
-@Composable
-private fun UserPasswordInput(
-    modifier: Modifier = Modifier,
-    inputValue: String,
-    inputEnabled: Boolean,
-    keyboardController: SoftwareKeyboardController? = null,
-    onValueChange: (String) -> Unit,
-) {
-    LoginTextField(
-        modifier = modifier,
-        inputValue = inputValue,
-        isEnabled = inputEnabled,
-        placeholder = stringResource(id = R.string.enter_password_hint),
-        onValueChange = onValueChange,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-        keyboardActions = KeyboardActions { keyboardController?.hide() }
-    )
 }
 
 @Preview
