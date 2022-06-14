@@ -1,6 +1,7 @@
 package ru.itis.core.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,7 +30,10 @@ internal class EmailSignUpRepositoryImpl @Inject constructor(
             .addOnSuccessListener {
                 signUpWithEmailAndPasswordProcessState.update { ResultState.Success(data = "") }
             }.addOnFailureListener { ex ->
-                signUpWithEmailAndPasswordProcessState.update { ResultState.Error(message = ex.message) }
+                val message = ex as FirebaseAuthException
+                signUpWithEmailAndPasswordProcessState.update { ResultState.Error(message = message.errorCode) }
+            }.addOnCompleteListener {
+                signUpWithEmailAndPasswordProcessState.update { ResultState.None }
             }
     }
 }

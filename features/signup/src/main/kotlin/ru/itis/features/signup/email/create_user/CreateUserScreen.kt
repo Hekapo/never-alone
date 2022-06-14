@@ -26,10 +26,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
+import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.common.FieldCorrectnessCheck
 import ru.itis.core.ui.components.AppTextField
 import ru.itis.core.ui.components.AuthButton
+import ru.itis.core.ui.components.NoInternetWarn
+import ru.itis.core.ui.components.Snackbar
+import ru.itis.core.ui.firebase_exceptions.authCodeMap
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.core.ui.utils.EmailPassData
 
@@ -55,11 +59,16 @@ fun CreateUserRoute(
 
     val uiState by createUserViewModel.emailUIState.collectAsState()
 
-    val snackBarState by createUserViewModel.showSnackBar.collectAsState()
-
     LaunchedEffect(key1 = uiState.couldNavigate) {
         if (uiState.couldNavigate) {
             onNextClick()
+        }
+    }
+
+    LaunchedEffect(key1 = uiState.snackBar.show) {
+        delay(1500L)
+        if (uiState.snackBar.show) {
+            createUserViewModel.hideSnackbar()
         }
     }
 
@@ -95,19 +104,22 @@ private fun CreateUserScreen(
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary)
     ) {
-        IconButton(
-            onClick = {
-                keyboardController?.hide()
-                onBackClick()
-            },
-            content = {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back),
-                    tint = AppTheme.colors.textHighEmphasis
-                )
-            }
-        )
+        Column {
+            NoInternetWarn(internetAvailable = uiState.internetAvailable)
+            IconButton(
+                onClick = {
+                    keyboardController?.hide()
+                    onBackClick()
+                },
+                content = {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.back),
+                        tint = AppTheme.colors.textHighEmphasis
+                    )
+                }
+            )
+        }
 
         Column(
             modifier = Modifier
@@ -121,6 +133,7 @@ private fun CreateUserScreen(
                 onChange = onNameChange,
                 isEnabled = uiState.inputUserName.isFieldEnabled,
                 placeholder = stringResource(id = R.string.user_name),
+                isError = uiState.inputUserName.showError,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 keyboardActions = KeyboardActions { keyboardController?.hide() }
             )
@@ -128,7 +141,7 @@ private fun CreateUserScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, top = 4.dp),
-                text = "Введенное имя изменить нельзя",
+                text = stringResource(id = R.string.cant_change_name),
                 textAlign = TextAlign.Start,
                 color = AppTheme.colors.textMediumEmphasis,
                 style = AppTheme.typography.text14R
@@ -166,10 +179,21 @@ private fun CreateUserScreen(
             AuthButton(
                 text = stringResource(id = R.string.continue_text),
                 style = AppTheme.typography.text14M,
-                enabled = uiState.inputPassword.showError is FieldCorrectnessCheck.Success,
-                onClick = {
-                    onNextClick()
-                }
+                enabled = uiState.inputPassword.showError is FieldCorrectnessCheck.Success && uiState.internetAvailable && !uiState.isLoading,
+                isLoading = uiState.isLoading,
+                onClick = onNextClick
+            )
+
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
+        ) {
+            Snackbar(
+                message = stringResource(id = uiState.snackBar.message.authCodeMap()),
+                isError = uiState.snackBar.isError,
+                visible = uiState.snackBar.show
             )
         }
     }

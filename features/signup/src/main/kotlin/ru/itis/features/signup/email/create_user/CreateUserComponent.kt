@@ -7,6 +7,7 @@ import dagger.Component
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.usecase.IEmailSignUpUseCase
+import ru.itis.core.network.NetworkListener
 import ru.itis.core.ui.utils.EmailPassData
 import javax.inject.Scope
 
@@ -38,6 +39,7 @@ interface CreateUserDeps {
     val emailSignUpUseCase: IEmailSignUpUseCase
     val databaseUseCase: IDatabaseUseCase
     val dispatchersProvider: DispatchersProvider
+    val networkListener: NetworkListener
 }
 
 internal class CreateUserComponentViewModel(deps: CreateUserDeps, emailData: EmailPassData) : ViewModel() {

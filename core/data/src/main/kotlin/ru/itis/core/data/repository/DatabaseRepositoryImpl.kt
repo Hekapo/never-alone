@@ -98,6 +98,4 @@ class DatabaseRepositoryImpl @Inject constructor(
     override val userFlowProcess: Flow<ResultState<User, Any>>
         get() = _userFlowProcessState.asStateFlow()
 
-    override val showSnackBar: Flow<ResultState<String, String>>
-        get() = _showSnackBarWithMessage.asStateFlow()
 }

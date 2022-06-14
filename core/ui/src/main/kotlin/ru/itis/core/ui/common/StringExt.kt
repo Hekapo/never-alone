@@ -57,3 +57,11 @@ fun String.checkPasswordLength(): FieldCorrectnessCheck {
         FieldCorrectnessCheck.Error(message = R.string.short_password_error)
     }
 }
+
+fun String.isFieldEmpty(): FieldCorrectnessCheck {
+    return if (this.isBlank() || this.isEmpty()) {
+        FieldCorrectnessCheck.Error(message = R.string.input_field_empty_error)
+    } else {
+        FieldCorrectnessCheck.Success(data = this)
+    }
+}

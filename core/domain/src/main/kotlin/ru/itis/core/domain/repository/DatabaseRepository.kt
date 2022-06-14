@@ -16,5 +16,4 @@ interface DatabaseRepository {
     suspend fun fetchCurrentUser()
 
     val userFlowProcess: Flow<ResultState<User, Any>>
-    val showSnackBar: Flow<ResultState<String, String>>
 }

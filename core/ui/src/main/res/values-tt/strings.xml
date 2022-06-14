@@ -49,4 +49,6 @@
     <string name="error">Ошибка</string>
     <string name="short_password_error">Пароль слишком короткий</string>
     <string name="no_internet">No internet connection</string>
+    <string name="cant_change_name">Введенное имя изменить нельзя</string>
+    <string name="email_already_in_use">The provided email is already in use by an existing user</string>
 </resources>
