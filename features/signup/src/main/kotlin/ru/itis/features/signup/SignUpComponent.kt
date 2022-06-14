@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Component
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
+import ru.itis.core.network.NetworkListener
 import javax.inject.Scope
 
 /**
@@ -30,7 +31,7 @@ internal interface SignUpComponent {
 }
 
 interface SignUpDeps {
-
+    val networkListener: NetworkListener
     val singUpUseCase: IPhoneSignUpUseCase
     val dispatchersProvider: DispatchersProvider
 }
@@ -44,7 +45,7 @@ internal class SignUpComponentViewModelFactory(
     private val deps: SignUpDeps
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return SignUpComponentViewModel(deps) as T
     }
 }

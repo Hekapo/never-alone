@@ -31,6 +31,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
+import ru.itis.core.ui.components.NoInternetWarn
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signup.email.EmailTabRoute
@@ -125,19 +126,22 @@ private fun SignUpScreen(
             .fillMaxSize()
             .background(AppTheme.colors.backgroundPrimary)
     ) {
-        IconButton(
-            onClick = {
-                focusManager.clearFocus()
-                onBackClick()
-            },
-            content = {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back),
-                    tint = AppTheme.colors.textHighEmphasis
-                )
-            }
-        )
+        Column {
+            NoInternetWarn(internetAvailable = uiState.networkAvailable)
+            IconButton(
+                onClick = {
+                    focusManager.clearFocus()
+                    onBackClick()
+                },
+                content = {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.back),
+                        tint = AppTheme.colors.textHighEmphasis
+                    )
+                }
+            )
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -186,10 +190,8 @@ private fun SignUpScreen(
                     color = AppTheme.colors.textHighEmphasis,
                     style = AppTheme.typography.text14M
                 )
-
             }
         }
-
     }
 }
 

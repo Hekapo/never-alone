@@ -62,7 +62,11 @@ internal fun LoginNavGraph(
             SignInRoute(
                 signInDeps = appComponent,
                 onBackClick = { navController.popBackStack() },
-                onTextRegisterClick = { navController.navigate(SignUpDestination.route) }
+                onTextRegisterClick = {
+                    if (!navController.popBackStack(route = SignUpDestination.route, false)) {
+                        navController.navigate(route = SignUpDestination.route)
+                    }
+                }
             )
         }
         composable(route = SignUpDestination.route) {
@@ -73,9 +77,12 @@ internal fun LoginNavGraph(
                 },
                 onNextWithPhoneClick = { navController.navigate(PhoneVerificationDestination.route) },
                 onBackClick = { navController.popBackStack() },
-                onTextSignInClick = { navController.navigate(SignInDestination.route) }
+                onTextSignInClick = {
+                    if (!navController.popBackStack(route = SignInDestination.route, false)) {
+                        navController.navigate(route = SignInDestination.route)
+                    }
+                }
             )
-
         }
         composable(route = PhoneVerificationDestination.route) {
             PhoneVerificationRoute(

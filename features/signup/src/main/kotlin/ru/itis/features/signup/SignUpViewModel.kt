@@ -1,7 +1,6 @@
 package ru.itis.features.signup
 
 import android.app.Activity
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -10,6 +9,7 @@ import kotlinx.coroutines.launch
 import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 import ru.itis.core.domain.viewstates.PhoneSignUpState
+import ru.itis.core.network.NetworkListener
 import ru.itis.core.ui.common.isEmailCorrect
 import ru.itis.core.ui.common.isPhoneNumberCorrect
 import javax.inject.Inject
@@ -20,13 +20,28 @@ import javax.inject.Inject
 
 internal class SignUpViewModel(
     private val phoneSignUpUseCase: IPhoneSignUpUseCase,
-    private val dispatchersProvider: DispatchersProvider
+    private val dispatchersProvider: DispatchersProvider,
+    networkListener: NetworkListener
 ) : ViewModel() {
+
     private val _signUpUIState = MutableStateFlow(SignUpUIState())
     val signUpUIState = _signUpUIState.asStateFlow()
 
     init {
+
+        networkListener.networkState
+            .distinctUntilChanged()
+            .onEach(this::onNetwork)
+            .flowOn(dispatchersProvider.IO)
+            .launchIn(viewModelScope)
+
         phoneSignUpUseCase.phoneSignUpState.onEach(this::signUpState).launchIn(viewModelScope)
+    }
+
+    private fun onNetwork(isAvailable: Boolean) {
+        _signUpUIState.update {
+            it.copy(networkAvailable = isAvailable)
+        }
     }
 
     fun onTabSelected(tabIndex: Int) = _signUpUIState.update { it.copy(activeTab = tabIndex) }
@@ -79,13 +94,10 @@ internal class SignUpViewModel(
             it.copy(
                 inputEmail = SignUpUIState.InputEmailField(
                     email = email,
-                    isFieldEnabled = true,
                     isError = email.isEmailCorrect()
                 )
             )
         }
-        Log.e("TAG", _signUpUIState.value.inputEmail.email)
-
     }
 
     private fun inProcess() {
@@ -103,14 +115,14 @@ internal class SignUpViewModel(
         }
     }
 
-
     class SignUpViewModelFactory @Inject constructor(
         private val signUpUseCase: IPhoneSignUpUseCase,
-        private val dispatchersProvider: DispatchersProvider
+        private val dispatchersProvider: DispatchersProvider,
+        private val networkListener: NetworkListener
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return SignUpViewModel(signUpUseCase, dispatchersProvider) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return SignUpViewModel(signUpUseCase, dispatchersProvider, networkListener) as T
         }
     }
 }
