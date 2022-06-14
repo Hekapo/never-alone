@@ -49,7 +49,6 @@ private fun PhoneTabScreen(
 
     Column(modifier = Modifier.height(140.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.height(24.dp))
-
         AppTextField(
             text = uiState.inputPhone.phone,
             placeholder = stringResource(id = ru.itis.core.ui.R.string.enter_phone_hint),
@@ -64,7 +63,7 @@ private fun PhoneTabScreen(
         AuthButton(
             text = stringResource(id = ru.itis.core.ui.R.string.create_account),
             style = AppTheme.typography.text14M,
-            enabled = uiState.inputPhone.isError is FieldCorrectnessCheck.Success,
+            enabled = uiState.inputPhone.isError is FieldCorrectnessCheck.Success && uiState.networkAvailable,
             onClick = { onNextClick() }
         )
     }

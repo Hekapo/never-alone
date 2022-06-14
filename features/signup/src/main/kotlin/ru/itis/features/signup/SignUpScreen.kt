@@ -190,10 +190,8 @@ private fun SignUpScreen(
                     color = AppTheme.colors.textHighEmphasis,
                     style = AppTheme.typography.text14M
                 )
-
             }
         }
-
     }
 }
 

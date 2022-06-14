@@ -65,7 +65,7 @@ private fun EmailTabScreen(
         AuthButton(
             text = stringResource(id = R.string.next),
             style = AppTheme.typography.text14M,
-            enabled = uiState.inputEmail.isError is FieldCorrectnessCheck.Success,
+            enabled = uiState.inputEmail.isError is FieldCorrectnessCheck.Success && uiState.networkAvailable,
             onClick = { onNextClick(EmailPassData(uiState.inputEmail.email)) }
         )
     }
