@@ -11,9 +11,11 @@ data class SignUpUIState(
     val inputEmail: InputEmailField = InputEmailField(),
     val inputPhone: InputPhoneField = InputPhoneField(),
     val signUpProcess: SignUpProcess = SignUpProcess(),
+    val snackBar: SnackBar = SnackBar(),
     val activeTab: Int = TAB_PHONE,
     val networkAvailable: Boolean = true,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val couldNavigate: Boolean = false
 ) {
 
     data class InputEmailField(
@@ -32,5 +34,11 @@ data class SignUpUIState(
         val signUpSuccess: Boolean = false,
         val signUpLoading: Boolean = false,
         val signUpError: Boolean = false
+    )
+
+    data class SnackBar(
+        val show: Boolean = false,
+        val message: String = "",
+        val isError: Boolean = true
     )
 }

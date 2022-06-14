@@ -9,8 +9,11 @@ import ru.itis.core.ui.common.FieldCorrectnessCheck
 internal data class CreateUserUIState(
     val inputUserName: InputUserName = InputUserName(),
     val inputPassword: InputPassword = InputPassword(),
+    val snackBar: SnackBar = SnackBar(),
     val email: String = "",
-    val couldNavigate: Boolean = false
+    val couldNavigate: Boolean = false,
+    val internetAvailable: Boolean = true,
+    val isLoading: Boolean = false,
 ) {
 
     internal data class InputUserName(
@@ -25,4 +28,9 @@ internal data class CreateUserUIState(
         val showError: FieldCorrectnessCheck = FieldCorrectnessCheck.None
     )
 
+    internal data class SnackBar(
+        val show: Boolean = false,
+        val message: String = "",
+        val isError: Boolean = true
+    )
 }

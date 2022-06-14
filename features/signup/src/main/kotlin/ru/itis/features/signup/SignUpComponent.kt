@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
 import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 import ru.itis.core.network.NetworkListener
 import javax.inject.Scope
@@ -34,6 +35,7 @@ interface SignUpDeps {
     val networkListener: NetworkListener
     val singUpUseCase: IPhoneSignUpUseCase
     val dispatchersProvider: DispatchersProvider
+    val databaseUseCase: IDatabaseUseCase
 }
 
 internal class SignUpComponentViewModel(deps: SignUpDeps) : ViewModel() {

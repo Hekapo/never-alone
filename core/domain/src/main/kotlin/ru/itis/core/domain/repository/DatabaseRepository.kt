@@ -14,7 +14,8 @@ interface DatabaseRepository {
     suspend fun updateUser(user: User)
     suspend fun getCurrentUserId(): String?
     suspend fun fetchCurrentUser()
+    suspend fun checkEmail(email: String)
 
     val userFlowProcess: Flow<ResultState<User, Any>>
-    val showSnackBar: Flow<ResultState<String, String>>
+    val emailFlowProcess: Flow<ResultState<String, String>>
 }

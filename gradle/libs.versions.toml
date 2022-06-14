@@ -42,7 +42,7 @@ google-accompanist = "0.23.1"
 
 google-services = "21.0.1"
 
-firebase = "29.1.0"
+firebase = "30.1.0"
 
 twyper-swipe = "0.0.4"
 
@@ -107,6 +107,7 @@ kotlin-lib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kot
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinx-coroutines"}
 
 coil-core = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
@@ -172,4 +173,4 @@ androidx-paging = ["androidx-paging-runtime", "androidx-paging-common", "android
 
 retrofit2 = ["retrofit2-runtime", "okhttp3", "retrofit2-koltinx-serialization", "kotlinx-serialization"]
 
-kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
+kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core", "kotlinx-coroutines-play-services"]

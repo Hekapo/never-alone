@@ -51,7 +51,6 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
             }
         }
 
-        databaseUseCase.snackBarFlow.onEach(this::snackBarState).launchIn(viewModelScope)
         databaseUseCase.userFlow.onEach(this::userState).launchIn(viewModelScope)
     }
 

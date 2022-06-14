@@ -2,10 +2,10 @@ package ru.itis.core.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,6 +26,7 @@ fun AuthButton(
     color: Color = AppTheme.colors.backgroundOnSecondary,
     style: TextStyle = AppTheme.typography.text14M,
     enabled: Boolean = true,
+    isLoading: Boolean = false,
     onClick: () -> Unit
 ) {
     Button(
@@ -45,6 +46,14 @@ fun AuthButton(
             color = color,
             style = style
         )
+        Spacer(modifier = Modifier.width(16.dp))
+        if(isLoading){
+            CircularProgressIndicator(
+                modifier = Modifier.size(24.dp),
+                color = AppTheme.colors.backgroundOnSecondary,
+                strokeWidth = 2.dp
+            )
+        }
     }
 }
 
@@ -55,7 +64,8 @@ private fun AuthButtonPreview() {
     AuthButton(
         modifier = Modifier.background(AppTheme.colors.backgroundPrimary),
         text = "Auth",
-        enabled = false
+        enabled = true,
+        isLoading = true
     ) {
 
     }
