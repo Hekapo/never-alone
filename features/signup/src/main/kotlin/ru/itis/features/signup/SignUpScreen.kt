@@ -3,6 +3,7 @@
 package ru.itis.features.signup
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -72,6 +73,21 @@ fun SignUpRoute(
         }
     }
 
+
+    LaunchedEffect(key1 = uiState.snackBar.show) {
+        delay(1500L)
+        if (uiState.snackBar.show) {
+            signUpViewModel.hideSnackbar()
+        }
+    }
+
+    LaunchedEffect(key1 = uiState.couldNavigate) {
+        if (uiState.couldNavigate) {
+            Log.e("DEBUG", uiState.couldNavigate.toString())
+            onNextWithEmailClick(EmailPassData(uiState.inputEmail.email))
+        }
+    }
+
     SignUpScreen(
         uiState = uiState,
         onTextSignInClick = onTextSignInClick,
@@ -91,7 +107,10 @@ fun SignUpRoute(
         onEmailRoute = {
             EmailTabRoute(
                 uiState = uiState,
-                onNextClick = onNextWithEmailClick,
+                onNextClick = {
+                    Log.e("DEBUG", "email: ${it.email}")
+                    signUpViewModel.checkEmail(it.email)
+                },
                 onEmailChange = signUpViewModel::onEmailChange
             )
         }
@@ -191,6 +210,17 @@ private fun SignUpScreen(
                     style = AppTheme.typography.text14M
                 )
             }
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
+        ) {
+            ru.itis.core.ui.components.Snackbar(
+                message = uiState.snackBar.message,
+                isError = uiState.snackBar.isError,
+                visible = uiState.snackBar.show
+            )
         }
     }
 }

@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.usecase.IPhoneSignUpUseCase
 import ru.itis.core.domain.viewstates.PhoneSignUpState
+import ru.itis.core.domain.viewstates.ResultState
 import ru.itis.core.network.NetworkListener
 import ru.itis.core.ui.common.isEmailCorrect
 import ru.itis.core.ui.common.isPhoneNumberCorrect
@@ -21,6 +23,7 @@ import javax.inject.Inject
 internal class SignUpViewModel(
     private val phoneSignUpUseCase: IPhoneSignUpUseCase,
     private val dispatchersProvider: DispatchersProvider,
+    private val databaseUseCase: IDatabaseUseCase,
     networkListener: NetworkListener
 ) : ViewModel() {
 
@@ -35,12 +38,51 @@ internal class SignUpViewModel(
             .flowOn(dispatchersProvider.IO)
             .launchIn(viewModelScope)
 
+        databaseUseCase.emailFlow
+            .distinctUntilChanged()
+            .onEach(this::onEmailCheck)
+            .flowOn(dispatchersProvider.IO)
+            .launchIn(viewModelScope)
+
         phoneSignUpUseCase.phoneSignUpState.onEach(this::signUpState).launchIn(viewModelScope)
     }
 
     private fun onNetwork(isAvailable: Boolean) {
         _signUpUIState.update {
             it.copy(networkAvailable = isAvailable)
+        }
+    }
+
+    private fun onEmailCheck(state: ResultState<String, String>) {
+        when (state) {
+            is ResultState.None -> {}
+            is ResultState.InProcess -> {}
+            is ResultState.Success -> {
+                _signUpUIState.update {
+                    it.copy(couldNavigate = true)
+                }
+            }
+            is ResultState.Error -> {
+                onEmailCheckError(message = "User with this email exist")
+            }
+        }
+    }
+
+    private fun onEmailCheckError(message: String) {
+        _signUpUIState.update {
+            it.copy(
+                snackBar = SignUpUIState.SnackBar(
+                    show = true,
+                    message = message,
+                    isError = true
+                )
+            )
+        }
+    }
+
+    fun checkEmail(email: String) {
+        viewModelScope.launch(dispatchersProvider.IO) {
+            databaseUseCase.checkEmail(email)
         }
     }
 
@@ -115,14 +157,26 @@ internal class SignUpViewModel(
         }
     }
 
+    fun hideSnackbar() {
+        _signUpUIState.update {
+            it.copy(snackBar = SignUpUIState.SnackBar(show = false))
+        }
+    }
+
     class SignUpViewModelFactory @Inject constructor(
         private val signUpUseCase: IPhoneSignUpUseCase,
         private val dispatchersProvider: DispatchersProvider,
-        private val networkListener: NetworkListener
+        private val databaseUseCase: IDatabaseUseCase,
+        private val networkListener: NetworkListener,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SignUpViewModel(signUpUseCase, dispatchersProvider, networkListener) as T
+            return SignUpViewModel(
+                signUpUseCase,
+                dispatchersProvider,
+                databaseUseCase,
+                networkListener
+            ) as T
         }
     }
 }

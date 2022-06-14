@@ -18,8 +18,10 @@ interface IDatabaseUseCase {
     suspend fun getUsers(): List<User>
     suspend fun getCurrentUserId(): String?
     suspend fun fetchCurrentUser()
+    suspend fun checkEmail(email: String)
 
     val userFlow: Flow<ResultState<User, Any>>
+    val emailFlow: Flow<ResultState<String, String>>
 }
 
 @Reusable
@@ -47,7 +49,14 @@ internal class DatabaseUseCase @Inject constructor(
         databaseRepository.fetchCurrentUser()
     }
 
+    override suspend fun checkEmail(email: String) {
+        databaseRepository.checkEmail(email)
+    }
+
     override val userFlow: Flow<ResultState<User, Any>>
         get() = databaseRepository.userFlowProcess.distinctUntilChanged()
+
+    override val emailFlow: Flow<ResultState<String, String>>
+        get() = databaseRepository.emailFlowProcess.distinctUntilChanged()
 
 }

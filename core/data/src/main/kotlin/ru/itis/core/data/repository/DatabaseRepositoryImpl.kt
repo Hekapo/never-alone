@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.tasks.await
 import ru.itis.core.database_constants.DatabaseConstants.NODE_USERS
 import ru.itis.core.domain.models.User
 import ru.itis.core.domain.repository.DatabaseRepository
@@ -26,20 +27,12 @@ class DatabaseRepositoryImpl @Inject constructor(
 ) : DatabaseRepository {
 
     private val _userFlowProcessState = MutableStateFlow<ResultState<User, Any>>(ResultState.None)
-    private val _showSnackBarWithMessage =
+    private val _checkEmailProcessState =
         MutableStateFlow<ResultState<String, String>>(ResultState.None)
 
     override suspend fun addUser(user: User) {
-//        if (isUserExists()) {
-//            _showSnackBarWithMessage.update {
-//                ResultState.Error("User already exists")
-//            }
-//        } else {
-//            _showSnackBarWithMessage.update {
-//                ResultState.Success(data = "Success")
-//            }
+
         databaseReference.child(NODE_USERS).child(user.id!!).setValue(user.toMap())
-//        }
     }
 
     override suspend fun getUsers(): List<User> {
@@ -47,7 +40,7 @@ class DatabaseRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateUser(user: User) {
-        databaseReference.child(NODE_USERS).child(user.id!!).setValue(user.toMap())
+        databaseReference.child(NODE_USERS).child(user.email).setValue(user.toMap())
     }
 
     override suspend fun getCurrentUserId(): String? {
@@ -79,6 +72,25 @@ class DatabaseRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun checkEmail(email: String) {
+        _checkEmailProcessState.update { ResultState.None }
+        var isExists = false
+        val ref = databaseReference.child(NODE_USERS).get().await()
+        run breaking@{
+            ref.children.forEach {
+                if (it.child("email").value as String == email) {
+                    isExists = true
+                    return@breaking
+                }
+            }
+        }
+        if (isExists) {
+            _checkEmailProcessState.update { ResultState.Error(null) }
+        } else {
+            _checkEmailProcessState.update { ResultState.Success(data = "") }
+        }
+    }
+
     private suspend fun isUserExists(): Boolean {
         var exists = false
         databaseReference.child(NODE_USERS).child(getCurrentUserId()!!)
@@ -98,4 +110,6 @@ class DatabaseRepositoryImpl @Inject constructor(
     override val userFlowProcess: Flow<ResultState<User, Any>>
         get() = _userFlowProcessState.asStateFlow()
 
+    override val emailFlowProcess: Flow<ResultState<String, String>>
+        get() = _checkEmailProcessState.asStateFlow()
 }

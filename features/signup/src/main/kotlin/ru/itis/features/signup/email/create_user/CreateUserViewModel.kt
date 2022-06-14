@@ -1,6 +1,5 @@
 package ru.itis.features.signup.email.create_user
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
