@@ -1,6 +1,5 @@
 package ru.itis.neveralone.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -63,7 +62,11 @@ internal fun LoginNavGraph(
             SignInRoute(
                 signInDeps = appComponent,
                 onBackClick = { navController.popBackStack() },
-                onTextRegisterClick = { navController.navigate(SignUpDestination.route) }
+                onTextRegisterClick = {
+                    if (!navController.popBackStack(route = SignUpDestination.route, false)) {
+                        navController.navigate(route = SignUpDestination.route)
+                    }
+                }
             )
         }
         composable(route = SignUpDestination.route) {
@@ -75,19 +78,8 @@ internal fun LoginNavGraph(
                 onNextWithPhoneClick = { navController.navigate(PhoneVerificationDestination.route) },
                 onBackClick = { navController.popBackStack() },
                 onTextSignInClick = {
-                    val dest =
-                        navController.findDestination(destinationRoute = SignInDestination.route)
-                    var destination: String? = null
-                    navController.backQueue.forEach {
-                        if (it.destination.route == SignInDestination.route) {
-                            destination = it.destination.route
-                        }
-                    }
-                    Log.e("DEBUG", destination.toString())
-                    if (destination == null) {
+                    if (!navController.popBackStack(route = SignInDestination.route, false)) {
                         navController.navigate(route = SignInDestination.route)
-                    } else {
-                        navController.popBackStack()
                     }
                 }
             )

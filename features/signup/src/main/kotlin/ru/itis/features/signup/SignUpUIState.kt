@@ -12,7 +12,7 @@ data class SignUpUIState(
     val inputPhone: InputPhoneField = InputPhoneField(),
     val signUpProcess: SignUpProcess = SignUpProcess(),
     val activeTab: Int = TAB_PHONE,
-    val networkAvailable: Boolean = false,
+    val networkAvailable: Boolean = true,
     val isLoading: Boolean = false
 ) {
 

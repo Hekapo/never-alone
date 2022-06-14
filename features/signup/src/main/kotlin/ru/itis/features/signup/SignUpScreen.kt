@@ -127,7 +127,7 @@ private fun SignUpScreen(
             .background(AppTheme.colors.backgroundPrimary)
     ) {
         Column {
-            NoInternetWarn()
+            NoInternetWarn(internetAvailable = uiState.networkAvailable)
             IconButton(
                 onClick = {
                     focusManager.clearFocus()

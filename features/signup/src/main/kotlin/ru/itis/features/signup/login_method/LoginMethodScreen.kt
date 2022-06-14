@@ -78,7 +78,7 @@ private fun LoginMethodScreen(
             )
         }
 
-        NoInternetWarn()
+        NoInternetWarn(internetAvailable = internetAvailable)
     }
 }
 
