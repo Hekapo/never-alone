@@ -55,7 +55,11 @@ internal class SignUpViewModel(
 
     private fun onEmailCheck(state: ResultState<String, String>) {
         when (state) {
-            is ResultState.None -> {}
+            is ResultState.None -> {
+                _signUpUIState.update {
+                    it.copy(couldNavigate = false)
+                }
+            }
             is ResultState.InProcess -> {}
             is ResultState.Success -> {
                 _signUpUIState.update {
@@ -160,6 +164,12 @@ internal class SignUpViewModel(
     fun hideSnackbar() {
         _signUpUIState.update {
             it.copy(snackBar = SignUpUIState.SnackBar(show = false))
+        }
+    }
+
+    fun setCouldNotNavigate() {
+        _signUpUIState.update {
+            it.copy(couldNavigate = false)
         }
     }
 

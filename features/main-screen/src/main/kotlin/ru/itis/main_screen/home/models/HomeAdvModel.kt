@@ -11,12 +11,12 @@ import ru.itis.core.domain.models.User
 data class HomeAdvModel(
     val id: String? = "",
     val age: Long,
-    val name: String,
+    val name: String?,
     val city: String,
     val interests: List<String>,
     val sex: String = "",
-    val email: String = "",
-    val phone: String = ""
+    val email: String? = "",
+    val phone: String? = ""
 )
 
 fun User.fromUser(): HomeAdvModel {

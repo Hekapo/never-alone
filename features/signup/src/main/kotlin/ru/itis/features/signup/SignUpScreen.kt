@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.*
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.NoInternetWarn
@@ -85,6 +86,7 @@ fun SignUpRoute(
         if (uiState.couldNavigate) {
             Log.e("DEBUG", uiState.couldNavigate.toString())
             onNextWithEmailClick(EmailPassData(uiState.inputEmail.email))
+            signUpViewModel.setCouldNotNavigate()
         }
     }
 

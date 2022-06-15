@@ -11,7 +11,8 @@ data class SignInUIState(
     val inputPassword: InputPasswordField = InputPasswordField(),
     val snackBar: SnackBar = SnackBar(),
     val internetAvailable: Boolean = true,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val couldNavigate: Boolean = false
 ) {
 
     data class InputEmailField(

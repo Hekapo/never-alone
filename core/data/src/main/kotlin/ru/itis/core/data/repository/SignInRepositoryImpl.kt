@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import ru.itis.core.domain.models.User
 import ru.itis.core.domain.repository.SignInRepository
 import ru.itis.core.domain.viewstates.ResultState
 import javax.inject.Inject
@@ -43,6 +44,7 @@ internal class SignInRepositoryImpl @Inject constructor(
     }
 
     override suspend fun signInWithGoogle(tokenId: String) {
+        _signInWithGoogleProcessState.update { ResultState.InProcess }
         val credential = GoogleAuthProvider.getCredential(tokenId, null)
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener { res ->
@@ -52,6 +54,16 @@ internal class SignInRepositoryImpl @Inject constructor(
             }.addOnFailureListener { ex ->
                 _signInWithGoogleProcessState.update { ResultState.Error(message = ex.message) }
             }
+    }
+
+    override suspend fun getSignedUser(): User {
+        val userData = firebaseAuth.currentUser
+        return User(
+            id = userData?.uid,
+            name = userData?.displayName,
+            email = userData?.email,
+            phone = userData?.phoneNumber
+        )
     }
 
     override suspend fun logout() {

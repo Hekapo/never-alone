@@ -65,7 +65,8 @@ fun OneAdvItem(
                     bottom.linkTo(bottomBar.top, margin = 8.dp)
 
                 },
-                text = model.name,
+                // TODO:
+                text = model.name ?: "",
                 color = AppTheme.colors.backgroundOnSecondary,
                 style = AppTheme.typography.text28M
             )

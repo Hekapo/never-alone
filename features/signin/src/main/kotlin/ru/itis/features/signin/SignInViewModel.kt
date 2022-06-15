@@ -1,14 +1,13 @@
 package ru.itis.features.signin
 
-import android.app.Activity
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.usecase.ISignInUseCase
 import ru.itis.core.domain.viewstates.ResultState
 import ru.itis.core.network.NetworkListener
@@ -22,6 +21,7 @@ import javax.inject.Inject
 
 internal class SignInViewModel(
     private val signInUseCase: ISignInUseCase,
+    private val databaseUseCase: IDatabaseUseCase,
     private val dispatchersProvider: DispatchersProvider,
     networkListener: NetworkListener
 ) : ViewModel() {
@@ -37,6 +37,8 @@ internal class SignInViewModel(
             .launchIn(viewModelScope)
 
         signInUseCase.signInState.onEach(this::signInState).launchIn(viewModelScope)
+        signInUseCase.signInWithGoogleState.onEach(this::signInWithGoogleState)
+            .launchIn(viewModelScope)
     }
 
     private fun onNetwork(isAvailable: Boolean) {
@@ -51,14 +53,9 @@ internal class SignInViewModel(
         }
     }
 
-    fun onSignInWithGoogle(activity: Activity, token: String) {
+    fun onSignInWithGoogle(token: String) {
         viewModelScope.launch(dispatchersProvider.IO) {
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(token)
-                .requestEmail()
-                .build()
-
-            val client = GoogleSignIn.getClient(activity, gso)
+            signInUseCase.signInWithGoogle(token)
         }
     }
 
@@ -86,6 +83,22 @@ internal class SignInViewModel(
         }
     }
 
+    // TODO: handle errors
+    private fun signInWithGoogleState(signInState: ResultState<String, String>) {
+        when (signInState) {
+            is ResultState.None -> {}
+            is ResultState.Error -> {
+                onError(message = signInState.message!!)
+            }
+            is ResultState.Success -> {
+                onSuccessWithGoogle()
+            }
+            is ResultState.InProcess -> {
+                inProcess()
+            }
+        }
+    }
+
     private fun signInState(signInState: ResultState<String, String>) {
         when (signInState) {
             is ResultState.None -> {}
@@ -102,7 +115,21 @@ internal class SignInViewModel(
     }
 
     private fun onSuccess() {
-        _signInUIState.update { it.copy(isLoading = false) }
+        _signInUIState.update { it.copy(isLoading = false, couldNavigate = true) }
+    }
+
+    private fun onSuccessWithGoogle() {
+        viewModelScope.launch(dispatchersProvider.IO) {
+            val user = signInUseCase.getCurrentUser()
+            Log.e("DEBUG", user.toString())
+            databaseUseCase.addUser(user)
+        }
+        _signInUIState.update { it.copy(isLoading = false, couldNavigate = true) }
+
+    }
+
+    fun setCouldNotNavigate() {
+        _signInUIState.update { it.copy(couldNavigate = true) }
     }
 
     private fun inProcess() {
@@ -132,12 +159,18 @@ internal class SignInViewModel(
 
     class SignInViewModelFactory @Inject constructor(
         private val signInUseCase: ISignInUseCase,
+        private val databaseUseCase: IDatabaseUseCase,
         private val dispatchersProvider: DispatchersProvider,
         private val networkListener: NetworkListener
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SignInViewModel(signInUseCase, dispatchersProvider, networkListener) as T
+            return SignInViewModel(
+                signInUseCase,
+                databaseUseCase,
+                dispatchersProvider,
+                networkListener
+            ) as T
         }
     }
 }
