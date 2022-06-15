@@ -1,8 +1,11 @@
 package ru.itis.features.signin
 
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.itis.core.dispathers.DispatchersProvider
@@ -45,6 +48,17 @@ internal class SignInViewModel(
             val email = _signInUIState.value.inputEmail.email
             val password = _signInUIState.value.inputPassword.password
             signInUseCase.trySignIn(email, password)
+        }
+    }
+
+    fun onSignInWithGoogle(activity: Activity, token: String) {
+        viewModelScope.launch(dispatchersProvider.IO) {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(token)
+                .requestEmail()
+                .build()
+
+            val client = GoogleSignIn.getClient(activity, gso)
         }
     }
 
@@ -107,6 +121,12 @@ internal class SignInViewModel(
                     isError = true
                 )
             )
+        }
+    }
+
+    fun hideSnackbar() {
+        _signInUIState.update {
+            it.copy(snackBar = SignInUIState.SnackBar(show = false))
         }
     }
 

@@ -40,7 +40,7 @@ coil = "2.1.0"
 
 google-accompanist = "0.23.1"
 
-google-services = "21.0.1"
+google-services = "20.2.0"
 
 firebase = "30.1.0"
 
@@ -125,7 +125,7 @@ google-firebase-database = { module = "com.google.firebase:firebase-database-ktx
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
 google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 google-firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
-
+google-play-services = { module = "com.google.android.gms:play-services-auth", version.ref = "google-services" }
 twyper = { module = "com.github.theapache64:twyper", version.ref = "twyper-swipe" }
 
 [bundles]

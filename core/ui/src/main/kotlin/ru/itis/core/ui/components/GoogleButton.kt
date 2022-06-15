@@ -40,7 +40,7 @@ fun GoogleButton(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     backgroundColor: Color = AppTheme.colors.googleButton,
 //    progressIndicatorColor: Color = MaterialTheme.colors.primary,
-    onClicked: () -> Unit
+    onClicked: @Composable () -> Unit
 ) {
     var clicked by remember { mutableStateOf(false) }
 

@@ -32,6 +32,10 @@ android {
 dependencies {
     implementation(project(":core:ui"))
 
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase.auth)
+    implementation(libs.google.play.services)
+
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)
 }

@@ -2,7 +2,11 @@
 
 package ru.itis.features.signin
 
+import android.app.Activity
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,6 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -31,6 +36,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import kotlinx.coroutines.delay
 import ru.itis.core.ui.R
 import ru.itis.core.ui.common.FieldCorrectnessCheck
 import ru.itis.core.ui.components.*
@@ -57,19 +65,24 @@ fun SignInRoute(
 
     val uiState by signInViewModel.signInUIState.collectAsState()
 
-//    LaunchedEffect(uiState.signInProcess.signInSuccess) {
-//        if (uiState.signInProcess.signInSuccess) {
-//            delay(300)
-//        }
-//    }
-
+    LaunchedEffect(key1 = uiState.snackBar.show) {
+        delay(1500L)
+        if (uiState.snackBar.show) {
+            signInViewModel.hideSnackbar()
+        }
+    }
+    val activity = LocalContext.current as ComponentActivity
+//val token = stringResource(id = R.string.default_web_client_id)
     SignInScreen(
         uiState = uiState,
         onEmailChanged = signInViewModel::onEmailChanged,
         onPasswordChanged = signInViewModel::onPasswordChanged,
         onEnterClick = signInViewModel::onSignInClick,
         onBackClick = onBackClick,
-        onTextRegisterClick = onTextRegisterClick
+        onTextRegisterClick = onTextRegisterClick,
+        onGoogleSignIn = {
+            signInViewModel.onSignInWithGoogle(activity, "")
+        }
     )
 
 }
@@ -81,12 +94,36 @@ private fun SignInScreen(
     onPasswordChanged: (String) -> Unit,
     onEnterClick: () -> Unit,
     onBackClick: () -> Unit,
-    onTextRegisterClick: () -> Unit
+    onTextRegisterClick: () -> Unit,
+    onGoogleSignIn: () -> Unit
 ) {
 
     var isPasswordVisible by remember { mutableStateOf(false) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) {
+        when (it.resultCode) {
+            Activity.RESULT_OK -> {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+                runCatching {
+                    val acc = task.getResult(ApiException::class.java)
+
+                }
+            }
+            Activity.RESULT_CANCELED -> {}
+        }
+
+    }
+
+    @Composable
+    fun LaunchGooglePick() {
+        SideEffect {
+//            launcher.launch()
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -198,7 +235,7 @@ private fun SignInScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
             GoogleButton(text = stringResource(id = R.string.signin_with_google)) {
-
+                LaunchGooglePick()
             }
 
         }
@@ -251,6 +288,7 @@ fun SignInPreview() {
         onPasswordChanged = {},
         onEnterClick = {},
         onBackClick = {},
-        onTextRegisterClick = {}
+        onTextRegisterClick = {},
+        onGoogleSignIn = {}
     )
 }

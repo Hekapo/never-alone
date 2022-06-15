@@ -9,7 +9,6 @@ import ru.itis.core.ui.common.FieldCorrectnessCheck
 data class SignInUIState(
     val inputEmail: InputEmailField = InputEmailField(),
     val inputPassword: InputPasswordField = InputPasswordField(),
-    val signInProcess: SignInProcess = SignInProcess(),
     val snackBar: SnackBar = SnackBar(),
     val internetAvailable: Boolean = true,
     val isLoading: Boolean = false
@@ -25,12 +24,6 @@ data class SignInUIState(
         val password: String = "",
         val isFieldEnabled: Boolean = true,
         val showError: FieldCorrectnessCheck = FieldCorrectnessCheck.None
-    )
-
-    data class SignInProcess(
-        val signInSuccess: Boolean = false,
-        val signInLoading: Boolean = false,
-        val signInError: Boolean = false
     )
 
     data class SnackBar(
