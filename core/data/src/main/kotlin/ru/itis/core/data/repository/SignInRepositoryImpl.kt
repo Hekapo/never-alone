@@ -1,5 +1,6 @@
 package ru.itis.core.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.Flow
@@ -23,12 +24,12 @@ internal class SignInRepositoryImpl @Inject constructor(
         MutableStateFlow<ResultState<String, String>>(ResultState.None)
 
     private val _signInWithGoogleProcessState =
-        MutableStateFlow<ResultState<String, String>>(ResultState.None)
+        MutableStateFlow<ResultState<User, String>>(ResultState.None)
 
     override val signInProcessState: Flow<ResultState<String, String>>
         get() = _signInProcessState.asStateFlow()
 
-    override val signInWithGoogleProcessState: Flow<ResultState<String, String>>
+    override val signInWithGoogleProcessState: Flow<ResultState<User, String>>
         get() = _signInWithGoogleProcessState.asStateFlow()
 
     override suspend fun trySignInWithEmailAndPassword(email: String, password: String) {
@@ -48,10 +49,21 @@ internal class SignInRepositoryImpl @Inject constructor(
         val credential = GoogleAuthProvider.getCredential(tokenId, null)
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener { res ->
-                _signInWithGoogleProcessState.update { ResultState.Success(data = res.user?.email.toString()) }
+                val user = res.user
+                _signInWithGoogleProcessState.update {
+                    ResultState.Success(
+                        data = User(
+                            id = user?.uid,
+                            name = user?.displayName,
+                            email = user?.email,
+                            phone = user?.phoneNumber
+                        )
+                    )
+                }
             }.addOnCompleteListener {
                 _signInWithGoogleProcessState.update { ResultState.None }
             }.addOnFailureListener { ex ->
+                Log.e("DEBUG", "${ex.message}")
                 _signInWithGoogleProcessState.update { ResultState.Error(message = ex.message) }
             }
     }

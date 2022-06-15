@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.domain.models.User
 import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.usecase.ISignInUseCase
 import ru.itis.core.domain.viewstates.ResultState
@@ -84,14 +85,14 @@ internal class SignInViewModel(
     }
 
     // TODO: handle errors
-    private fun signInWithGoogleState(signInState: ResultState<String, String>) {
+    private fun signInWithGoogleState(signInState: ResultState<User, String>) {
         when (signInState) {
             is ResultState.None -> {}
             is ResultState.Error -> {
                 onError(message = signInState.message!!)
             }
             is ResultState.Success -> {
-                onSuccessWithGoogle()
+                onSuccessWithGoogle(user = signInState.data)
             }
             is ResultState.InProcess -> {
                 inProcess()
@@ -118,9 +119,8 @@ internal class SignInViewModel(
         _signInUIState.update { it.copy(isLoading = false, couldNavigate = true) }
     }
 
-    private fun onSuccessWithGoogle() {
+    private fun onSuccessWithGoogle(user: User) {
         viewModelScope.launch(dispatchersProvider.IO) {
-            val user = signInUseCase.getCurrentUser()
             Log.e("DEBUG", user.toString())
             databaseUseCase.addUser(user)
         }

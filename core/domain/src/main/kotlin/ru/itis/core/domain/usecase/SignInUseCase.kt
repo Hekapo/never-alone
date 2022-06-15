@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 interface ISignInUseCase {
     val signInState: Flow<ResultState<String, String>>
-    val signInWithGoogleState: Flow<ResultState<String, String>>
+    val signInWithGoogleState: Flow<ResultState<User, String>>
     suspend fun trySignIn(email: String, password: String)
     suspend fun signInWithGoogle(token: String)
     suspend fun getCurrentUser(): User
@@ -29,7 +29,7 @@ internal class SignInUseCase @Inject constructor(
     override val signInState: Flow<ResultState<String, String>>
         get() = iSignInRepository.signInProcessState.distinctUntilChanged()
 
-    override val signInWithGoogleState: Flow<ResultState<String, String>>
+    override val signInWithGoogleState: Flow<ResultState<User, String>>
         get() = iSignInRepository.signInWithGoogleProcessState.distinctUntilChanged()
 
     override suspend fun trySignIn(email: String, password: String) {
