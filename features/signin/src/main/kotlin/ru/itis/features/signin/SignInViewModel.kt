@@ -89,7 +89,7 @@ internal class SignInViewModel(
         when (signInState) {
             is ResultState.None -> {}
             is ResultState.Error -> {
-                onError(message = signInState.message!!)
+                onError(message = "Err")
             }
             is ResultState.Success -> {
                 onSuccessWithGoogle(user = signInState.data)
@@ -146,7 +146,8 @@ internal class SignInViewModel(
                     show = true,
                     message = message,
                     isError = true
-                )
+                ),
+                couldNavigate = false
             )
         }
     }
