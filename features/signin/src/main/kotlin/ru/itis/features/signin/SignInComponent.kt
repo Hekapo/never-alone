@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
 import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.usecase.ISignInUseCase
+import ru.itis.core.network.NetworkListener
 import javax.inject.Scope
 
 
@@ -31,9 +33,10 @@ internal interface SignInComponent {
 }
 
 interface SignInDeps {
-
+    val networkListener: NetworkListener
     val sigInUseCase: ISignInUseCase
     val dispatchersProvider: DispatchersProvider
+    val databaseUseCase: IDatabaseUseCase
 }
 
 internal class SignInComponentViewModel(deps: SignInDeps) : ViewModel() {

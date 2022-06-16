@@ -7,8 +7,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.itis.core.dispathers.DispatchersProvider
+import ru.itis.core.domain.models.User
+import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.usecase.ISignInUseCase
-import ru.itis.core.domain.viewstates.SignInState
+import ru.itis.core.domain.viewstates.ResultState
+import ru.itis.core.network.NetworkListener
+import ru.itis.core.ui.common.checkPasswordLength
+import ru.itis.core.ui.common.isEmailCorrect
 import javax.inject.Inject
 
 /**
@@ -17,13 +22,28 @@ import javax.inject.Inject
 
 internal class SignInViewModel(
     private val signInUseCase: ISignInUseCase,
-    private val dispatchersProvider: DispatchersProvider
+    private val databaseUseCase: IDatabaseUseCase,
+    private val dispatchersProvider: DispatchersProvider,
+    networkListener: NetworkListener
 ) : ViewModel() {
+
     private val _signInUIState = MutableStateFlow(SignInUIState())
     val signInUIState = _signInUIState.asStateFlow()
 
     init {
+        networkListener.networkState
+            .distinctUntilChanged()
+            .onEach(this::onNetwork)
+            .flowOn(dispatchersProvider.IO)
+            .launchIn(viewModelScope)
+
         signInUseCase.signInState.onEach(this::signInState).launchIn(viewModelScope)
+        signInUseCase.signInWithGoogleState.onEach(this::signInWithGoogleState)
+            .launchIn(viewModelScope)
+    }
+
+    private fun onNetwork(isAvailable: Boolean) {
+        _signInUIState.update { it.copy(internetAvailable = isAvailable) }
     }
 
     fun onSignInClick() {
@@ -32,14 +52,12 @@ internal class SignInViewModel(
             val password = _signInUIState.value.inputPassword.password
             signInUseCase.trySignIn(email, password)
         }
+    }
 
-//        _signInUIState.update {
-//            it.copy(
-//                inputEmail = SignInUIState.InputEmailField(isFieldEnabled = false),
-//                inputPassword = SignInUIState.InputPasswordField(isFieldEnabled = false)
-//            )
-//        }
-
+    fun onSignInWithGoogle(token: String) {
+        viewModelScope.launch(dispatchersProvider.IO) {
+            signInUseCase.signInWithGoogle(token)
+        }
     }
 
     fun onEmailChanged(email: String) {
@@ -47,12 +65,11 @@ internal class SignInViewModel(
             it.copy(
                 inputEmail = SignInUIState.InputEmailField(
                     email = email,
-                    isFieldEnabled = true
+                    isFieldEnabled = true,
+                    showError = email.isEmailCorrect()
                 )
             )
         }
-        Log.e("TAG", _signInUIState.value.inputEmail.email)
-
     }
 
     fun onPasswordChanged(password: String) {
@@ -60,70 +77,101 @@ internal class SignInViewModel(
             it.copy(
                 inputPassword = SignInUIState.InputPasswordField(
                     password = password,
-                    isFieldEnabled = true
+                    isFieldEnabled = true,
+                    showError = password.checkPasswordLength()
                 )
             )
         }
-        Log.e("TAG", _signInUIState.value.inputPassword.password)
-
     }
 
-    private fun signInState(signInState: SignInState) {
+    // TODO: handle errors
+    private fun signInWithGoogleState(signInState: ResultState<User, String>) {
         when (signInState) {
-            is SignInState.SignInStateNone -> {}
-            is SignInState.SignInStateInProcess -> run { signInLoading() }
-            is SignInState.SignInStateSuccess -> run { signInComplete() }
-            is SignInState.SignInStateError -> run { signInError() }
+            is ResultState.None -> {}
+            is ResultState.Error -> {
+                onError(message = "Err")
+            }
+            is ResultState.Success -> {
+                onSuccessWithGoogle(user = signInState.data)
+            }
+            is ResultState.InProcess -> {
+                inProcess()
+            }
         }
     }
 
-    private fun signInComplete() {
-        _signInUIState.update {
-            it.copy(
-                signInProcess = SignInUIState.SignInProcess(
-                    signInSuccess = true,
-                    signInLoading = false,
-                    signInError = false
-                )
-            )
+    private fun signInState(signInState: ResultState<String, String>) {
+        when (signInState) {
+            is ResultState.None -> {}
+            is ResultState.Error -> {
+                onError(message = signInState.message!!)
+            }
+            is ResultState.Success -> {
+                onSuccess()
+            }
+            is ResultState.InProcess -> {
+                inProcess()
+            }
         }
     }
 
-    private fun signInLoading() {
+    private fun onSuccess() {
+        _signInUIState.update { it.copy(isLoading = false, couldNavigate = true) }
+    }
+
+    private fun onSuccessWithGoogle(user: User) {
+        viewModelScope.launch(dispatchersProvider.IO) {
+            Log.e("DEBUG", user.toString())
+            databaseUseCase.addUser(user)
+        }
+        _signInUIState.update { it.copy(isLoading = false, couldNavigate = true) }
+
+    }
+
+    fun setCouldNotNavigate() {
+        _signInUIState.update { it.copy(couldNavigate = true) }
+    }
+
+    private fun inProcess() {
         _signInUIState.update {
-            it.copy(
-                signInProcess = SignInUIState.SignInProcess(
-                    signInSuccess = false,
-                    signInLoading = true,
-                    signInError = false
-                )
-            )
+            it.copy(isLoading = true)
         }
     }
 
-    private fun signInError() {
+    private fun onError(message: String) {
         _signInUIState.update {
             it.copy(
-                signInProcess = SignInUIState.SignInProcess(
-                    signInSuccess = false,
-                    signInLoading = false,
-                    signInError = true
+                isLoading = false,
+                snackBar = SignInUIState.SnackBar(
+                    show = true,
+                    message = message,
+                    isError = true
                 ),
-                inputEmail = SignInUIState.InputEmailField(
-                    isFieldEnabled = true
-                )
+                couldNavigate = false
             )
         }
     }
 
+    fun hideSnackbar() {
+        _signInUIState.update {
+            it.copy(snackBar = SignInUIState.SnackBar(show = false))
+        }
+    }
 
     class SignInViewModelFactory @Inject constructor(
         private val signInUseCase: ISignInUseCase,
-        private val dispatchersProvider: DispatchersProvider
+        private val databaseUseCase: IDatabaseUseCase,
+        private val dispatchersProvider: DispatchersProvider,
+        private val networkListener: NetworkListener
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return SignInViewModel(signInUseCase, dispatchersProvider) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return SignInViewModel(
+                signInUseCase,
+                databaseUseCase,
+                dispatchersProvider,
+                networkListener
+            ) as T
         }
     }
 }

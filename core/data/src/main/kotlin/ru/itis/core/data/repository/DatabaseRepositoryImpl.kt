@@ -40,7 +40,8 @@ class DatabaseRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateUser(user: User) {
-        databaseReference.child(NODE_USERS).child(user.email).setValue(user.toMap())
+        // TODO
+        databaseReference.child(NODE_USERS).child(user.email!!).setValue(user.toMap())
     }
 
     override suspend fun getCurrentUserId(): String? {

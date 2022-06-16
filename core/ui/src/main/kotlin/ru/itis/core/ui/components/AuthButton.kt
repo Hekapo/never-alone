@@ -46,8 +46,8 @@ fun AuthButton(
             color = color,
             style = style
         )
-        Spacer(modifier = Modifier.width(16.dp))
-        if(isLoading){
+        if (isLoading) {
+            Spacer(modifier = Modifier.width(16.dp))
             CircularProgressIndicator(
                 modifier = Modifier.size(24.dp),
                 color = AppTheme.colors.backgroundOnSecondary,

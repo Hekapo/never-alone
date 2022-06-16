@@ -16,12 +16,12 @@ import ru.itis.core.database_constants.DatabaseConstants.CHILD_USERNAME
 data class User(
     val id: String? = "",
     val age: Long = -1,
-    val name: String = "",
+    val name: String? = "",
     val city: String = "",
     val interests: List<String> = emptyList(),
     val sex: String = "",
-    val email: String = "",
-    val phone: String = ""
+    val email: String? = "",
+    val phone: String? = ""
 ) {
     fun toMap(): Map<String, Any?> = mapOf(
         Pair(CHILD_ID, id),

@@ -4,7 +4,6 @@ import dagger.Reusable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import ru.itis.core.domain.repository.EmailSignUpRepository
-import ru.itis.core.domain.viewstates.EmailSignUpState
 import ru.itis.core.domain.viewstates.ResultState
 import javax.inject.Inject
 

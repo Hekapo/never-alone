@@ -66,7 +66,8 @@ internal fun LoginNavGraph(
                     if (!navController.popBackStack(route = SignUpDestination.route, false)) {
                         navController.navigate(route = SignUpDestination.route)
                     }
-                }
+                },
+                onNext = { toMainScreen() }
             )
         }
         composable(route = SignUpDestination.route) {
