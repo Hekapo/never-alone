@@ -40,8 +40,13 @@ class DatabaseRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateUser(user: User) {
-        // TODO
-        databaseReference.child(NODE_USERS).child(user.email!!).setValue(user.toMap())
+        val uid = getCurrentUserId()
+        val userData = user.toMap()
+        val childUpdates = hashMapOf<String, Any>(
+            "/$NODE_USERS/$uid" to userData,
+        )
+
+        databaseReference.updateChildren(childUpdates)
     }
 
     override suspend fun getCurrentUserId(): String? {

@@ -18,10 +18,10 @@ data class HomeAdvModel(
     val email: String? = "",
     val phone: String? = ""
 )
-
+// TODO
 fun User.fromUser(): HomeAdvModel {
     return HomeAdvModel(
         this.id,
-        this.age, this.name, this.city, this.interests, this.sex, this.email, this.phone
+        this.age!!, this.name, this.city!!, this.interests!!, this.sex!!, this.email, this.phone
     )
 }
