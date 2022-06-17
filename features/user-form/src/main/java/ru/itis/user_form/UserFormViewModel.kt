@@ -30,9 +30,6 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
     private val _dateOfBirth = MutableStateFlow("")
     val dateOfBirth = _dateOfBirth.asStateFlow()
 
-    private val _showSnackBar = MutableStateFlow<Pair<String?, Boolean>>(Pair("", false))
-    val showSnackBar = _showSnackBar.asStateFlow()
-
     private val _genderFlow = MutableStateFlow("")
     val genderFlow = _genderFlow.asStateFlow()
 
@@ -52,23 +49,6 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
         }
 
         databaseUseCase.userFlow.onEach(this::userState).launchIn(viewModelScope)
-    }
-
-    private fun snackBarState(snackBarState: ResultState<String, String>) {
-        when (snackBarState) {
-            is ResultState.None -> {}
-            is ResultState.InProcess -> {}
-            is ResultState.Success -> {
-                _showSnackBar.update {
-                    Pair(snackBarState.data, true)
-                }
-            }
-            is ResultState.Error -> {
-                _showSnackBar.update {
-                    Pair(snackBarState.message, true)
-                }
-            }
-        }
     }
 
     fun fillInterests(interests: List<String>) {
@@ -163,7 +143,12 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
 
     fun updateUserData() {
         viewModelScope.launch {
-            databaseUseCase.updateUser(_userInfo.value)
+            databaseUseCase.updateUser(
+                User(
+                    id = "123",
+                    name = "Mike",
+                )
+            )
         }
     }
 

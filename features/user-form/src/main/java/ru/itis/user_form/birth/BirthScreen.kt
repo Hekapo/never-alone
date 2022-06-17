@@ -7,11 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -111,10 +107,9 @@ private fun BirthScreen(
             ) {
                 AuthButton(
                     modifier = Modifier.padding(vertical = 16.dp),
-                    text = stringResource(id = R.string.continue_text)
-                ) {
-                    onNext()
-                }
+                    text = stringResource(id = R.string.continue_text),
+                    onClick = onNext
+                )
             }
         }
     }
@@ -130,6 +125,5 @@ private fun BirthScreenPreview() {
         showDatePickerDialog = {},
         setBirthDate = {},
         onNext = {},
-        onBack = {}
     )
 }

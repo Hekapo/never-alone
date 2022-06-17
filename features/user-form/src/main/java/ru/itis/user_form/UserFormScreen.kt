@@ -105,7 +105,7 @@ private fun UserFormScreen(
                     userFormViewModel = userFormViewModel,
                     onNext = {
                         userFormViewModel.updateUserData()
-                        toMainScreen()
+//                        toMainScreen()
                     },
                     onBack = { childNavController.popBackStack() },
                     onPickPhoto = {
