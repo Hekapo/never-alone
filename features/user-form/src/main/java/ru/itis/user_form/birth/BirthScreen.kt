@@ -41,7 +41,6 @@ internal fun BirthScreenRoute(
     user: User,
     userFormViewModel: UserFormViewModel,
     onNext: () -> Unit,
-    onBack: () -> Unit
 ) {
 
     val dateState by userFormViewModel.dateOfBirth.collectAsState()
@@ -56,7 +55,6 @@ internal fun BirthScreenRoute(
             userFormViewModel.setBirthdayDate(date = it)
         },
         onNext = onNext,
-        onBack = onBack
     )
 }
 
@@ -67,7 +65,6 @@ private fun BirthScreen(
     showDatePickerDialog: (Context) -> Unit,
     setBirthDate: (String) -> Unit,
     onNext: () -> Unit,
-    onBack: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -78,18 +75,6 @@ private fun BirthScreen(
             .statusBarsPadding()
             .background(color = AppTheme.colors.backgroundPrimary)
     ) {
-        IconButton(
-            onClick = {
-                onBack()
-            },
-            content = {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back),
-                    tint = AppTheme.colors.textHighEmphasis
-                )
-            }
-        )
         Box(
             modifier = Modifier
                 .fillMaxSize()

@@ -76,7 +76,6 @@ private fun UserFormScreen(
                     user = userState,
                     userFormViewModel = userFormViewModel,
                     onNext = { childNavController.navigate(UserFormScreens.GenderScreen.route) },
-                    onBack = { childNavController.popBackStack() }
                 )
             }
 
