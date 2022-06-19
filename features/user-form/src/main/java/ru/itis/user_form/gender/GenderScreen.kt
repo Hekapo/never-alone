@@ -85,7 +85,7 @@ private fun GenderScreen(
                 .padding(horizontal = 32.dp, vertical = 32.dp)
         ) {
             Text(
-                modifier = Modifier.padding(top = 16.dp),
+                    modifier = Modifier.padding(top = 16.dp),
                 text = "Я",
                 color = AppTheme.colors.textHighEmphasis,
                 style = AppTheme.typography.text36R,
