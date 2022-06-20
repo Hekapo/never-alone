@@ -1,5 +1,6 @@
 package ru.itis.user_form.add_photo
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -33,12 +35,9 @@ internal fun AddPhotoScreenRoute(
     onNext: () -> Unit,
     onBack: () -> Unit,
 ) {
-    val photoState by userFormViewModel.photoUris.collectAsState()
 
     AddPhotoScreen(
-        photoState = photoState,
         onPickPhoto = {
-            userFormViewModel.addPhoto(position = it, "none")
             onPickPhoto(it)
         },
         onNext = onNext,
@@ -47,13 +46,11 @@ internal fun AddPhotoScreenRoute(
 }
 
 
-@OptIn(ExperimentalPermissionsApi::class, ExperimentalCoroutinesApi::class)
 @Composable
 private fun AddPhotoScreen(
     onPickPhoto: (position: Int) -> Unit,
     onNext: () -> Unit,
     onBack: () -> Unit,
-    photoState: MutableSet<Pair<Int?, String?>>,
 ) {
 
     var uri by remember {
@@ -67,9 +64,7 @@ private fun AddPhotoScreen(
             .background(color = AppTheme.colors.backgroundPrimary)
     ) {
         IconButton(
-            onClick = {
-                onBack()
-            },
+            onClick = onBack,
             content = {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
@@ -81,17 +76,17 @@ private fun AddPhotoScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 32.dp, vertical = 32.dp)
+                .padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Text(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = 22.dp, start = 16.dp),
                 text = stringResource(id = R.string.add_photo),
                 style = AppTheme.typography.text36R,
                 color = AppTheme.colors.textHighEmphasis,
                 textAlign = TextAlign.Start
             )
             Text(
-                modifier = Modifier.padding(top = 68.dp),
+                modifier = Modifier.padding(top = 68.dp, start = 16.dp),
                 text = stringResource(id = R.string.add_at_least_2_photo),
                 style = AppTheme.typography.text16R,
                 color = AppTheme.colors.textMediumEmphasis,
@@ -106,21 +101,6 @@ private fun AddPhotoScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
 
-                    repeat(3) {
-                        photoState.forEach { pair ->
-                            uri =
-                                if (!pair.second.equals("none") && pair.first != null && it == pair.first) {
-                                    pair.second.toString()
-                                } else {
-                                    ""
-                                }
-                        }
-                        PhotoHolder(
-                            image = uri,
-                            onClick = {
-                                onPickPhoto(it)
-                            })
-                    }
                 }
             }
             Box(
@@ -128,19 +108,17 @@ private fun AddPhotoScreen(
                     .align(Alignment.BottomCenter)
             ) {
                 AuthButton(
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    text = stringResource(id = R.string.continue_text)
-                ) {
-                    onNext()
-                }
+                    text = stringResource(id = R.string.continue_text),
+                    onClick = onNext
+                )
             }
         }
     }
 }
 
-//@Preview
-//@Preview(uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//private fun AddPhotoScreenPreview() {
-//    AddPhotoScreen(onPickPhoto = {}, onNext = {}, onBack = {}, photoState = )
-//}
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun AddPhotoScreenPreview() {
+    AddPhotoScreen(onPickPhoto = {}, onNext = {}, onBack = {})
+}

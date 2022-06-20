@@ -3,10 +3,10 @@ android-compileSdk = "32"
 android-minSdk = "21"
 android-tagetSdk = "32"
 
-kotlin = "1.6.21"
+kotlin = "1.6.10"
 
-dagger = "2.42"
-compose = "1.2.0-beta03"
+dagger = "2.41"
+compose = "1.1.1"
 
 androidx-core = "1.7.0"
 androidx-appcompat = "1.4.1"
@@ -33,8 +33,8 @@ retrofit2-runtime = "2.9.0"
 retrofit2-koltinx-serialization = "0.8.0"
 okhttp3 = "4.9.3"
 
-kotlinx-serialization = "1.3.2"
-kotlinx-coroutines = "1.6.2"
+kotlinx-serialization = "1.6.10"
+kotlinx-coroutines = "1.6.0"
 
 coil = "2.1.0"
 

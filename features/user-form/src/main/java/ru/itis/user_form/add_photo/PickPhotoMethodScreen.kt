@@ -35,16 +35,10 @@ internal fun PickPhotoMethodScreenRoute(
     userFormViewModel: UserFormViewModel,
     onBack: () -> Unit,
 ) {
-    val photoState = userFormViewModel.photoUris.collectAsState()
 
     PickPhotoMethodScreen(
         addUri = { uri ->
-            photoState.value.forEachIndexed { index, pair ->
-                if (pair.second.equals("none")) {
-                    userFormViewModel.addPhoto(index + 1, uri)
-                    onBack()
-                }
-            }
+
         },
         onBack = onBack,
     )

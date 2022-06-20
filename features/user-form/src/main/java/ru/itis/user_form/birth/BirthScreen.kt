@@ -31,7 +31,6 @@ import ru.itis.user_form.UserFormViewModel
  * Copyright (c) 27.05.2022 Created by Iskandar
  */
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun BirthScreenRoute(
     user: User,
@@ -74,11 +73,11 @@ private fun BirthScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 32.dp, vertical = 32.dp)
+                .padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Text(
-                modifier = Modifier.padding(top = 16.dp),
-                text = "Привет, ${user.name} " + stringResource(id = R.string.my_birthday),
+                modifier = Modifier.padding(top = 22.dp, start = 16.dp),
+                text = stringResource(id = R.string.hello) + ", ${user.name} " + stringResource(id = R.string.my_birthday),
                 style = AppTheme.typography.text36R,
                 color = AppTheme.colors.textHighEmphasis,
                 textAlign = TextAlign.Start
@@ -106,7 +105,6 @@ private fun BirthScreen(
                     .align(Alignment.BottomCenter)
             ) {
                 AuthButton(
-                    modifier = Modifier.padding(vertical = 16.dp),
                     text = stringResource(id = R.string.continue_text),
                     onClick = onNext
                 )
@@ -120,7 +118,7 @@ private fun BirthScreen(
 @Composable
 private fun BirthScreenPreview() {
     BirthScreen(
-        user = User(),
+        user = User(name = "Iskandar"),
         dateState = "",
         showDatePickerDialog = {},
         setBirthDate = {},

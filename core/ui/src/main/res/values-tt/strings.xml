@@ -51,4 +51,5 @@
     <string name="no_internet">No internet connection</string>
     <string name="cant_change_name">Введенное имя изменить нельзя</string>
     <string name="email_already_in_use">The provided email is already in use by an existing user</string>
+    <string name="hello">Привет</string>
 </resources>
