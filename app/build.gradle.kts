@@ -3,8 +3,8 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("io.gitlab.arturbosch.detekt")
-    id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 kapt {
@@ -12,13 +12,8 @@ kapt {
     useBuildCache = true
 }
 
-dependencies {
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.compiler)
-}
-
 android {
-    compileSdk = 32
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "ru.itis.neveralone"
@@ -28,6 +23,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.toString()
     }
 
     buildTypes {
@@ -46,7 +45,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     buildFeatures {
@@ -66,26 +65,23 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.google.firebase.auth)
-
     implementation(libs.androidx.core)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.google.material)
-    implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.bundles.androidx.compose)
-    implementation(libs.google.accompanist.insets)
+    implementation(project(":core"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+    implementation(project(":features:splash"))
+    implementation(project(":features:signin"))
+    implementation(project(":features:signup"))
+    implementation(project(":features:main-screen"))
+    implementation(project(path = ":features:settings-screen"))
+    implementation(project(path = ":features:onboarding"))
+    implementation(project(path = ":features:user-form"))
 
-    implementation(libs.bundles.androidx.lifecycle)
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase.crashlytics)
 
-    testImplementation(libs.junit4)
-
-    androidTestImplementation(libs.androidx.test.ext)
-    androidTestImplementation(libs.bundles.androidx.test.espresso)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-
-    debugImplementation(libs.androidx.compose.ui.tooling)
-
-    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.dagger.runtime)
+    kapt(libs.dagger.compiler)
 }

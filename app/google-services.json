@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "182044788791",
+    "firebase_url": "https://neveralone-dbd08-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "neveralone-dbd08",
     "storage_bucket": "neveralone-dbd08.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "182044788791-to2rhr4cdklfj39ndv6s7m0fo9ub68m0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.itis.neveralone",
+            "certificate_hash": "45267e9b5e6b4b909804fec9111e096cbf63332d"
+          }
+        },
         {
           "client_id": "182044788791-cej2dg3j94tuj332seu497og1s1votbf.apps.googleusercontent.com",
           "client_type": 3
