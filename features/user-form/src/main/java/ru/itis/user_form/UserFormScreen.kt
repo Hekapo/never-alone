@@ -3,6 +3,7 @@ package ru.itis.user_form
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -15,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.delay
 import ru.itis.core.domain.models.User
 import ru.itis.user_form.add_photo.AddPhotoScreenRoute
 import ru.itis.user_form.add_photo.PickPhotoMethodScreenRoute
@@ -36,12 +38,18 @@ fun UserFormRoute(deps: UserFormDeps, toMainScreen: () -> Unit) {
         factory = userFormComponentViewModel.userFormingComponent.factory
     )
 
-    val uiState by userFormViewModel.userFormScreen.collectAsState()
     val userState by userFormViewModel.userInfo.collectAsState()
+    val userFormState by userFormViewModel.userFormUIState.collectAsState()
     val context = LocalContext.current
 
     val childNavController = rememberNavController()
 
+    LaunchedEffect(key1 = userFormState.snackBar.show) {
+        delay(1500L)
+        if (userFormState.snackBar.show) {
+            userFormViewModel.hideSnackbar()
+        }
+    }
 
     UserFormScreen(
         childNavController = childNavController,

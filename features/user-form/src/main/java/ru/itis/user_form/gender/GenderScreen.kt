@@ -68,9 +68,7 @@ private fun GenderScreen(
             .background(color = AppTheme.colors.backgroundPrimary)
     ) {
         IconButton(
-            onClick = {
-                onBack()
-            },
+            onClick = onBack,
             content = {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
@@ -82,10 +80,10 @@ private fun GenderScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 32.dp, vertical = 32.dp)
+                .padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Text(
-                    modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = 22.dp, start = 16.dp),
                 text = "Я",
                 color = AppTheme.colors.textHighEmphasis,
                 style = AppTheme.typography.text36R,
@@ -125,11 +123,9 @@ private fun GenderScreen(
                     .align(Alignment.BottomCenter)
             ) {
                 AuthButton(
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    text = stringResource(id = R.string.continue_text)
-                ) {
-                    onNext()
-                }
+                    text = stringResource(id = R.string.continue_text),
+                    onClick = onNext
+                )
             }
         }
     }

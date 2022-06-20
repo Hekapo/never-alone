@@ -3,7 +3,9 @@ package ru.itis.user_form
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Component
+import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.usecase.IDatabaseUseCase
+import ru.itis.core.network.NetworkListener
 
 /**
  * Created by Iskandar on 27.05.2022.
@@ -24,6 +26,8 @@ internal interface UserFormComponent {
 
 interface UserFormDeps {
     val databaseUseCase: IDatabaseUseCase
+    val dispatchersProvider: DispatchersProvider
+    val networkListener: NetworkListener
 }
 
 internal class UserFormComponentViewModel(deps: UserFormDeps) : ViewModel() {

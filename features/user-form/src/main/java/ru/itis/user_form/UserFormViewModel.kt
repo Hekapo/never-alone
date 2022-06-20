@@ -8,9 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.itis.core.dispathers.DispatchersProvider
 import ru.itis.core.domain.models.User
 import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.viewstates.ResultState
+import ru.itis.core.network.NetworkListener
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -19,13 +21,17 @@ import javax.inject.Inject
  * Created by Iskandar on 27.05.2022.
  */
 
-internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) : ViewModel() {
-
-    private val _userFormScreen = MutableStateFlow<UserFormScreens>(UserFormScreens.BirthScreen)
-    val userFormScreen = _userFormScreen.asStateFlow()
+internal class UserFormViewModel(
+    private val databaseUseCase: IDatabaseUseCase,
+    private val dispatchersProvider: DispatchersProvider,
+    networkListener: NetworkListener
+) : ViewModel() {
 
     private val _userInfo = MutableStateFlow(User())
     val userInfo = _userInfo.asStateFlow()
+
+    private val _userFormUIState = MutableStateFlow(UserFormUIState())
+    val userFormUIState = _userFormUIState.asStateFlow()
 
     private val _dateOfBirth = MutableStateFlow("")
     val dateOfBirth = _dateOfBirth.asStateFlow()
@@ -36,10 +42,6 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
     private val _interests = MutableStateFlow(listOf<String>())
     val interests = _interests.asStateFlow()
 
-    private val _photoUris =
-        MutableStateFlow<MutableSet<Pair<Int?, String?>>>(mutableSetOf(Pair(0, "")))
-    val photoUris = _photoUris.asStateFlow()
-
     init {
         viewModelScope.launch {
             databaseUseCase.fetchCurrentUser()
@@ -48,7 +50,21 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
             }
         }
 
+        networkListener.networkState
+            .distinctUntilChanged()
+            .onEach(this::onNetwork)
+            .flowOn(dispatchersProvider.IO)
+            .launchIn(viewModelScope)
+
         databaseUseCase.userFlow.onEach(this::userState).launchIn(viewModelScope)
+    }
+
+    private fun onNetwork(isAvailable: Boolean) {
+        _userFormUIState.update {
+            it.copy(
+                networkAvailable = isAvailable
+            )
+        }
     }
 
     fun fillInterests(interests: List<String>) {
@@ -56,17 +72,6 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
             it.copy(interests = interests)
         }
         _interests.value += interests
-    }
-
-    fun addPhoto(position: Int?, uri: String?) {
-        Log.e("DEBUG", photoUris.value.toString())
-        _photoUris.value.forEach {
-            if (it.first != position) {
-                _photoUris.value.plusAssign(Pair(position, uri))
-            }
-        }
-        Log.e("DEBUG", "after " + photoUris.value.toString())
-
     }
 
     fun setGender(gender: String) {
@@ -82,7 +87,7 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
         _dateOfBirth.value = date
     }
 
-    private var dateFormat = "yyyy-MM-dd"
+    private val dateFormat = "dd-MM-yyyy"
 
     private fun getCalendar(): Calendar {
         return if (_dateOfBirth.value.isEmpty())
@@ -94,14 +99,14 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
     private fun getLastPickedDateCalendar(): Calendar {
         val dateFormat = SimpleDateFormat(dateFormat)
         val calendar = Calendar.getInstance()
-        calendar.time = dateFormat.parse(_dateOfBirth.value)
+        calendar.time = dateFormat.parse(_dateOfBirth.value) as Date
         return calendar
     }
 
     private fun getPickedDateAsString(year: Int, month: Int, day: Int): String {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
-        val dateFormat = SimpleDateFormat(dateFormat)
+        val dateFormat = SimpleDateFormat(dateFormat, Locale.ENGLISH)
         return dateFormat.format(calendar.time)
     }
 
@@ -152,12 +157,20 @@ internal class UserFormViewModel(private val databaseUseCase: IDatabaseUseCase) 
         }
     }
 
+    fun hideSnackbar() {
+        _userFormUIState.update {
+            it.copy(snackBar = UserFormUIState.SnackBar(show = false))
+        }
+    }
+
     class UserFormViewModelFactory @Inject constructor(
-        private val databaseUseCase: IDatabaseUseCase
+        private val databaseUseCase: IDatabaseUseCase,
+        private val dispatchersProvider: DispatchersProvider,
+        private val networkListener: NetworkListener
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return UserFormViewModel(databaseUseCase) as T
+            return UserFormViewModel(databaseUseCase, dispatchersProvider, networkListener) as T
         }
     }
 }
