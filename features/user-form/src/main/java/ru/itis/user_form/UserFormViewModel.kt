@@ -13,6 +13,7 @@ import ru.itis.core.domain.models.User
 import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.viewstates.ResultState
 import ru.itis.core.network.NetworkListener
+import ru.itis.core.ui.R
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -59,6 +60,8 @@ internal class UserFormViewModel(
         databaseUseCase.userFlow.onEach(this::userState).launchIn(viewModelScope)
     }
 
+    val genders = listOf(R.string.man, R.string.woman)
+
     private fun onNetwork(isAvailable: Boolean) {
         _userFormUIState.update {
             it.copy(
@@ -78,6 +81,7 @@ internal class UserFormViewModel(
         _userInfo.update {
             it.copy(sex = gender)
         }
+        Log.e("DEBUG", _userInfo.value.toString())
     }
 
     fun setBirthdayDate(date: String) {

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -60,7 +61,6 @@ private fun GenderScreen(
         mutableStateOf(0)
     }
 
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -84,7 +84,7 @@ private fun GenderScreen(
         ) {
             Text(
                 modifier = Modifier.padding(top = 22.dp, start = 16.dp),
-                text = "Я",
+                text = stringResource(id = R.string.me),
                 color = AppTheme.colors.textHighEmphasis,
                 style = AppTheme.typography.text36R,
                 textAlign = TextAlign.Start
