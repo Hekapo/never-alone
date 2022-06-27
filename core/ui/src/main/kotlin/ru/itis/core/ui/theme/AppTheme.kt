@@ -2,6 +2,7 @@ package ru.itis.core.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Typography
 import androidx.compose.runtime.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -27,7 +28,9 @@ fun AppTheme(
         )
     }
 
-    MaterialTheme {
+    MaterialTheme(
+        typography = Typography()
+    ) {
         CompositionLocalProvider(
             LocalAppColors provides rememberedColors,
             LocalAppDarkColors provides rememberedColors,

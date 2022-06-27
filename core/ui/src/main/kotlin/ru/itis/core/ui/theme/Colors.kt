@@ -18,6 +18,10 @@ internal val LightTextHighEmphasis = Color(color = 0xDE000000)
 internal val LightTextMediumEmphasis = Color(color = 0x99000000)
 internal val LightTextLowEmphasis = Color(color = 0x61000000)
 
+internal val LightMaterialDialogBackground = Color(color = 0xFFE7E0EC)
+internal val LightMaterialDialogPrimary = Color(color = 0xFF6750A4)
+internal val LightMaterialDialogOnSurface = Color(color = 0xFF1C1B1F)
+internal val LightMaterialDialogOnSurfaceVariant = Color(color = 0xFF49454F)
 
 internal val DarkBackground = Color(color = 0xFF121212)
 internal val DarkOnBackgroundBTN = Color(color = 0xFFBB86FC)
@@ -30,6 +34,11 @@ internal val DarkOnSecondary = Color(color = 0xDEFFFFFF)
 internal val DarkTextHighEmphasis = Color(color = 0xDEFFFFFF)
 internal val DarkTextMediumEmphasis = Color(color = 0x99FFFFFF)
 internal val DarkTextLowEmphasis = Color(color = 0x61FFFFFF)
+
+internal val DarkMaterialDialogBackground = Color(color = 0xFF1C1B1F)
+internal val DarkMaterialDialogPrimary = Color(color = 0xFFD0BCFF)
+internal val DarkMaterialDialogOnSurface = Color(color = 0xFFE6E1E5)
+internal val DarkMaterialDialogOnSurfaceVariant = Color(color = 0xFFCAC4D0)
 
 internal val LightError = Color(color = 0xFFFC452C)
 internal val LightSuccess = Color(color = 0xFF9ACD32)

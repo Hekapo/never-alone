@@ -2,6 +2,8 @@ package ru.itis.user_form.birth
 
 import android.content.Context
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -12,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -20,10 +21,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import ru.itis.core.domain.models.User
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AppTextField
 import ru.itis.core.ui.components.AuthButton
+import ru.itis.core.ui.components.DatePicker
 import ru.itis.core.ui.theme.AppTheme
 import ru.itis.user_form.UserFormViewModel
 
@@ -31,6 +34,7 @@ import ru.itis.user_form.UserFormViewModel
  * Copyright (c) 27.05.2022 Created by Iskandar
  */
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun BirthScreenRoute(
     user: User,
@@ -53,6 +57,7 @@ internal fun BirthScreenRoute(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun BirthScreen(
     user: User,
@@ -62,7 +67,7 @@ private fun BirthScreen(
     onNext: () -> Unit,
 ) {
 
-    val context = LocalContext.current
+    val dialogState = rememberMaterialDialogState()
 
     Box(
         modifier = Modifier
@@ -70,6 +75,9 @@ private fun BirthScreen(
             .statusBarsPadding()
             .background(color = AppTheme.colors.backgroundPrimary)
     ) {
+        DatePicker(
+            dialogState = dialogState
+        )
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -89,7 +97,7 @@ private fun BirthScreen(
                 AppTextField(
                     modifier = Modifier
                         .clickable {
-                            showDatePickerDialog(context)
+                            dialogState.show()
                         },
                     text = dateState,
                     placeholder = "Birthdate",
@@ -113,6 +121,7 @@ private fun BirthScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable

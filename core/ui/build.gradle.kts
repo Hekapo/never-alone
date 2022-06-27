@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.coil.core)
 
     api(libs.bundles.androidx.camera)
+    api(libs.androidx.fragment)
+    api(libs.bundles.material.pickers)
 
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)

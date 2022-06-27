@@ -53,4 +53,6 @@
     <string name="email_already_in_use">Пользователь с таким email уже существует</string>
     <string name="hello">Привет</string>
     <string name="me">Я</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
 </resources>
