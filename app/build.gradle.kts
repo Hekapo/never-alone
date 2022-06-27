@@ -40,6 +40,7 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -83,6 +84,7 @@ dependencies {
 
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.crashlytics)
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     implementation(libs.dagger.runtime)
     kapt(libs.dagger.compiler)

@@ -27,6 +27,10 @@ class AppColors(
     googleButton: Color,
     googleButtonText: Color,
     disabledButton: Color,
+    dialogBackground: Color,
+    dialogPrimary: Color,
+    dialogOnSurface: Color,
+    dialogOnSurfaceVariant: Color,
     isLight: Boolean
 ) {
 
@@ -62,6 +66,14 @@ class AppColors(
         internal set
     var disabledButton by mutableStateOf(disabledButton)
         internal set
+    var dialogBackground by mutableStateOf(dialogBackground)
+        internal set
+    var dialogPrimary by mutableStateOf(dialogBackground)
+        internal set
+    var dialogOnSurface by mutableStateOf(dialogBackground)
+        internal set
+    var dialogOnSurfaceVariant by mutableStateOf(dialogBackground)
+        internal set
 
     fun copy(
         statusBar: Color = this.statusBar,
@@ -79,6 +91,10 @@ class AppColors(
         googleButton: Color = this.googleButton,
         googleButtonText: Color = this.googleButtonText,
         disabledButton: Color = this.disabledButton,
+        dialogBackground: Color = this.dialogBackground,
+        dialogPrimary: Color = this.dialogPrimary,
+        dialogOnSurface: Color = this.dialogOnSurface,
+        dialogOnSurfaceVariant: Color = this.dialogOnSurfaceVariant,
         isLight: Boolean = this.isLight
 
     ): AppColors = AppColors(
@@ -97,6 +113,10 @@ class AppColors(
         googleButton = googleButton,
         googleButtonText = googleButtonText,
         disabledButton = disabledButton,
+        dialogBackground = dialogBackground,
+        dialogPrimary = dialogPrimary,
+        dialogOnSurface = dialogOnSurface,
+        dialogOnSurfaceVariant = dialogOnSurfaceVariant,
         isLight = isLight,
     )
 
@@ -116,7 +136,10 @@ class AppColors(
         googleButtonText = colors.googleButtonText
         disabledButton = colors.disabledButton
         checkBoxOnPrimary = colors.checkBoxOnPrimary
-
+        dialogBackground = colors.dialogBackground
+        dialogPrimary = colors.dialogPrimary
+        dialogOnSurface = colors.dialogOnSurface
+        dialogOnSurfaceVariant = colors.dialogOnSurfaceVariant
     }
 }
 

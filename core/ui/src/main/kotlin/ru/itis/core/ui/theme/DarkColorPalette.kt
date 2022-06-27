@@ -22,6 +22,10 @@ fun darkColors(
     googleButtonText: Color = DarkOnSecondary,
     disabledButton: Color = DarkOnBackgroundBTNDisabled,
     checkBoxOnPrimary: Color = DarkOnBackgroundChB,
+    dialogBackground: Color = DarkMaterialDialogBackground,
+    dialogPrimary: Color = DarkMaterialDialogPrimary,
+    dialogOnSurface: Color = DarkMaterialDialogOnSurface,
+    dialogOnSurfaceVariant: Color = DarkMaterialDialogOnSurfaceVariant,
 ): AppColors = AppColors(
     statusBar = statusBar,
     backgroundPrimary = backgroundPrimary,
@@ -38,5 +42,9 @@ fun darkColors(
     googleButton = googleButton,
     googleButtonText = googleButtonText,
     disabledButton = disabledButton,
+    dialogBackground = dialogBackground,
+    dialogPrimary = dialogPrimary,
+    dialogOnSurface = dialogOnSurface,
+    dialogOnSurfaceVariant = dialogOnSurfaceVariant,
     isLight = true
 )

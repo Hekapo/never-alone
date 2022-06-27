@@ -22,6 +22,10 @@ fun lightColors(
     googleButtonText: Color = LightTextMediumEmphasis,
     disabledButton: Color = LightOnBackgroundBTNDisabled,
     checkBoxOnPrimary: Color = LightOnBackgroundChB,
+    dialogBackground: Color = LightMaterialDialogBackground,
+    dialogPrimary: Color = LightMaterialDialogPrimary,
+    dialogOnSurface: Color = LightMaterialDialogOnSurface,
+    dialogOnSurfaceVariant: Color = LightMaterialDialogOnSurfaceVariant,
 ): AppColors = AppColors(
     statusBar = statusBar,
     backgroundPrimary = backgroundPrimary,
@@ -38,5 +42,9 @@ fun lightColors(
     googleButton = googleButton,
     googleButtonText = googleButtonText,
     disabledButton = disabledButton,
+    dialogBackground = dialogBackground,
+    dialogPrimary = dialogPrimary,
+    dialogOnSurface = dialogOnSurface,
+    dialogOnSurfaceVariant = dialogOnSurfaceVariant,
     isLight = true,
 )

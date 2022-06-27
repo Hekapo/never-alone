@@ -34,7 +34,6 @@ import ru.itis.user_form.UserFormViewModel
  * Copyright (c) 27.05.2022 Created by Iskandar
  */
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun BirthScreenRoute(
     user: User,
@@ -57,7 +56,6 @@ internal fun BirthScreenRoute(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun BirthScreen(
     user: User,
@@ -121,7 +119,6 @@ private fun BirthScreen(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
