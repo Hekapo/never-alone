@@ -2,14 +2,17 @@ package ru.itis.user_form
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -53,6 +56,7 @@ fun UserFormRoute(deps: UserFormDeps, toMainScreen: () -> Unit) {
 
     UserFormScreen(
         childNavController = childNavController,
+        userFormState = userFormState,
         userState = userState,
         userFormViewModel = userFormViewModel,
         toMainScreen = toMainScreen
@@ -65,7 +69,8 @@ private fun UserFormScreen(
     userState: User,
     userFormViewModel: UserFormViewModel,
     childNavController: NavHostController,
-    toMainScreen: () -> Unit,
+    userFormState: UserFormUIState,
+    toMainScreen: () -> Unit
 ) {
     val navBackStackEntry by childNavController.currentBackStackEntryAsState()
 
@@ -132,6 +137,17 @@ private fun UserFormScreen(
                     }
                 )
             }
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
+        ) {
+            ru.itis.core.ui.components.Snackbar(
+                message = userFormState.snackBar.message,
+                isError = userFormState.snackBar.isError,
+                visible = userFormState.snackBar.show
+            )
         }
     }
 }

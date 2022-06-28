@@ -32,7 +32,7 @@ fun AppTextField(
     text: String,
     placeholder: String,
     leadingIcon: @Composable (() -> Unit)? = null,
-    onChange: (String) -> Unit,
+    onChange: (String) -> Unit = {},
     error: String = "",
     isError: FieldCorrectnessCheck = FieldCorrectnessCheck.None,
     imeAction: ImeAction = ImeAction.Next,

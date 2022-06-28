@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -46,9 +47,6 @@ internal fun BirthScreenRoute(
     BirthScreen(
         user = user,
         dateState = dateState,
-        showDatePickerDialog = {
-            userFormViewModel.showDatePickerDialog(it)
-        },
         setBirthDate = {
             userFormViewModel.setBirthdayDate(date = it)
         },
@@ -60,7 +58,6 @@ internal fun BirthScreenRoute(
 private fun BirthScreen(
     user: User,
     dateState: String,
-    showDatePickerDialog: (Context) -> Unit,
     setBirthDate: (String) -> Unit,
     onNext: () -> Unit,
 ) {
@@ -74,8 +71,10 @@ private fun BirthScreen(
             .background(color = AppTheme.colors.backgroundPrimary)
     ) {
         DatePicker(
-            dialogState = dialogState
+            dialogState = dialogState,
+            onDateSelected = setBirthDate
         )
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -99,9 +98,6 @@ private fun BirthScreen(
                         },
                     text = dateState,
                     placeholder = "Birthdate",
-                    onChange = {
-                        setBirthDate(it)
-                    },
                     isEnabled = false,
                 )
             }
@@ -112,6 +108,7 @@ private fun BirthScreen(
             ) {
                 AuthButton(
                     text = stringResource(id = R.string.continue_text),
+                    enabled = dateState.isNotEmpty() && requireNotNull(user.age) >= 18,
                     onClick = onNext
                 )
             }
@@ -126,7 +123,6 @@ private fun BirthScreenPreview() {
     BirthScreen(
         user = User(name = "Iskandar"),
         dateState = "",
-        showDatePickerDialog = {},
         setBirthDate = {},
         onNext = {},
     )

@@ -12,17 +12,18 @@ import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import ru.itis.core.ui.R
 import ru.itis.core.ui.theme.AppTheme
+import java.time.format.DateTimeFormatter
 
 /**
  * Copyright (c) 27.06.2022 Created by Iskandar
  */
 
-
 @Composable
 fun DatePicker(
     dialogState: MaterialDialogState = rememberMaterialDialogState(initialValue = true),
     positiveButtonText: String = stringResource(id = R.string.ok),
-    negativeButtonText: String = stringResource(id = R.string.cancel)
+    negativeButtonText: String = stringResource(id = R.string.cancel),
+    onDateSelected: (String) -> Unit
 ) {
     MaterialDialog(
         dialogState = dialogState,
@@ -37,10 +38,10 @@ fun DatePicker(
                 headerBackgroundColor = AppTheme.colors.buttonOnPrimary,
                 dateActiveBackgroundColor = AppTheme.colors.buttonOnPrimary,
                 dateInactiveTextColor = AppTheme.colors.textHighEmphasis,
-                calendarHeaderTextColor = AppTheme.colors.backgroundOnSecondary
+                calendarHeaderTextColor = AppTheme.colors.textHighEmphasis
             )
         ) { date ->
-            Log.e("DEBUG", date.year.toString())
+            onDateSelected(date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
         }
     }
 }
@@ -49,5 +50,5 @@ fun DatePicker(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun DatePickerPreview() {
-    DatePicker()
+    DatePicker(){}
 }

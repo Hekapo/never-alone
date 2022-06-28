@@ -1,7 +1,5 @@
 package ru.itis.user_form
 
-import android.app.DatePickerDialog
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +12,8 @@ import ru.itis.core.domain.usecase.IDatabaseUseCase
 import ru.itis.core.domain.viewstates.ResultState
 import ru.itis.core.network.NetworkListener
 import ru.itis.core.ui.R
-import java.text.SimpleDateFormat
-import java.util.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 /**
@@ -50,6 +48,7 @@ internal class UserFormViewModel(
                 it.copy(id = databaseUseCase.getCurrentUserId())
             }
         }
+        _userInfo.onEach(this::onAgeCheck).launchIn(viewModelScope)
 
         networkListener.networkState
             .distinctUntilChanged()
@@ -61,6 +60,22 @@ internal class UserFormViewModel(
     }
 
     val genders = listOf(R.string.man, R.string.woman)
+
+    private fun onAgeCheck(user: User?) {
+        user?.age?.let { age ->
+            if (age < 18) {
+                _userFormUIState.update {
+                    it.copy(
+                        snackBar = UserFormUIState.SnackBar(
+                            show = true,
+                            isError = true,
+                            message = "Ограничение по возрасту"
+                        )
+                    )
+                }
+            }
+        }
+    }
 
     private fun onNetwork(isAvailable: Boolean) {
         _userFormUIState.update {
@@ -85,48 +100,14 @@ internal class UserFormViewModel(
     }
 
     fun setBirthdayDate(date: String) {
+        val localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        val nowYear = LocalDate.now().year
+        val userYear = localDate.year
+        val age = (nowYear - userYear).toLong()
         _userInfo.update {
-            it.copy(age = 10L)
+            it.copy(age = age)
         }
         _dateOfBirth.value = date
-    }
-
-    private val dateFormat = "dd-MM-yyyy"
-
-    private fun getCalendar(): Calendar {
-        return if (_dateOfBirth.value.isEmpty())
-            Calendar.getInstance()
-        else
-            getLastPickedDateCalendar()
-    }
-
-    private fun getLastPickedDateCalendar(): Calendar {
-        val dateFormat = SimpleDateFormat(dateFormat)
-        val calendar = Calendar.getInstance()
-        calendar.time = dateFormat.parse(_dateOfBirth.value) as Date
-        return calendar
-    }
-
-    private fun getPickedDateAsString(year: Int, month: Int, day: Int): String {
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, day)
-        val dateFormat = SimpleDateFormat(dateFormat, Locale.ENGLISH)
-        return dateFormat.format(calendar.time)
-    }
-
-    fun showDatePickerDialog(context: Context) {
-        val calendar = getCalendar()
-        DatePickerDialog(
-            context, { _, year, month, day ->
-                _dateOfBirth.value = getPickedDateAsString(year, month, day)
-                _userInfo.update {
-                    it.copy(age = day.toLong())
-                }
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
     }
 
     private fun userState(userState: ResultState<User, Any>) {
