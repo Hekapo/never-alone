@@ -120,8 +120,8 @@ internal class UserFormViewModel(
                 Log.e("DEBUG", "Error")
             }
             is ResultState.Success -> {
-                Log.e("DEBUG", userState.data.toString())
                 val userData = userState.data
+                Log.e("DEBUG", "userdata $userData")
                 _userInfo.update {
                     it.copy(
                         name = userData.name,
@@ -135,8 +135,8 @@ internal class UserFormViewModel(
         viewModelScope.launch {
             databaseUseCase.updateUser(
                 User(
-                    id = "123",
-                    name = "Mike",
+                    age = _userInfo.value.age,
+                    isUserFormCompleted = true
                 )
             )
         }

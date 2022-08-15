@@ -28,4 +28,6 @@ object DatabaseConstants {
 
     const val CHILD_INTERESTS = "interests"
 
+    const val CHILD_USER_FORM = "is_user_form_completed"
+
 }

@@ -8,6 +8,7 @@ import ru.itis.core.database_constants.DatabaseConstants.CHILD_INTERESTS
 import ru.itis.core.database_constants.DatabaseConstants.CHILD_PHONE
 import ru.itis.core.database_constants.DatabaseConstants.CHILD_SEX
 import ru.itis.core.database_constants.DatabaseConstants.CHILD_USERNAME
+import ru.itis.core.database_constants.DatabaseConstants.CHILD_USER_FORM
 
 /**
  * Created by Iskandar on 10.04.2022.
@@ -21,7 +22,8 @@ data class User(
     val interests: List<String>? = null,
     val sex: String? = null,
     val email: String? = null,
-    val phone: String? = null
+    val phone: String? = null,
+    val isUserFormCompleted: Boolean? = null
 ) {
     fun toMap(): Map<String, Any?> = mapOf(
         Pair(CHILD_ID, id),
@@ -31,6 +33,7 @@ data class User(
         Pair(CHILD_PHONE, phone),
         Pair(CHILD_SEX, sex),
         Pair(CHILD_CITY, city),
-        Pair(CHILD_INTERESTS, interests)
+        Pair(CHILD_INTERESTS, interests),
+        Pair(CHILD_USER_FORM, isUserFormCompleted)
     )
 }
