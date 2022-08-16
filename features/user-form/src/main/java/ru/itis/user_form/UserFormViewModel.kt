@@ -136,7 +136,8 @@ internal class UserFormViewModel(
             databaseUseCase.updateUser(
                 User(
                     age = _userInfo.value.age,
-                    isUserFormCompleted = true
+                    isUserFormCompleted = true,
+                    sex = _userInfo.value.sex ?: "Мужчина"
                 )
             )
         }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ru.itis.core.common.buildPath
 import ru.itis.core.ui.destinations.LoginDestinations.*
+import ru.itis.core.ui.destinations.MainDestinations
 import ru.itis.core.ui.utils.EmailPassData
 import ru.itis.features.signin.SignInRoute
 import ru.itis.features.signup.SignUpRoute
@@ -37,7 +38,7 @@ internal fun LoginNavGraph(
                 deps = appComponent,
                 toMainScreen = { toMainScreen() },
                 toRegistration = {
-                    navController.navigate(OnBoardingScreenDestination.route) {
+                    navController.navigate(MainDestinations.MainScreenDestination.route) {
                         popUpTo(SplashDestination.route) {
                             inclusive = true
                         }

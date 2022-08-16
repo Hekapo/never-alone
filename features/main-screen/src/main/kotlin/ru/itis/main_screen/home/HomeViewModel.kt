@@ -37,7 +37,9 @@ internal class HomeViewModel(
     }
 
     private fun onNetwork(available: Boolean) {
-
+        if (!available) {
+            _homeViewState.update { HomeViewState.NoInternet }
+        }
     }
 
     override fun obtainEvent(event: HomeEvent) {
@@ -47,15 +49,15 @@ internal class HomeViewModel(
                 val data = mutableListOf(
                     HomeAdvModel(
                         age = 19,
-                        name = "Kamilla",
+                        name = "cat",
                         city = "Kazan",
-                        interests = listOf("Hard sex", "BDSM", "Spanking")
+                        interests = listOf("birds", "meat", "sleep")
                     ),
                     HomeAdvModel(
                         age = 20,
-                        name = "Kamilla2",
+                        name = "cat2",
                         city = "Kazan",
-                        interests = listOf("2 children", "Cooking", "Washing")
+                        interests = listOf("birds", "meat", "sleep")
                     ),
                 )
                 _homeViewState.update {

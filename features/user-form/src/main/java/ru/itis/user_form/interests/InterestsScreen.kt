@@ -1,10 +1,11 @@
 package ru.itis.user_form.interests
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -21,7 +22,6 @@ import com.google.accompanist.insets.statusBarsPadding
 import ru.itis.core.ui.R
 import ru.itis.core.ui.components.AuthButton
 import ru.itis.core.ui.components.ClickableCard
-import ru.itis.core.ui.components.StaggeredGrid
 import ru.itis.core.ui.theme.AppTheme
 
 /**
@@ -39,6 +39,7 @@ internal fun InterestsScreenRoute(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun InterestsScreen(
     onNext: () -> Unit,
@@ -57,14 +58,11 @@ private fun InterestsScreen(
         "Путешествия",
         "Соцсети",
         "Пиво",
-        "Ликер",
         "Бег по утрам",
         "Программирование",
         "Лыжи",
         "Готовить",
-        "Аквапарк",
         "Учеба",
-        "Лимончелла",
         "Сериалы",
         "Подкасты",
     )
@@ -103,19 +101,14 @@ private fun InterestsScreen(
                 modifier = Modifier
                     .align(Alignment.Center)
             ) {
-                StaggeredGrid(
-                    modifier = Modifier
-                        .horizontalScroll(rememberScrollState())
-                        .padding(horizontal = 4.dp)
-                        .wrapContentHeight(),
-                    rows = 4,
-                ) {
-                    categories.forEach {
+                LazyVerticalGrid(cells = GridCells.Fixed(2)) {
+                    items(categories.size) { index ->
                         ClickableCard(
                             modifier = Modifier
+                                .height(50.dp)
                                 .fillMaxWidth()
                                 .padding(vertical = 6.dp, horizontal = 6.dp),
-                            text = it,
+                            text = categories[index],
                             selectedValue = categories[0],
                             onSelect = {}
                         )

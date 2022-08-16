@@ -21,7 +21,7 @@ internal fun MainNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = UserFormDestination.route
+        startDestination = MainScreenDestination.route
     ) {
 
         composable(route = UserFormDestination.route) {
